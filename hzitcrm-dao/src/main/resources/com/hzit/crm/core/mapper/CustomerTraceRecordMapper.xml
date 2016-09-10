@@ -41,7 +41,7 @@
         </if>
     </sql>
 
-    <insert id="insertCustomerTraceRecord" parameterType="com.hzit.crm.core.entity.CustomerTraceRecord">
+    <insert id="insertCustomerTraceRecord" parameterType="com.hzit.crm.core.mapper.entity.CustomerTraceRecord">
         INSERT INTO customer_trace_record(
         <include refid="customerTraceRecordBaseColumnSql"/>
         )VALUES(
@@ -60,7 +60,7 @@
         DELETE FROM customer_trace_record WHERE record_id = #{recordId}
     </delete>
 
-    <update id="updateCustomerTraceRecord" parameterType="com.hzit.crm.core.entity.CustomerTraceRecord">
+    <update id="updateCustomerTraceRecord" parameterType="com.hzit.crm.core.mapper.entity.CustomerTraceRecord">
         UPDATE customer_trace_record
         <set>
             <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(customerId)">
@@ -92,7 +92,7 @@
         <include refid="customerTraceRecordBaseWhereSql"/>
     </select>
 
-    <resultMap type="com.hzit.crm.core.entity.CustomerTraceRecord" id="customerTraceRecordMap">
+    <resultMap type="com.hzit.crm.core.mapper.entity.CustomerTraceRecord" id="customerTraceRecordMap">
         <id column="record_id" property="recordId"/>
         <result column="customer_id" property="customerId"/>
         <result column="user_id" property="userId"/>

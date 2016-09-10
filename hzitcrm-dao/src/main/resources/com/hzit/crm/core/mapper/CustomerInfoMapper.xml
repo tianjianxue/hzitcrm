@@ -113,7 +113,7 @@
         </if>
     </sql>
 
-    <insert id="insertCustomerInfo" parameterType="com.hzit.crm.core.entity.CustomerInfo">
+    <insert id="insertCustomerInfo" parameterType="com.hzit.crm.core.mapper.entity.CustomerInfo">
         INSERT INTO customer_info(
         <include refid="customerInfoBaseColumnSql"/>
         )VALUES(
@@ -150,7 +150,7 @@
         DELETE FROM customer_info WHERE customer_id = #{customerId}
     </delete>
 
-    <update id="updateCustomerInfo" parameterType="com.hzit.crm.core.entity.CustomerInfo">
+    <update id="updateCustomerInfo" parameterType="com.hzit.crm.core.mapper.entity.CustomerInfo">
         UPDATE customer_info
         <set>
             <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(realName)">
@@ -239,7 +239,7 @@
         ORDER BY  last_time DESC
     </select>
 
-    <resultMap type="com.hzit.crm.core.entity.CustomerInfo" id="customerInfoMap">
+    <resultMap type="com.hzit.crm.core.mapper.entity.CustomerInfo" id="customerInfoMap">
         <id column="customer_id" property="customerId"/>
         <result column="real_name" property="realName"/>
         <result column="sex" property="sex"/>

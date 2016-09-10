@@ -29,7 +29,7 @@
         </if>
     </sql>
 
-    <insert id="insertRole" parameterType="com.hzit.crm.core.entity.Role">
+    <insert id="insertRole" parameterType="com.hzit.crm.core.mapper.entity.Role">
         INSERT INTO role(
         <include refid="roleBaseColumnSql"/>
         )VALUES(
@@ -45,7 +45,7 @@
         DELETE FROM role WHERE role_id = #{roleId}
     </delete>
 
-    <update id="updateRole" parameterType="com.hzit.crm.core.entity.Role">
+    <update id="updateRole" parameterType="com.hzit.crm.core.mapper.entity.Role">
         UPDATE role
         <set>
             <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(roleName)">
@@ -68,7 +68,7 @@
         <include refid="roleBaseWhereSql"/>
     </select>
 
-    <resultMap type="com.hzit.crm.core.entity.Role" id="roleMap">
+    <resultMap type="com.hzit.crm.core.mapper.entity.Role" id="roleMap">
         <id column="role_id" property="roleId"/>
         <result column="role_name" property="roleName"/>
         <result column="total_auth_value" property="totalAuthValue"/>
