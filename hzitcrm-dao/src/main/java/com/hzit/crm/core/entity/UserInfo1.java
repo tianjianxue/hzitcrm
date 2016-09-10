@@ -1,10 +1,10 @@
-package com.hzit.crm.core.mapper.entity;
+package com.hzit.crm.core.entity;
 
 /**
  * 
  * @author ethen
  */
-public class UserInfo {
+public class UserInfo1 {
 	/**
 	 *  用户id
 	 */

@@ -1,4 +1,4 @@
-package com.hzit.crm.core.mapper.entity;
+package com.hzit.crm.core.entity;
 
 /**
  * 
