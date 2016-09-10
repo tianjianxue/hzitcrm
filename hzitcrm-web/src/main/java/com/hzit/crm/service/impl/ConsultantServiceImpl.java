@@ -6,9 +6,10 @@ import com.hzit.crm.common.ResponseEnum;
 import com.hzit.crm.common.RoleEnum;
 
 import com.hzit.crm.core.entity.CustomerInfo;
-import com.hzit.crm.core.entity.entity.UserInfo;
-import com.hzit.crm.core.mapper.mapper.CustomerInfoMapper;
-import com.hzit.crm.core.mapper.mapper.UserInfoMapper;
+import com.hzit.crm.core.entity.UserInfo;
+
+import com.hzit.crm.core.mapper.CustomerInfoMapper;
+import com.hzit.crm.core.mapper.UserInfoMapper;
 import com.hzit.crm.service.ConsultantService;
 import com.hzit.crm.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * Created by yangxiaowei-pc on 2016/8/21.
@@ -38,7 +40,7 @@ public class ConsultantServiceImpl implements ConsultantService{
 
         Map<String,String> paramMap = new HashMap<String, String>();
         paramMap.put("roleId", RoleEnum.CONSULTANT.getRoleType().toString());
-        List<UserInfo> resultList = userDao.searchUserInfoByParams(paramMap);
+        List<UserInfo> resultList = userDao.searchUserinfoByParams(paramMap);
         System.out.println("ConsultantServiceImpl.getAllConsultantList return:" +resultList);
         return resultList;
 

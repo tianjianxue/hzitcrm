@@ -8,8 +8,9 @@ import com.hzit.crm.common.CustomerStateEnum;
 
 import com.hzit.crm.core.entity.CustomerInfo;
 import com.hzit.crm.core.entity.CustomerTraceRecord;
-import com.hzit.crm.core.mapper.mapper.CustomerInfoMapper;
-import com.hzit.crm.core.mapper.mapper.CustomerTraceRecordMapper;
+
+import com.hzit.crm.core.mapper.CustomerInfoMapper;
+import com.hzit.crm.core.mapper.CustomerTraceRecordMapper;
 import com.hzit.crm.service.CustomerService;
 import com.hzit.crm.util.BeanMapConvertUtil;
 import com.hzit.crm.util.DateUtils;

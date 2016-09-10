@@ -5,7 +5,7 @@ import com.hzit.crm.common.BaseReponse;
 import com.hzit.crm.common.ResponseEnum;
 
 import com.hzit.crm.core.entity.CustomerInfo;
-import com.hzit.crm.core.entity.entity.UserInfo;
+import com.hzit.crm.core.entity.UserInfo;
 import com.hzit.crm.service.ConsultantService;
 import com.hzit.crm.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
