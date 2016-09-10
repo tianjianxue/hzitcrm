@@ -1,4 +1,4 @@
-package com.hzit.crm.core.mapper.mapper;
+package com.hzit.crm.core.mapper;
 
 import java.util.List;
 import java.util.Map;
