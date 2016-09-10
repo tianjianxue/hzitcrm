@@ -4,8 +4,8 @@ import com.alibaba.druid.util.StringUtils;
 import com.hzit.crm.common.BaseReponse;
 import com.hzit.crm.common.ResponseEnum;
 
-import com.hzit.crm.core.mapper.entity.CustomerInfo;
-import com.hzit.crm.core.mapper.entity.UserInfo;
+import com.hzit.crm.core.entity.CustomerInfo;
+import com.hzit.crm.core.entity.entity.UserInfo;
 import com.hzit.crm.service.ConsultantService;
 import com.hzit.crm.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 前台人员控制器

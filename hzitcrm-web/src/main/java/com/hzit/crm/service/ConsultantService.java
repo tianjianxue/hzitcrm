@@ -2,7 +2,7 @@ package com.hzit.crm.service;
 
 import com.hzit.crm.common.BaseReponse;
 
-import com.hzit.crm.core.mapper.entity.UserInfo;
+import com.hzit.crm.core.entity.entity.UserInfo;
 
 import java.util.List;
 

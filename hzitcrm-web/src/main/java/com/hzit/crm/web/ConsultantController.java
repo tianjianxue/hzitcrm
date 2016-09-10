@@ -2,8 +2,8 @@ package com.hzit.crm.web;
 
 import com.fc.platform.commons.page.PageRequest;
 
-import com.hzit.crm.core.mapper.entity.CustomerInfo;
-import com.hzit.crm.core.mapper.entity.CustomerTraceRecord;
+import com.hzit.crm.core.entity.CustomerInfo;
+import com.hzit.crm.core.entity.CustomerTraceRecord;
 import com.hzit.crm.service.CustomerService;
 import com.hzit.crm.util.DateUtils;
 import org.apache.commons.lang3.StringUtils;

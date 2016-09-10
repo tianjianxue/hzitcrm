@@ -5,13 +5,12 @@ import com.hzit.crm.common.CustomerStateEnum;
 import com.hzit.crm.common.ResponseEnum;
 import com.hzit.crm.common.RoleEnum;
 
-import com.hzit.crm.core.mapper.entity.CustomerInfo;
-import com.hzit.crm.core.mapper.entity.UserInfo;
+import com.hzit.crm.core.entity.CustomerInfo;
+import com.hzit.crm.core.entity.entity.UserInfo;
 import com.hzit.crm.core.mapper.mapper.CustomerInfoMapper;
 import com.hzit.crm.core.mapper.mapper.UserInfoMapper;
 import com.hzit.crm.service.ConsultantService;
 import com.hzit.crm.util.DateUtils;
-import javafx.scene.input.DataFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

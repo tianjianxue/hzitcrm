@@ -3,21 +3,22 @@ package com.hzit.crm.core.mapper;
 import java.util.List;
 import java.util.Map;
 
+import com.hzit.crm.core.entity.UserInfo;
 import org.apache.ibatis.annotations.Param;
-import com.hzit.crm.core.entity.Userinfo;
+
 import com.fc.platform.commons.page.Page;
 import com.fc.platform.commons.page.Pageable;
 
 public interface UserinfoMapper {
 
-	void insertUserinfo(Userinfo userinfo);
+	void insertUserinfo(UserInfo userinfo);
 
 	void deleteUserinfoByUserid(Integer userid);
 
-	void updateUserinfo(Userinfo userinfo);
+	void updateUserinfo(UserInfo userinfo);
 
-	Page<Userinfo> searchUserinfoByParams(@Param("map") Map<String, String> map, Pageable pageable);
+	Page<UserInfo> searchUserinfoByParams(@Param("map") Map<String, String> map, Pageable pageable);
 
-	List<Userinfo> searchUserinfoByParams(@Param("map") Map<String, String> map);
+	List<UserInfo> searchUserinfoByParams(@Param("map") Map<String, String> map);
 
 } 

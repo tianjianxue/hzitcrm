@@ -6,8 +6,8 @@ import com.fc.platform.commons.page.PageRequest;
 
 import com.hzit.crm.common.CustomerStateEnum;
 
-import com.hzit.crm.core.mapper.entity.CustomerInfo;
-import com.hzit.crm.core.mapper.entity.CustomerTraceRecord;
+import com.hzit.crm.core.entity.CustomerInfo;
+import com.hzit.crm.core.entity.CustomerTraceRecord;
 import com.hzit.crm.core.mapper.mapper.CustomerInfoMapper;
 import com.hzit.crm.core.mapper.mapper.CustomerTraceRecordMapper;
 import com.hzit.crm.service.CustomerService;
@@ -18,7 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.*;
 

@@ -1,8 +1,8 @@
 package com.hzit.crm.service;
 
 import com.fc.platform.commons.page.PageRequest;
-import com.hzit.crm.core.mapper.entity.CustomerInfo;
-import com.hzit.crm.core.mapper.entity.CustomerTraceRecord;
+import com.hzit.crm.core.entity.CustomerInfo;
+import com.hzit.crm.core.entity.CustomerTraceRecord;
 
 import java.util.List;
 import java.util.Map;
