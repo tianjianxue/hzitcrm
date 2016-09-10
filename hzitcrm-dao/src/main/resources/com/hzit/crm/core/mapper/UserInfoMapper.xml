@@ -40,7 +40,7 @@
         DELETE FROM userinfo WHERE userid = #{userid}
     </delete>
 
-    <update id="updateUserinfo" parameterType="com.hzit.crm.core.entity.Userinfo">
+    <update id="updateUserinfo" parameterType="com.hzit.crm.core.entity.UserInfo">
         UPDATE userinfo
         <set>
             <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(username)">
@@ -60,7 +60,7 @@
         <include refid="userinfoBaseWhereSql"/>
     </select>
 
-    <resultMap type="com.hzit.crm.core.entity.Userinfo" id="userinfoMap">
+    <resultMap type="com.hzit.crm.core.entity.UserInfo" id="userinfoMap">
         <id column="userid" property="userid"/>
         <result column="username" property="username"/>
         <result column="upwd" property="upwd"/>
