@@ -4,7 +4,7 @@ package com.hzit.crm.core.entity;
  * 
  * @author ethen
  */
-public class UserInfo1 {
+public class UserInfo {
 	/**
 	 *  用户id
 	 */
