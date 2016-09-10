@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hzit.crm.core.mapper.mapper.RoleMapper">
+
+    <sql id="roleBaseColumnSql">
+        role_id,
+        role_name,
+        total_auth_value,
+        memo
+    </sql>
+
+    <sql id="roleBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.roleId)">
+                    role_id = #{map.roleId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.roleName)">
+                    AND role_name = #{map.roleName}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.totalAuthValue)">
+                    AND total_auth_value = #{map.totalAuthValue}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.memo)">
+                    AND memo = #{map.memo}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertRole" parameterType="com.hzit.crm.core.mapper.entity.Role">
+        INSERT INTO role(
+        <include refid="roleBaseColumnSql"/>
+        )VALUES(
+            #{roleId},
+            #{roleName},
+            #{totalAuthValue},
+            #{memo}
+        )
+    </insert>
+
+    
+    <delete id="deleteRoleByRoleId" parameterType="Integer">
+        DELETE FROM role WHERE role_id = #{roleId}
+    </delete>
+
+    <update id="updateRole" parameterType="com.hzit.crm.core.mapper.entity.Role">
+        UPDATE role
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(roleName)">
+                role_name = #{roleName} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(totalAuthValue)">
+                total_auth_value = #{totalAuthValue} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(memo)">
+                memo = #{memo} ,
+            </if>
+        </set>
+        WHERE role_id = #{roleId}
+    </update>
+
+    <select id="searchRoleByParams" parameterType="map" resultMap="roleMap">
+        SELECT
+        <include refid="roleBaseColumnSql"/>
+        FROM role
+        <include refid="roleBaseWhereSql"/>
+    </select>
+
+    <resultMap type="com.hzit.crm.core.mapper.entity.Role" id="roleMap">
+        <id column="role_id" property="roleId"/>
+        <result column="role_name" property="roleName"/>
+        <result column="total_auth_value" property="totalAuthValue"/>
+        <result column="memo" property="memo"/>
+    </resultMap>
+
+</mapper>

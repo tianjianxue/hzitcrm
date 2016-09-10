@@ -1,0 +1,45 @@
+
+<c:forEach var="customerInfo" items="${customerInfoList}">
+<!--TODO 目前只录入了姓名 客户详细信息待完善 -->
+<%--<% for(int i=0;i<10;i++) {%>--%>
+<div class="accordion-group widget-box">
+    <div class="accordion-heading">
+        <div class="widget-title">
+            <a data-parent="#collapse-group" href="#collapseGOne <%--<%=i%>--%> " data-toggle="collapse" >
+                <span class="icon"><i class="icon-user" onclick="alert(00)"></i></span>
+                    <h5 ><%--<%=i%>--%>${customerInfo.realName}（${customerInfo.tel}），${customerInfo.sex}，${customerInfo.age}岁，本科，${customerInfo.graduateFrom}${customerInfo.majorIn}专业。最后跟近时间：TODO 2015-9-9日</h5>
+                <span title="54 total posts" class="label label-info" style="float:right"> TODO 意向客户</span>
+            </a>
+        </div>
+    </div>
+    <div class="collapse  accordion-body" id="collapseGOne <%--<%=i%--%>> ">
+        <div class="widget-content">
+            <ul class="recent-posts">
+                <!--   TODO 查询跟进记录表最新5条记录 -->
+                <%for(int j=0;j<5;j++){%>
+                <li>
+                    <div class="article-post">
+                        <span class="user-info">:2016-09-2:09:10:李春梅</span>
+                        <p>
+                            <a href="javascript:void(0)"><%=j%>明天对比一下华育，朋友想明天来学</a>
+                        </p>
+                    </div>
+                </li>
+                <%}%>
+
+                <li>
+                    <form>
+                        <div class="article-post controls">
+                            <textarea name="txtjilu" style="width: 100%"></textarea>
+                        </div>
+                        <a href="#" class="btn btn-primary btn-mini">新增跟进记录</a>
+                    </form>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</div>
+<%--<%}%>--%>
+
+</c:forEach>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hzit.crm.core.mapper.mapper.ModuleMapper">
+
+    <sql id="moduleBaseColumnSql">
+        module_id,
+        name,
+        auth_value,
+        module_url,
+        parent_module_id,
+        module_level
+    </sql>
+
+    <sql id="moduleBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.moduleId)">
+                    module_id = #{map.moduleId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.name)">
+                    AND name = #{map.name}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.authValue)">
+                    AND auth_value = #{map.authValue}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.moduleUrl)">
+                    AND module_url = #{map.moduleUrl}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.parentModuleId)">
+                    AND parent_module_id = #{map.parentModuleId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.moduleLevel)">
+                    AND module_level = #{map.moduleLevel}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertModule" parameterType="com.hzit.crm.core.mapper.entity.Module">
+        INSERT INTO module(
+        <include refid="moduleBaseColumnSql"/>
+        )VALUES(
+            #{moduleId},
+            #{name},
+            #{authValue},
+            #{moduleUrl},
+            #{parentModuleId},
+            #{moduleLevel}
+        )
+    </insert>
+
+    
+    <delete id="deleteModuleByModuleId" parameterType="Integer">
+        DELETE FROM module WHERE module_id = #{moduleId}
+    </delete>
+
+    <update id="updateModule" parameterType="com.hzit.crm.core.mapper.entity.Module">
+        UPDATE module
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(name)">
+                name = #{name} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(authValue)">
+                auth_value = #{authValue} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(moduleUrl)">
+                module_url = #{moduleUrl} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(parentModuleId)">
+                parent_module_id = #{parentModuleId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(moduleLevel)">
+                module_level = #{moduleLevel} ,
+            </if>
+        </set>
+        WHERE module_id = #{moduleId}
+    </update>
+
+    <select id="searchModuleByParams" parameterType="map" resultMap="moduleMap">
+        SELECT
+        <include refid="moduleBaseColumnSql"/>
+        FROM module
+        <include refid="moduleBaseWhereSql"/>
+    </select>
+
+    <resultMap type="com.hzit.crm.core.mapper.entity.Module" id="moduleMap">
+        <id column="module_id" property="moduleId"/>
+        <result column="name" property="name"/>
+        <result column="auth_value" property="authValue"/>
+        <result column="module_url" property="moduleUrl"/>
+        <result column="parent_module_id" property="parentModuleId"/>
+        <result column="module_level" property="moduleLevel"/>
+    </resultMap>
+
+</mapper>

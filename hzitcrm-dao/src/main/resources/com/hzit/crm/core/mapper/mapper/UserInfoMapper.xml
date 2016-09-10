@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hzit.crm.core.mapper.mapper.UserInfoMapper">
+
+    <sql id="userInfoBaseColumnSql">
+        user_id,
+        name,
+        role_id,
+        wechat_no,
+        tel,
+        real_name
+    </sql>
+
+    <sql id="userInfoBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.userId)">
+                    user_id = #{map.userId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.name)">
+                    AND name = #{map.name}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.roleId)">
+                    AND role_id = #{map.roleId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.wechatNo)">
+                    AND wechat_no = #{map.wechatNo}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.tel)">
+                    AND tel = #{map.tel}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.realName)">
+                    AND real_name = #{map.realName}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertUserInfo" parameterType="com.hzit.crm.core.mapper.entity.UserInfo">
+        INSERT INTO user_info(
+        <include refid="userInfoBaseColumnSql"/>
+        )VALUES(
+            #{userId},
+            #{name},
+            #{roleId},
+            #{wechatNo},
+            #{tel},
+            #{realName}
+        )
+    </insert>
+
+    
+    <delete id="deleteUserInfoByUserId" parameterType="Integer">
+        DELETE FROM user_info WHERE user_id = #{userId}
+    </delete>
+
+    <update id="updateUserInfo" parameterType="com.hzit.crm.core.mapper.entity.UserInfo">
+        UPDATE user_info
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(name)">
+                name = #{name} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(roleId)">
+                role_id = #{roleId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(wechatNo)">
+                wechat_no = #{wechatNo} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(tel)">
+                tel = #{tel} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(realName)">
+                real_name = #{realName} ,
+            </if>
+        </set>
+        WHERE user_id = #{userId}
+    </update>
+
+    <select id="searchUserInfoByParams" parameterType="map" resultMap="userInfoMap">
+        SELECT
+        <include refid="userInfoBaseColumnSql"/>
+        FROM user_info
+        <include refid="userInfoBaseWhereSql"/>
+    </select>
+
+    <resultMap type="com.hzit.crm.core.mapper.entity.UserInfo" id="userInfoMap">
+        <id column="user_id" property="userId"/>
+        <result column="name" property="name"/>
+        <result column="role_id" property="roleId"/>
+        <result column="wechat_no" property="wechatNo"/>
+        <result column="tel" property="tel"/>
+        <result column="real_name" property="realName"/>
+    </resultMap>
+
+</mapper>

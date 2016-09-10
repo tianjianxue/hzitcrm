@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hzit.crm.core.mapper.mapper.CustomerInfoMapper">
+
+    <sql id="customerInfoBaseColumnSql">
+        customer_id,
+        real_name,
+        sex,
+        age,
+        native_place,
+        tel,
+        wechat_no,
+        qq,
+        education_bg,
+        graduate_time,
+        graduate_from,
+        major_in,
+        work_age,
+        work_experience,
+        job,
+        educate_experience,
+        recruit_channel,
+        customer_state,
+        customer_level,
+        user_id,
+        target_skill,
+        introducer,
+        memo,
+        last_time,
+        create_time
+    </sql>
+
+    <sql id="customerInfoBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.customerId)">
+                    customer_id = #{map.customerId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.realName)">
+                    AND real_name = #{map.realName}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.sex)">
+                    AND sex = #{map.sex}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.age)">
+                    AND age = #{map.age}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.nativePlace)">
+                    AND native_place = #{map.nativePlace}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.tel)">
+                    AND tel = #{map.tel}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.wechatNo)">
+                    AND wechat_no = #{map.wechatNo}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.qq)">
+                    AND qq = #{map.qq}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.educationBg)">
+                    AND education_bg = #{map.educationBg}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.graduateTime)">
+                    AND graduate_time = #{map.graduateTime}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.graduateFrom)">
+                    AND graduate_from = #{map.graduateFrom}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.majorIn)">
+                    AND major_in = #{map.majorIn}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.workAge)">
+                    AND work_age = #{map.workAge}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.workExperience)">
+                    AND work_experience = #{map.workExperience}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.job)">
+                    AND job = #{map.job}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.educateExperience)">
+                    AND educate_experience = #{map.educateExperience}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.recruitChannel)">
+                    AND recruit_channel = #{map.recruitChannel}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.customerState)">
+                    AND customer_state = #{map.customerState}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.customerLevel)">
+                    AND customer_level = #{map.customerLevel}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.userId)">
+                    AND user_id = #{map.userId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.targetSkill)">
+                    AND target_skill = #{map.targetSkill}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.introducer)">
+                    AND introducer = #{map.introducer}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.memo)">
+                    AND memo = #{map.memo}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.lastTime)">
+                    AND last_time = #{map.lastTime}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.createTime)">
+                    AND create_time = #{map.createTime}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertCustomerInfo" parameterType="com.hzit.crm.core.mapper.entity.CustomerInfo">
+        INSERT INTO customer_info(
+        <include refid="customerInfoBaseColumnSql"/>
+        )VALUES(
+            #{customerId},
+            #{realName},
+            #{sex},
+            #{age},
+            #{nativePlace},
+            #{tel},
+            #{wechatNo},
+            #{qq},
+            #{educationBg},
+            #{graduateTime},
+            #{graduateFrom},
+            #{majorIn},
+            #{workAge},
+            #{workExperience},
+            #{job},
+            #{educateExperience},
+            #{recruitChannel},
+            #{customerState},
+            #{customerLevel},
+            #{userId},
+            #{targetSkill},
+            #{introducer},
+            #{memo},
+            #{lastTime},
+            #{createTime}
+        )
+    </insert>
+
+    
+    <delete id="deleteCustomerInfoByCustomerId" parameterType="Integer">
+        DELETE FROM customer_info WHERE customer_id = #{customerId}
+    </delete>
+
+    <update id="updateCustomerInfo" parameterType="com.hzit.crm.core.mapper.entity.CustomerInfo">
+        UPDATE customer_info
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(realName)">
+                real_name = #{realName} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(sex)">
+                sex = #{sex} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(age)">
+                age = #{age} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(nativePlace)">
+                native_place = #{nativePlace} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(tel)">
+                tel = #{tel} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(wechatNo)">
+                wechat_no = #{wechatNo} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(qq)">
+                qq = #{qq} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(educationBg)">
+                education_bg = #{educationBg} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(graduateTime)">
+                graduate_time = #{graduateTime} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(graduateFrom)">
+                graduate_from = #{graduateFrom} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(majorIn)">
+                major_in = #{majorIn} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(workAge)">
+                work_age = #{workAge} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(workExperience)">
+                work_experience = #{workExperience} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(job)">
+                job = #{job} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(educateExperience)">
+                educate_experience = #{educateExperience} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(recruitChannel)">
+                recruit_channel = #{recruitChannel} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(customerState)">
+                customer_state = #{customerState} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(customerLevel)">
+                customer_level = #{customerLevel} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(userId)">
+                user_id = #{userId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(targetSkill)">
+                target_skill = #{targetSkill} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(introducer)">
+                introducer = #{introducer} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(memo)">
+                memo = #{memo} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(lastTime)">
+                last_time = #{lastTime} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(createTime)">
+                create_time = #{createTime} ,
+            </if>
+        </set>
+        WHERE customer_id = #{customerId}
+    </update>
+
+    <select id="searchCustomerInfoByParams" parameterType="map" resultMap="customerInfoMap">
+        SELECT
+        <include refid="customerInfoBaseColumnSql"/>
+        FROM customer_info
+        <include refid="customerInfoBaseWhereSql"/>
+        WHERE
+          customer_state != 0
+        ORDER BY  last_time DESC
+    </select>
+
+    <resultMap type="com.hzit.crm.core.mapper.entity.CustomerInfo" id="customerInfoMap">
+        <id column="customer_id" property="customerId"/>
+        <result column="real_name" property="realName"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="native_place" property="nativePlace"/>
+        <result column="tel" property="tel"/>
+        <result column="wechat_no" property="wechatNo"/>
+        <result column="qq" property="qq"/>
+        <result column="education_bg" property="educationBg"/>
+        <result column="graduate_time" property="graduateTime"/>
+        <result column="graduate_from" property="graduateFrom"/>
+        <result column="major_in" property="majorIn"/>
+        <result column="work_age" property="workAge"/>
+        <result column="work_experience" property="workExperience"/>
+        <result column="job" property="job"/>
+        <result column="educate_experience" property="educateExperience"/>
+        <result column="recruit_channel" property="recruitChannel"/>
+        <result column="customer_state" property="customerState"/>
+        <result column="customer_level" property="customerLevel"/>
+        <result column="user_id" property="userId"/>
+        <result column="target_skill" property="targetSkill"/>
+        <result column="introducer" property="introducer"/>
+        <result column="memo" property="memo"/>
+        <result column="last_time" property="lastTime"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+</mapper>

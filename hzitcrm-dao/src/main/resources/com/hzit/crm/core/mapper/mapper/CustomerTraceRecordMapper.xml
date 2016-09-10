@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hzit.crm.core.mapper.mapper.CustomerTraceRecordMapper">
+
+    <sql id="customerTraceRecordBaseColumnSql">
+        record_id,
+        customer_id,
+        user_id,
+        channel,
+        record_date,
+        times,
+        content
+    </sql>
+
+    <sql id="customerTraceRecordBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.recordId)">
+                    record_id = #{map.recordId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.customerId)">
+                    AND customer_id = #{map.customerId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.userId)">
+                    AND user_id = #{map.userId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.channel)">
+                    AND channel = #{map.channel}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.recordDate)">
+                    AND record_date = #{map.recordDate}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.times)">
+                    AND times = #{map.times}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.content)">
+                    AND content = #{map.content}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertCustomerTraceRecord" parameterType="com.hzit.crm.core.mapper.entity.CustomerTraceRecord">
+        INSERT INTO customer_trace_record(
+        <include refid="customerTraceRecordBaseColumnSql"/>
+        )VALUES(
+            #{recordId},
+            #{customerId},
+            #{userId},
+            #{channel},
+            #{recordDate},
+            #{times},
+            #{content}
+        )
+    </insert>
+
+    
+    <delete id="deleteCustomerTraceRecordByRecordId" parameterType="Integer">
+        DELETE FROM customer_trace_record WHERE record_id = #{recordId}
+    </delete>
+
+    <update id="updateCustomerTraceRecord" parameterType="com.hzit.crm.core.mapper.entity.CustomerTraceRecord">
+        UPDATE customer_trace_record
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(customerId)">
+                customer_id = #{customerId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(userId)">
+                user_id = #{userId} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(channel)">
+                channel = #{channel} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(recordDate)">
+                record_date = #{recordDate} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(times)">
+                times = #{times} ,
+            </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(content)">
+                content = #{content} ,
+            </if>
+        </set>
+        WHERE record_id = #{recordId}
+    </update>
+
+    <select id="searchCustomerTraceRecordByParams" parameterType="map" resultMap="customerTraceRecordMap">
+        SELECT
+        <include refid="customerTraceRecordBaseColumnSql"/>
+        FROM customer_trace_record
+        <include refid="customerTraceRecordBaseWhereSql"/>
+    </select>
+
+    <resultMap type="com.hzit.crm.core.mapper.entity.CustomerTraceRecord" id="customerTraceRecordMap">
+        <id column="record_id" property="recordId"/>
+        <result column="customer_id" property="customerId"/>
+        <result column="user_id" property="userId"/>
+        <result column="channel" property="channel"/>
+        <result column="record_date" property="recordDate"/>
+        <result column="times" property="times"/>
+        <result column="content" property="content"/>
+    </resultMap>
+
+</mapper>
