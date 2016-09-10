@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.hzit.crm.core.mapper.UserInfoMapper1">
+<mapper namespace="com.hzit.crm.core.mapper.UserInfoMapper">
 
     <sql id="userinfoBaseColumnSql">
         userid,
@@ -25,7 +25,7 @@
         </if>
     </sql>
 
-    <insert id="insertUserinfo" parameterType="com.hzit.crm.core.entity.Userinfo">
+    <insert id="insertUserinfo" parameterType="com.hzit.crm.core.entity.UserInfo">
         INSERT INTO userinfo(
         <include refid="userinfoBaseColumnSql"/>
         )VALUES(

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.hzit.crm.core.mapper.mapper.CustomerTraceRecordMapper">
+<mapper namespace="com.hzit.crm.core.mapper.CustomerTraceRecordMapper">
 
     <sql id="customerTraceRecordBaseColumnSql">
         record_id,
@@ -41,7 +41,7 @@
         </if>
     </sql>
 
-    <insert id="insertCustomerTraceRecord" parameterType="com.hzit.crm.core.mapper.entity.CustomerTraceRecord">
+    <insert id="insertCustomerTraceRecord" parameterType="com.hzit.crm.core.entity.CustomerTraceRecord">
         INSERT INTO customer_trace_record(
         <include refid="customerTraceRecordBaseColumnSql"/>
         )VALUES(
@@ -60,7 +60,7 @@
         DELETE FROM customer_trace_record WHERE record_id = #{recordId}
     </delete>
 
-    <update id="updateCustomerTraceRecord" parameterType="com.hzit.crm.core.mapper.entity.CustomerTraceRecord">
+    <update id="updateCustomerTraceRecord" parameterType="com.hzit.crm.core.entity.CustomerTraceRecord">
         UPDATE customer_trace_record
         <set>
             <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(customerId)">
@@ -92,7 +92,7 @@
         <include refid="customerTraceRecordBaseWhereSql"/>
     </select>
 
-    <resultMap type="com.hzit.crm.core.mapper.entity.CustomerTraceRecord" id="customerTraceRecordMap">
+    <resultMap type="com.hzit.crm.core.entity.CustomerTraceRecord" id="customerTraceRecordMap">
         <id column="record_id" property="recordId"/>
         <result column="customer_id" property="customerId"/>
         <result column="user_id" property="userId"/>
