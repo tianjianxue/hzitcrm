@@ -117,35 +117,35 @@
         INSERT INTO customer_info(
         <include refid="customerInfoBaseColumnSql"/>
         )VALUES(
-            #{customerId},
-            #{realName},
-            #{sex},
-            #{age},
-            #{nativePlace},
-            #{tel},
-            #{wechatNo},
-            #{qq},
-            #{educationBg},
-            #{graduateTime},
-            #{graduateFrom},
-            #{majorIn},
-            #{workAge},
-            #{workExperience},
-            #{job},
-            #{educateExperience},
-            #{recruitChannel},
-            #{customerState},
-            #{customerLevel},
-            #{userId},
-            #{targetSkill},
-            #{introducer},
-            #{memo},
-            #{lastTime},
-            #{createTime}
+        #{customerId},
+        #{realName},
+        #{sex},
+        #{age},
+        #{nativePlace},
+        #{tel},
+        #{wechatNo},
+        #{qq},
+        #{educationBg},
+        #{graduateTime},
+        #{graduateFrom},
+        #{majorIn},
+        #{workAge},
+        #{workExperience},
+        #{job},
+        #{educateExperience},
+        #{recruitChannel},
+        #{customerState},
+        #{customerLevel},
+        #{userId},
+        #{targetSkill},
+        #{introducer},
+        #{memo},
+        #{lastTime},
+        #{createTime}
         )
     </insert>
 
-    
+
     <delete id="deleteCustomerInfoByCustomerId" parameterType="Integer">
         DELETE FROM customer_info WHERE customer_id = #{customerId}
     </delete>
@@ -229,14 +229,16 @@
         WHERE customer_id = #{customerId}
     </update>
 
+    <!--获取来访者姓名和来访状态-->
+    <select id="findByNameAndState" resultMap="customerInfoMap">
+        SELECT real_name,customer_state FROM customer_info
+    </select>
+
     <select id="searchCustomerInfoByParams" parameterType="map" resultMap="customerInfoMap">
         SELECT
         <include refid="customerInfoBaseColumnSql"/>
         FROM customer_info
         <include refid="customerInfoBaseWhereSql"/>
-        WHERE
-          customer_state != 0
-        ORDER BY  last_time DESC
     </select>
 
     <resultMap type="com.hzit.crm.core.entity.CustomerInfo" id="customerInfoMap">

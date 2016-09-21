@@ -1,8 +1,8 @@
 package com.hzit.crm.core.entity;
 
 /**
- * 
- * @author ethen
+ *
+ * @author clark1230
  */
 public class CustomerInfo {
 	/**
@@ -112,14 +112,14 @@ public class CustomerInfo {
 	public void setCustomerId(Integer customerId){
 		this.customerId = customerId;
 	}
-	
-    /**
-     * 客户id
-     * @return
-     */	
-    public Integer getCustomerId(){
-    	return customerId;
-    }
+
+	/**
+	 * 客户id
+	 * @return
+	 */
+	public Integer getCustomerId(){
+		return customerId;
+	}
 	/**
 	 * 客户姓名
 	 * @param realName
@@ -127,14 +127,14 @@ public class CustomerInfo {
 	public void setRealName(String realName){
 		this.realName = realName;
 	}
-	
-    /**
-     * 客户姓名
-     * @return
-     */	
-    public String getRealName(){
-    	return realName;
-    }
+
+	/**
+	 * 客户姓名
+	 * @return
+	 */
+	public String getRealName(){
+		return realName;
+	}
 	/**
 	 * 性别
 	 * @param sex
@@ -142,14 +142,14 @@ public class CustomerInfo {
 	public void setSex(Integer sex){
 		this.sex = sex;
 	}
-	
-    /**
-     * 性别
-     * @return
-     */	
-    public Integer getSex(){
-    	return sex;
-    }
+
+	/**
+	 * 性别
+	 * @return
+	 */
+	public Integer getSex(){
+		return sex;
+	}
 	/**
 	 * 年龄
 	 * @param age
@@ -157,14 +157,14 @@ public class CustomerInfo {
 	public void setAge(Integer age){
 		this.age = age;
 	}
-	
-    /**
-     * 年龄
-     * @return
-     */	
-    public Integer getAge(){
-    	return age;
-    }
+
+	/**
+	 * 年龄
+	 * @return
+	 */
+	public Integer getAge(){
+		return age;
+	}
 	/**
 	 * 籍贯
 	 * @param nativePlace
@@ -172,14 +172,14 @@ public class CustomerInfo {
 	public void setNativePlace(String nativePlace){
 		this.nativePlace = nativePlace;
 	}
-	
-    /**
-     * 籍贯
-     * @return
-     */	
-    public String getNativePlace(){
-    	return nativePlace;
-    }
+
+	/**
+	 * 籍贯
+	 * @return
+	 */
+	public String getNativePlace(){
+		return nativePlace;
+	}
 	/**
 	 * 联系电话
 	 * @param tel
@@ -187,14 +187,14 @@ public class CustomerInfo {
 	public void setTel(String tel){
 		this.tel = tel;
 	}
-	
-    /**
-     * 联系电话
-     * @return
-     */	
-    public String getTel(){
-    	return tel;
-    }
+
+	/**
+	 * 联系电话
+	 * @return
+	 */
+	public String getTel(){
+		return tel;
+	}
 	/**
 	 * 微信账号
 	 * @param wechatNo
@@ -202,14 +202,14 @@ public class CustomerInfo {
 	public void setWechatNo(String wechatNo){
 		this.wechatNo = wechatNo;
 	}
-	
-    /**
-     * 微信账号
-     * @return
-     */	
-    public String getWechatNo(){
-    	return wechatNo;
-    }
+
+	/**
+	 * 微信账号
+	 * @return
+	 */
+	public String getWechatNo(){
+		return wechatNo;
+	}
 	/**
 	 * 扣扣号
 	 * @param qq
@@ -217,14 +217,14 @@ public class CustomerInfo {
 	public void setQq(String qq){
 		this.qq = qq;
 	}
-	
-    /**
-     * 扣扣号
-     * @return
-     */	
-    public String getQq(){
-    	return qq;
-    }
+
+	/**
+	 * 扣扣号
+	 * @return
+	 */
+	public String getQq(){
+		return qq;
+	}
 	/**
 	 * 学历
 	 * @param educationBg
@@ -232,14 +232,14 @@ public class CustomerInfo {
 	public void setEducationBg(Integer educationBg){
 		this.educationBg = educationBg;
 	}
-	
-    /**
-     * 学历
-     * @return
-     */	
-    public Integer getEducationBg(){
-    	return educationBg;
-    }
+
+	/**
+	 * 学历
+	 * @return
+	 */
+	public Integer getEducationBg(){
+		return educationBg;
+	}
 	/**
 	 * 毕业时间
 	 * @param graduateTime
@@ -247,14 +247,14 @@ public class CustomerInfo {
 	public void setGraduateTime(String graduateTime){
 		this.graduateTime = graduateTime;
 	}
-	
-    /**
-     * 毕业时间
-     * @return
-     */	
-    public String getGraduateTime(){
-    	return graduateTime;
-    }
+
+	/**
+	 * 毕业时间
+	 * @return
+	 */
+	public String getGraduateTime(){
+		return graduateTime;
+	}
 	/**
 	 * 毕业院校
 	 * @param graduateFrom
@@ -262,14 +262,14 @@ public class CustomerInfo {
 	public void setGraduateFrom(String graduateFrom){
 		this.graduateFrom = graduateFrom;
 	}
-	
-    /**
-     * 毕业院校
-     * @return
-     */	
-    public String getGraduateFrom(){
-    	return graduateFrom;
-    }
+
+	/**
+	 * 毕业院校
+	 * @return
+	 */
+	public String getGraduateFrom(){
+		return graduateFrom;
+	}
 	/**
 	 * 专业
 	 * @param majorIn
@@ -277,14 +277,14 @@ public class CustomerInfo {
 	public void setMajorIn(String majorIn){
 		this.majorIn = majorIn;
 	}
-	
-    /**
-     * 专业
-     * @return
-     */	
-    public String getMajorIn(){
-    	return majorIn;
-    }
+
+	/**
+	 * 专业
+	 * @return
+	 */
+	public String getMajorIn(){
+		return majorIn;
+	}
 	/**
 	 * 工作年限
 	 * @param workAge
@@ -292,14 +292,14 @@ public class CustomerInfo {
 	public void setWorkAge(Integer workAge){
 		this.workAge = workAge;
 	}
-	
-    /**
-     * 工作年限
-     * @return
-     */	
-    public Integer getWorkAge(){
-    	return workAge;
-    }
+
+	/**
+	 * 工作年限
+	 * @return
+	 */
+	public Integer getWorkAge(){
+		return workAge;
+	}
 	/**
 	 * 工作经历
 	 * @param workExperience
@@ -307,14 +307,14 @@ public class CustomerInfo {
 	public void setWorkExperience(String workExperience){
 		this.workExperience = workExperience;
 	}
-	
-    /**
-     * 工作经历
-     * @return
-     */	
-    public String getWorkExperience(){
-    	return workExperience;
-    }
+
+	/**
+	 * 工作经历
+	 * @return
+	 */
+	public String getWorkExperience(){
+		return workExperience;
+	}
 	/**
 	 * 从事职业
 	 * @param job
@@ -322,14 +322,14 @@ public class CustomerInfo {
 	public void setJob(String job){
 		this.job = job;
 	}
-	
-    /**
-     * 从事职业
-     * @return
-     */	
-    public String getJob(){
-    	return job;
-    }
+
+	/**
+	 * 从事职业
+	 * @return
+	 */
+	public String getJob(){
+		return job;
+	}
 	/**
 	 * 教育培训经历
 	 * @param educateExperience
@@ -337,14 +337,14 @@ public class CustomerInfo {
 	public void setEducateExperience(String educateExperience){
 		this.educateExperience = educateExperience;
 	}
-	
-    /**
-     * 教育培训经历
-     * @return
-     */	
-    public String getEducateExperience(){
-    	return educateExperience;
-    }
+
+	/**
+	 * 教育培训经历
+	 * @return
+	 */
+	public String getEducateExperience(){
+		return educateExperience;
+	}
 	/**
 	 * 应聘渠道
 	 * @param recruitChannel
@@ -352,14 +352,14 @@ public class CustomerInfo {
 	public void setRecruitChannel(Integer recruitChannel){
 		this.recruitChannel = recruitChannel;
 	}
-	
-    /**
-     * 应聘渠道
-     * @return
-     */	
-    public Integer getRecruitChannel(){
-    	return recruitChannel;
-    }
+
+	/**
+	 * 应聘渠道
+	 * @return
+	 */
+	public Integer getRecruitChannel(){
+		return recruitChannel;
+	}
 	/**
 	 * 客户状态
 	 * @param customerState
@@ -367,14 +367,14 @@ public class CustomerInfo {
 	public void setCustomerState(Integer customerState){
 		this.customerState = customerState;
 	}
-	
-    /**
-     * 客户状态
-     * @return
-     */	
-    public Integer getCustomerState(){
-    	return customerState;
-    }
+
+	/**
+	 * 客户状态
+	 * @return
+	 */
+	public Integer getCustomerState(){
+		return customerState;
+	}
 	/**
 	 * 客户级别
 	 * @param customerLevel
@@ -382,14 +382,14 @@ public class CustomerInfo {
 	public void setCustomerLevel(String customerLevel){
 		this.customerLevel = customerLevel;
 	}
-	
-    /**
-     * 客户级别
-     * @return
-     */	
-    public String getCustomerLevel(){
-    	return customerLevel;
-    }
+
+	/**
+	 * 客户级别
+	 * @return
+	 */
+	public String getCustomerLevel(){
+		return customerLevel;
+	}
 	/**
 	 * 咨询师id
 	 * @param userId
@@ -397,14 +397,14 @@ public class CustomerInfo {
 	public void setUserId(Integer userId){
 		this.userId = userId;
 	}
-	
-    /**
-     * 咨询师id
-     * @return
-     */	
-    public Integer getUserId(){
-    	return userId;
-    }
+
+	/**
+	 * 咨询师id
+	 * @return
+	 */
+	public Integer getUserId(){
+		return userId;
+	}
 	/**
 	 * 客户感兴趣的目标技能
 	 * @param targetSkill
@@ -412,14 +412,14 @@ public class CustomerInfo {
 	public void setTargetSkill(String targetSkill){
 		this.targetSkill = targetSkill;
 	}
-	
-    /**
-     * 客户感兴趣的目标技能
-     * @return
-     */	
-    public String getTargetSkill(){
-    	return targetSkill;
-    }
+
+	/**
+	 * 客户感兴趣的目标技能
+	 * @return
+	 */
+	public String getTargetSkill(){
+		return targetSkill;
+	}
 	/**
 	 * 推荐人
 	 * @param introducer
@@ -427,14 +427,14 @@ public class CustomerInfo {
 	public void setIntroducer(String introducer){
 		this.introducer = introducer;
 	}
-	
-    /**
-     * 推荐人
-     * @return
-     */	
-    public String getIntroducer(){
-    	return introducer;
-    }
+
+	/**
+	 * 推荐人
+	 * @return
+	 */
+	public String getIntroducer(){
+		return introducer;
+	}
 	/**
 	 * 备注
 	 * @param memo
@@ -442,14 +442,14 @@ public class CustomerInfo {
 	public void setMemo(String memo){
 		this.memo = memo;
 	}
-	
-    /**
-     * 备注
-     * @return
-     */	
-    public String getMemo(){
-    	return memo;
-    }
+
+	/**
+	 * 备注
+	 * @return
+	 */
+	public String getMemo(){
+		return memo;
+	}
 	/**
 	 * 最后跟进时间 格式2015-10-09
 	 * @param lastTime
@@ -457,14 +457,14 @@ public class CustomerInfo {
 	public void setLastTime(String lastTime){
 		this.lastTime = lastTime;
 	}
-	
-    /**
-     * 最后跟进时间 格式2015-10-09
-     * @return
-     */	
-    public String getLastTime(){
-    	return lastTime;
-    }
+
+	/**
+	 * 最后跟进时间 格式2015-10-09
+	 * @return
+	 */
+	public String getLastTime(){
+		return lastTime;
+	}
 	/**
 	 * 创建时间
 	 * @param createTime
@@ -472,43 +472,12 @@ public class CustomerInfo {
 	public void setCreateTime(String createTime){
 		this.createTime = createTime;
 	}
-	
-    /**
-     * 创建时间
-     * @return
-     */	
-    public String getCreateTime(){
-    	return createTime;
-    }
 
-	@Override
-	public String toString() {
-		return "CustomerInfo{" +
-				"customerId=" + customerId +
-				", realName='" + realName + '\'' +
-				", sex=" + sex +
-				", age=" + age +
-				", nativePlace='" + nativePlace + '\'' +
-				", tel='" + tel + '\'' +
-				", wechatNo='" + wechatNo + '\'' +
-				", qq='" + qq + '\'' +
-				", educationBg=" + educationBg +
-				", graduateTime='" + graduateTime + '\'' +
-				", graduateFrom='" + graduateFrom + '\'' +
-				", majorIn='" + majorIn + '\'' +
-				", workAge=" + workAge +
-				", workExperience='" + workExperience + '\'' +
-				", job='" + job + '\'' +
-				", educateExperience='" + educateExperience + '\'' +
-				", recruitChannel=" + recruitChannel +
-				", customerState=" + customerState +
-				", customerLevel='" + customerLevel + '\'' +
-				", userId=" + userId +
-				", targetSkill='" + targetSkill + '\'' +
-				", introducer='" + introducer + '\'' +
-				", memo='" + memo + '\'' +
-				", lastTime='" + lastTime + '\'' +
-				", createTime='" + createTime + '\'' +
-				'}';
+	/**
+	 * 创建时间
+	 * @return
+	 */
+	public String getCreateTime(){
+		return createTime;
 	}
 }

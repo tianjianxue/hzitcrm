@@ -20,4 +20,9 @@ public interface CustomerInfoMapper {
 
 	List<CustomerInfo> searchCustomerInfoByParams(@Param("map") Map<String, String> map);
 
+	/**
+	 * 获取来访者的姓名和状态
+	 * @return
+     */
+	List<CustomerInfo> findByNameAndState();
 } 

@@ -119,4 +119,16 @@ public class UserInfo {
     public String getRealName(){
     	return realName;
     }
+
+	@Override
+	public String toString() {
+		return "UserInfo{" +
+				"userId=" + userId +
+				", name='" + name + '\'' +
+				", roleId=" + roleId +
+				", wechatNo='" + wechatNo + '\'' +
+				", tel='" + tel + '\'' +
+				", realName='" + realName + '\'' +
+				'}';
+	}
 }
