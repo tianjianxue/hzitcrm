@@ -480,4 +480,35 @@ public class CustomerInfo {
 	public String getCreateTime(){
 		return createTime;
 	}
+
+	@Override
+	public String toString() {
+		return "CustomerInfo{" +
+				"customerId=" + customerId +
+				", realName='" + realName + '\'' +
+				", sex=" + sex +
+				", age=" + age +
+				", nativePlace='" + nativePlace + '\'' +
+				", tel='" + tel + '\'' +
+				", wechatNo='" + wechatNo + '\'' +
+				", qq='" + qq + '\'' +
+				", educationBg=" + educationBg +
+				", graduateTime='" + graduateTime + '\'' +
+				", graduateFrom='" + graduateFrom + '\'' +
+				", majorIn='" + majorIn + '\'' +
+				", workAge=" + workAge +
+				", workExperience='" + workExperience + '\'' +
+				", job='" + job + '\'' +
+				", educateExperience='" + educateExperience + '\'' +
+				", recruitChannel=" + recruitChannel +
+				", customerState=" + customerState +
+				", customerLevel='" + customerLevel + '\'' +
+				", userId=" + userId +
+				", targetSkill='" + targetSkill + '\'' +
+				", introducer='" + introducer + '\'' +
+				", memo='" + memo + '\'' +
+				", lastTime='" + lastTime + '\'' +
+				", createTime='" + createTime + '\'' +
+				'}';
+	}
 }

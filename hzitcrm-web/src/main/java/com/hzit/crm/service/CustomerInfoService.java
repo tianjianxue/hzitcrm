@@ -1,8 +1,11 @@
 package com.hzit.crm.service;
 
+import com.fc.platform.commons.page.Page;
+import com.fc.platform.commons.page.Pageable;
 import com.hzit.crm.core.entity.CustomerInfo;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 冼耀基 on 2016/9/20.
@@ -24,4 +27,6 @@ public interface CustomerInfoService {
 
 
     public void updateCustomerInfo(CustomerInfo customerInfo);
+
+    public Page<CustomerInfo> customerInfoList(Map<String,String> map, Pageable pageable);
 }

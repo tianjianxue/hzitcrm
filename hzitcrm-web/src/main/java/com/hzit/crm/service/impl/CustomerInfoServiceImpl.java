@@ -1,5 +1,7 @@
 package com.hzit.crm.service.impl;
 
+import com.fc.platform.commons.page.Page;
+import com.fc.platform.commons.page.Pageable;
 import com.hzit.crm.core.entity.CustomerInfo;
 import com.hzit.crm.core.mapper.CustomerInfoMapper;
 import com.hzit.crm.service.CustomerInfoService;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 冼耀基 on 2016/9/20.
@@ -55,6 +58,17 @@ public class CustomerInfoServiceImpl implements CustomerInfoService {
     @Override
     public void updateCustomerInfo(CustomerInfo customerInfo) {
 
+    }
+
+    /**
+     * 获取客户列表
+     * @param map
+     * @param pageable
+     * @return
+     */
+    @Override
+    public Page<CustomerInfo> customerInfoList(Map<String, String> map, Pageable pageable) {
+        return customerInfoMapper.searchCustomerInfoByParams(map,pageable);
     }
 
 }

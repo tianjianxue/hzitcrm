@@ -4,18 +4,23 @@
     <a href="#" class="visible-phone"><i class="icon icon-home"></i>手机查看</a>
     <ul style="display: block;">
         <li class="active">
-            <a href="index.html"><i class="icon icon-home"></i><span>来访者登记</span></a>
+            <a href="${pageContext.request.contextPath}/index"><i class="icon icon-home"></i><span>来访者登记</span></a>
         </li>
-        <li class="submenu">
-            <a href="#"><i class="icon icon-th-list"></i> <span>表单</span> <span class="label">3</span></a>
-            <ul>
-                <li ><a href="form-common.html">常规表单</a></li>
-                <li><a href="form-validation.html">验证表单</a></li>
+        <%--<li class="submenu">
+            <a href="#"><i class="icon icon-th-list"></i> <span>客户信息</span><span class="label">3</span></a>
+            &lt;%&ndash;<ul>
+                <li ><a href="${pageContext.request.contextPath}/customerInfo/list">客户列表</a></li>
+                <li><a href="#">我的客户</a></li>
                 <li><a href="form-wizard.html">指定模块</a></li>
-            </ul>
+            </ul>&ndash;%&gt;
+        </li>--%>
+        <li>
+            <a href="${pageContext.request.contextPath}/customerInfo/list"><i class="icon icon-pencil"></i>客户列表</a>
         </li>
-
-        <li><a href="buttons.html"><i class="icon icon-tint"></i> <span>Buttons &amp; icons</span></a></li>
+        <li >
+            <a href="${pageContext.request.contextPath}/customerInfo/list"><i class="icon icon-pencil"></i>我的客户</a>
+        </li>
+        <li><a href="#"><i class="icon icon-tint"></i> <span>客户跟踪</span></a></li>
 
         <li><a href="interface.html"><i class="icon icon-pencil"></i> <span>Interface elements</span></a></li>
 
