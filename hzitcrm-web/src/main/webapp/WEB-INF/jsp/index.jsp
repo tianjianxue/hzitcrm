@@ -11,53 +11,92 @@
 <!-- container-fluid -->
 <head>
     <title>来访记录</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/assets/css/bootstrap-responsive.min.css" />
-    <link rel="stylesheet" href="/assets/css/fullcalendar.css" />
-    <link rel="stylesheet" href="/assets/css/unicorn.main.css" />
-    <link rel="stylesheet" href="/assets/css/unicorn.grey.css" class="skin-color" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/assets/css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="/assets/css/fullcalendar.css"/>
+    <link rel="stylesheet" href="/assets/css/unicorn.main.css"/>
+    <link rel="stylesheet" href="/assets/css/unicorn.grey.css" class="skin-color"/>
     <script src="${pageContext.request.contextPath}/assets/js/excanvas.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/jquery.ui.custom.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
-   <%-- <script src="${pageContext.request.contextPath}/assets/js/jquery.flot.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/js/jquery.flot.resize.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/js/jquery.peity.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/js/fullcalendar.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/js/unicorn.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/js/unicorn.dashboard.js"></script>--%>
     <script type="text/javascript">
 
-        window.onload = function () {
-           $.get("${pageContext.request.contextPath}/userInfoList",function(data){
-               var $option ;
-               var $index_select = $("#index_select");
-               for(var item in data){
-                   $option = $("<option value='"+data[item].name+"'></option>");
-                   $option.html(data[item].name);
-                   $index_select.append($option);
-               }
-           });
-            $("#index_button_userinfo").click(function(){
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+            <!--获取咨询师信息-->
+            $.get("${pageContext.request.contextPath}/userInfoList", function (data) {
+                var $option;
+                var $index_select = $("#index_select");
+                for (var item in data) {
+                    $option = $("<option value='" + data[item].userId + "'></option>");
+                    $option.html(data[item].name);
+                    $index_select.append($option);
+                }
+            });
+            <!--保存来访者信息-->
+            $("#index_button_userinfo").click(function () {
                 $.ajax({
-                    type:'post',
-                    url:'${pageContext.request.contextPath}/userInfo/add',
-                    data:$("#form-userinfo").serialize(),
-                    success:function(data){
+                    type: 'post',
+                    url: '${pageContext.request.contextPath}/userInfo/add',
+                    data: $("#form-userinfo").serialize(),
+                    success: function (data) {
                         alert(data);
                     }
                 });
             });
-        }
-    </script>
 
-   <script type="text/javascript">
-        $(function(){
+            function getTime() {
+                var today = new Date();
+                var s = today.getFullYear() + "年" + today.getMonth() + "月" + today.getDate() + "日" + today.getHours() + "时" + today.getMinutes() + "分" + today.getSeconds() + "秒" + "\t星期" + today.getDay();
+                return s;
+            }
 
+            <!--获取来访客户信息-->
+            function getCustomerInfo() {
+                $.ajax({
+                    type: 'get',
+                    url: '${pageContext.request.contextPath}/customerInfoList',
+                    success: function (data) {
+                        var showTime = getTime();//获取当前时间
+                        var leftTime;//来访时间
+                        var label = "label label-warning ";//标签
+                        var $ul = $("#index_customer_info");
+
+                        var currentDate;
+                        var hour;
+                        var minute;
+                        var second;
+                        var $totalCustomer = $("#index_span_total");
+                        var $index_showTime = $("#index_showTime");
+                        var $li = null;
+                        $ul.empty();//每次请求服务器时清空当前ul标签下的li标签
+                        $index_showTime.empty();
+                        $index_showTime.html("当前时间为:" + showTime);
+                        $totalCustomer.html("当前访客人数:" + data.length);
+                        for (var item in data) {
+                            currentDate = new Date(Date.parse(data[item].createTime));
+                            hour = Math.floor((new Date().getTime() - currentDate.getTime()) / 1000 / 60 / 60);
+                            minute = Math.floor((new Date().getTime() - currentDate.getTime()) / 1000 / 60 - (hour * 60));
+                            second = Math.floor((new Date().getTime() - currentDate.getTime()) / 1000 - (hour * 60 * 60 + minute * 60));
+                            leftTime = hour + "小时" + minute + "分钟" + second + "秒";
+                            $li = $('<li><i class="icon-user"></i> <strong>' + data[item].realName + '</strong> <span style="color:orange;font-size:12px;">等待' + leftTime + '</span>' +
+                                    '<span title="" class="' + label + '" style="float:right">待面试</span></li>');
+                            $ul.append($li);
+                        }
+                    }
+                });
+            }
+
+            <!--每1秒向服务器获取客户信息-->
+            window.setInterval(getCustomerInfo, 1000);
         });
+
     </script>
 </head>
 <body>
@@ -70,8 +109,10 @@
 
 <div id="user-nav" class="navbar navbar-inverse">
     <ul class="nav btn-group">
-        <li class="btn btn-inverse"><a title="" href="#"><i class="icon icon-user"></i> <span class="text">登陆者名字</span></a></li>
-        <li class="btn btn-inverse"><a title="" href="login.html"><i class="icon icon-share-alt"></i> <span class="text">退出</span></a></li>
+        <li class="btn btn-inverse"><a title="" href="#"><i class="icon icon-user"></i> <span class="text">登陆者名字</span></a>
+        </li>
+        <li class="btn btn-inverse"><a title="" href="login.html"><i class="icon icon-share-alt"></i> <span
+                class="text">退出</span></a></li>
     </ul>
 </div>
 <!--左侧动态生成的菜单 -->
@@ -92,41 +133,84 @@
                     <div class="widget-title"><span class="icon"><i class="icon-file"></i></span><h5>来访者登记</h5></div>
                     <div class="widget-content nopadding">
                         <!--记录当前访问者的表单-->
-                        <form  action="${pageContextPath.request.contxtPath}/userInfo/add" method="post" id="form-userinfo" class="form-horizontal ui-formwizard"   >
+                        <form action="${pageContextPath.request.contxtPath}/userInfo/add" method="post"
+                              id="form-userinfo" class="form-horizontal ui-formwizard">
 
                             <div class="control-group">
                                 <label class="control-label">应聘者名字</label>
                                 <div class="controls">
-                                    <input id="username" type="text" name="username" >
+                                    <input id="username" type="text" name="realName">
                                 </div>
                             </div>
                             <div class="control-group">
-                                <label class="control-label">选择所属咨询师</label>
+                                <label class="control-label">选择所属面试官</label>
                                 <div class="controls">
-                                    <select id="index_select" name="name">
+                                    <select id="index_select" name="userId">
                                     </select>
                                 </div>
                             </div>
                             <div class="control-group">
                                 <div class="controls">
-                                    <input id="index_button_userinfo" class="btn btn-primary" type="button" value="登记" style="">
+                                    <input id="index_button_userinfo" class="btn btn-primary" type="button" value="登记"
+                                           style="">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+
+
+                <div class="widget-box">
+                    <div class="widget-title"><span class="icon"><i class="icon-file"></i></span><h5>修改来访登记</h5></div>
+                    <div class="widget-content nopadding">
+                        <!--记录当前访问者的表单-->
+                        <form action="${pageContextPath.request.contxtPath}/userInfo/add" method="post"
+                               class="form-horizontal ui-formwizard">
+
+                            <div class="control-group">
+                                <label class="control-label">应聘者名字</label>
+                                <div class="controls">
+                                    <input  type="text" name="realName">
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">选择其他面试官</label>
+                                <div class="controls">
+                                    <select  name="userId">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <input  class="btn btn-primary" type="button" value="修改"
+                                           style="">
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
+
+            <!--来访者列表-->
             <div class="span6">
                 <div class="widget-box">
-                    <div class="widget-title"><span class="icon"><i class="icon-signal"></i></span><h5>来访者列表</h5><span title="54 total posts" class="label label-info tip-left">54</span></div>
+                    <div class="widget-title">
+                        <span class="icon">
+                            <i class="icon-signal"></i>
+                        </span>
+                        <h5>来访者列表</h5>
+                        <span title="" style="width:110px;" class="label label-info tip-left"
+                              id="index_span_total">0</span>
+                        <span title="" style="width:280px;" class="label label-info tip-left"
+                              id="index_showTime">当前时间为:</span>
+                    </div>
                     <div class="widget-content">
                         <div class="row-fluid">
                             <div class="span12">
-                                <ul class="site-stats">
-                                    <li><i class="icon-user"></i> <strong>李凯</strong> <small>等待 30分钟12秒</small><span title="54 total posts" class="label label-info" style="float:right">接单中</span></li>
-                                    <li><i class="icon-user"></i> <strong>1433</strong> <small>Total Users</small><span title="54 total posts" class=" label label-warning" style="float:right">等待中</span></li>
-                                    <li><i class="icon-user"></i> <strong>1433</strong> <small>Total Users</small></li>
-                                    <li><i class="icon-user"></i> <strong>1433</strong> <small>Total Users</small></li>
+                                <ul class="site-stats" id="index_customer_info">
+
                                 </ul>
                             </div>
                         </div>
@@ -135,6 +219,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 
 </body>

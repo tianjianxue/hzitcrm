@@ -17,8 +17,44 @@ import java.util.List;
 public class CustomerInfoServiceImpl implements CustomerInfoService {
     @Autowired
     private CustomerInfoMapper customerInfoMapper;
+
+    /**
+     * 获取当前日期的来访客户
+     * @return
+     */
     @Override
     public List<CustomerInfo> findByNameAndState() {
+       /* SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String currentDate = simpleDateFormat.format(new Date());
+        Map<String,String> map = new HashMap<String,String>();
+        map.put("createTime",currentDate);*/
         return customerInfoMapper.findByNameAndState();
     }
+
+    /**
+     * 保存客户的真实名称和咨询师id
+     */
+    @Override
+    public void insertByRealNameAndUserId(CustomerInfo customerInfo) {
+        customerInfoMapper.insertCustomerInfo(customerInfo);
+    }
+
+    /**
+     * 获取客户表的总记录数
+     * @return
+     */
+    @Override
+    public int getTotal() {
+        return customerInfoMapper.getTotal();
+    }
+
+    /**
+     * 录入客户信息
+     * @param customerInfo
+     */
+    @Override
+    public void updateCustomerInfo(CustomerInfo customerInfo) {
+
+    }
+
 }

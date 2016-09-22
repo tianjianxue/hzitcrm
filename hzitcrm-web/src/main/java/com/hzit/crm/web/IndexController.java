@@ -1,13 +1,16 @@
 package com.hzit.crm.web;
 
+import com.hzit.crm.core.entity.CustomerInfo;
 import com.hzit.crm.core.entity.UserInfo;
+import com.hzit.crm.service.CustomerInfoService;
 import com.hzit.crm.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,6 +21,11 @@ import java.util.List;
 public class IndexController {
     @Autowired
     private UserInfoService userInfoService;
+
+    @Autowired
+    private CustomerInfoService customerInfoService;
+
+
     @RequestMapping("/add")
     public void one(){
         System.out.println("处理用户新增的请求");
@@ -29,9 +37,11 @@ public class IndexController {
         return "zixunshi";
     }
 
+
+
     /**
      * 跳转到系统首页
-     * 到数据库中查找相应咨询师的信息
+     * 异步到数据库中查找相应咨询师的信息
      * @return
      */
     @RequestMapping("/index")
@@ -39,20 +49,38 @@ public class IndexController {
         return "index";
     }
 
+    /**
+     * json
+     * @return
+     */
     @RequestMapping("/userInfoList")
     @ResponseBody
     protected List<UserInfo> userInfoList(){
         return userInfoService.findAll();
     }
 
-
+    /**
+     * 首页中初步保存客户信息
+     * @param customerInfo
+     * @return
+     */
     @RequestMapping("/userInfo/add")
     @ResponseBody
-    protected String add(UserInfo userInfo){
-        if(userInfo != null){
-            System.out.println(userInfo.getName());
+    protected String add(CustomerInfo customerInfo){
+        String msg = null;
+        if(customerInfo != null){
+           try{
+
+               customerInfo.setCustomerState(1);//默认为等待状态
+               SimpleDateFormat simpleDateFormat  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+               customerInfo.setCreateTime(simpleDateFormat.format(new Date()));
+               customerInfoService.insertByRealNameAndUserId(customerInfo);
+               msg = "添加成功";
+           }catch (Exception e){
+               msg = "添加失败";
+           }
         }
-        return "添加成功!";
+        return msg;
     }
 
 }

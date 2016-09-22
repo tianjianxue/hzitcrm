@@ -228,12 +228,23 @@
         </set>
         WHERE customer_id = #{customerId}
     </update>
-
+   <!-- SELECT real_name,customer_state,create_time FROM customer_info ORDER BY create_time DESC-->
     <!--获取来访者姓名和来访状态-->
-    <select id="findByNameAndState" resultMap="customerInfoMap">
-        SELECT real_name,customer_state FROM customer_info
+    <select id="findByNameAndState" resultMap="customerInfoMap" parameterType="map">
+         SELECT
+              real_name,
+              customer_state,
+              create_time
+         FROM
+            customer_info
+         where
+              to_days(create_time)= to_days(now())
+          order by create_time DESC
     </select>
-
+    <!--获取客户表的总记录数-->
+    <select id="getTotal" resultType="int">
+        SELECT COUNT(customer_id) FROM customer_info
+    </select>
     <select id="searchCustomerInfoByParams" parameterType="map" resultMap="customerInfoMap">
         SELECT
         <include refid="customerInfoBaseColumnSql"/>

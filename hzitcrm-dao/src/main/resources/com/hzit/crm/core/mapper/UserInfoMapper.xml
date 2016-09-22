@@ -83,7 +83,7 @@
         FROM user_info
         <include refid="userInfoBaseWhereSql"/>
     </select>
-    <select id="findAll" resultType="com.hzit.crm.core.entity.UserInfo">
+    <select id="findAll" resultMap="userInfoMap">
         select * from user_info
     </select>
     <resultMap type="com.hzit.crm.core.entity.UserInfo" id="userInfoMap">
