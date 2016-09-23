@@ -83,4 +83,9 @@ public class IndexController {
         return msg;
     }
 
+    @RequestMapping("/layout/welcome")
+    protected  String welcome(){
+        return "/layout/welcome";
+    }
+
 }

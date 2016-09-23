@@ -113,6 +113,8 @@
         </if>
     </sql>
 
+
+
     <insert id="insertCustomerInfo" parameterType="com.hzit.crm.core.entity.CustomerInfo">
         INSERT INTO customer_info(
         <include refid="customerInfoBaseColumnSql"/>
@@ -232,6 +234,7 @@
     <!--获取来访者姓名和来访状态-->
     <select id="findByNameAndState" resultMap="customerInfoMap" parameterType="map">
          SELECT
+              customer_id,
               real_name,
               customer_state,
               create_time
@@ -242,14 +245,16 @@
           order by create_time DESC
     </select>
     <!--获取客户表的总记录数-->
-    <select id="getTotal" resultType="int">
+    <select id="getTotal" resultType="long">
         SELECT COUNT(customer_id) FROM customer_info
     </select>
-    <select id="searchCustomerInfoByParams" parameterType="map" resultMap="customerInfoMap">
+
+    <select id="searchCustomerInfoByParams" parameterType="map"  resultMap="customerInfoMap">
         SELECT
         <include refid="customerInfoBaseColumnSql"/>
         FROM customer_info
         <include refid="customerInfoBaseWhereSql"/>
+
     </select>
 
     <resultMap type="com.hzit.crm.core.entity.CustomerInfo" id="customerInfoMap">

@@ -30,5 +30,5 @@ public interface CustomerInfoMapper {
 	 * 获取客户表的总记录数
 	 * @return
      */
-	public int getTotal();
+	public long getTotal();
 } 

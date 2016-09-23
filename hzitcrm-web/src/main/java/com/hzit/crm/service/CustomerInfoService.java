@@ -3,6 +3,7 @@ package com.hzit.crm.service;
 import com.fc.platform.commons.page.Page;
 import com.fc.platform.commons.page.Pageable;
 import com.hzit.crm.core.entity.CustomerInfo;
+import com.hzit.crm.vo.DataGrid;
 
 import java.util.List;
 import java.util.Map;
@@ -23,10 +24,9 @@ public interface CustomerInfoService {
      */
     public void insertByRealNameAndUserId(CustomerInfo customerInfo);
 
-    public int getTotal();
 
 
     public void updateCustomerInfo(CustomerInfo customerInfo);
 
-    public Page<CustomerInfo> customerInfoList(Map<String,String> map, Pageable pageable);
+    public DataGrid<CustomerInfo> customerInfoList(Map<String,String> map, Pageable pageable, String sort, String order);
 }

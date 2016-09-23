@@ -6,124 +6,158 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>客户列表</title>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/bootstrap-responsive.min.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/uniform.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/select2.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/unicorn.main.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/unicorn.grey.css" class="skin-color" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
-<body>
 
+    <!--easyui-->
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/easyui/css/themes/bootstrap/easyui.css">
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/easyui/css/themes/icon.css">
+    <!--easyui-->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/easyui/js/jquery.min.js" ></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/easyui/js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/easyui/js/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/easyui/js/syUtil.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $("#customerInfo_datagrid").datagrid({
+            url:'${pageContext.request.contextPath}/customerInfo/ajaxList',
+            pagination:true,
+            rownumbers:true,
+            singleSelect: false,
+            selectOnCheck: true,
+            checkOnSelect: true,
+            striped:true,
+            //fitColumns:true,
+            pageSize:20,
+            loadMsg:"正在拼命加载数据!",
+            fit:true,//在面板中固定
+            pageList: [10, 20, 30, 40, 50,100],
+            autoRowHeight:false,
+            remoteSort:true,//服务器排序
+            columns:[[
+                {
+                    field:'realName',
+                    title:'客户姓名',
+                    width:80,
+                    sortable:true
+                },{
+                    field:'sex',
+                    title:"性别",
+                    sortable:true
+                },{
+                    field:"age",
+                    title:"年龄",
+                    sortable:true
+                },{
+                    field:"nativePlace",
+                    title:"籍贯",
+                    sortable:true
+                },{
+                    field:"tel",
+                    title:"电话号码",
+                    sortable:true
+                },{
+                    field:"wechatNo",
+                    title:"微信号",
+                    sortable:true,
+                    width:150
+                },{
+                    field:"qq",
+                    title:"qq号码",
+                    sortable:true,
+                    width:120
+                },{
+                    field:"educationBg",
+                    title:"学历",
+                    sortable:true,
+                    width:70
+                },{
+                    field:"graduateTime",
+                    title:"毕业时间",
+                    sortable:true,
+                    width:80
+                },{
+                    field:"graduateFrom",
+                    title:"毕业学校",
+                    sortable:true,
+                    width:120
+                },{
+                    field:"majorIn",
+                    title:"专业",
+                    sortable:true,
+                    width:100
+                },{
+                    field:"workAge",
+                    title:"工作年限",
+                    sortable:true,
+                    width:80
+                },{
+                    field:"workExperience",
+                    title:"工作经历",
+                    sortable:true,
+                    width:120
+                },{
+                    field:"job",
+                    title:"从事职业",
+                    sortable:true,
+                    width:120
+                },{
+                    field:"educateExperience",
+                    title:"教育培训经历",
+                    sortable:true,
+                    width:80
+                },{
+                    field:"recruitChannel",
+                    title:"应聘渠道",
+                    sortable:true,
+                    width:120
+                },{
+                    field:"customerLevel",
+                    title:"客户级别",
+                    sortable:true,
+                    width:120
+                },{
+                    field:"userId",
+                    title:"咨询师id",
+                    sortable:true,
+                    width:120
+                },{
+                    field:"targetSkill",
+                    title:"客户感兴趣的目标技能",
+                    sortable:true,
+                    width:120
+                },{
+                    field:"introducer",
+                    title:"推荐人",
+                    sortable:true,
+                    width:120
+                },{
+                    field:"memo",
+                    title:"备注",
+                    sortable:true
+                },{
+                    field:"lastTime",
+                    title:"最后跟进时间",
+                    sortable:true
+                },{
+                    field:"createTime",
+                    title:"创建时间",
+                    sortable:true
+                }
 
-
-<div id="content">
-
-    <div id="breadcrumb">
-        <a href="${pageContext.request.contextPath}/index" title="回到主页" class="tip-bottom"><i class="icon-home"></i>主页</a>
-        <a href="#" class="current">客户列表</a>
-    </div>
-    <div class="container-fluid">
-        <div class="row-fluid">
-            <div class="span12">
-                <div class="widget-box">
-                    <div class="widget-title">
-                        <h5>客户列表</h5>
-                    </div>
-                    <div class="widget-content nopadding">
-                        <table class="table table-bordered data-table">
-                            <thead>
-                            <tr>
-                                <th>编号</th>
-                                <th>客户名</th>
-                                <th>性别</th>
-                                <th>籍贯</th>
-                                <th>手机号</th>
-                                <th>微信</th>
-                                <th>qq</th>
-                                <th>学历</th>
-                                <th>毕业时间</th>
-                                <th>毕业学校</th>
-
-                                <th>专业</th>
-                                <th>工作年限</th>
-                                <th>工作经历</th>
-                                <th>从事职业</th>
-                                <th>培训经历</th>
-                                <th>应聘渠道</th>
-                                <th>客户状态</th>
-                                <th>客户级别</th>
-                                <th>咨询师</th>
-                                <th>目标技能</th>
-
-                                <th>推荐人</th>
-                                <th>备注</th>
-                                <th>最后跟进时间</th>
-                                <th>创建时间</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${requestScope.customerInfoList}" var="customerInfo" varStatus="vs">
-                                    <tr>
-                                        <td>${vs.count}</td>
-                                        <td>${customerInfo.realName}</td>
-                                        <td>${customerInfo.sex}</td>
-                                        <td>${customerInfo.nativePlace}</td>
-                                        <td>${customerInfo.tel}</td>
-                                        <td>${customerInfo.wechatNo}</td>
-                                        <td>${customerInfo.qq}</td>
-                                        <td>${customerInfo.educationBg}</td>
-                                        <td>${customerInfo.graduateTime}</td>
-                                        <td>${customerInfo.graduateFrom}</td>
-
-                                        <td>${customerInfo.majorIn}</td>
-                                        <td>${customerInfo.workAge}</td>
-                                        <td>${customerInfo.workExperience}</td>
-                                        <td>${customerInfo.job}</td>
-                                        <td>${customerInfo.educateExperience}</td>
-                                        <td>${customerInfo.recruitChannel}</td>
-                                        <td>${customerInfo.customerState}</td>
-                                        <td>${customerInfo.customerLevel}</td>
-                                        <td>${customerInfo.userId}</td>
-                                        <td>${customerInfo.targetSkill}</td>
-
-                                        <td>${customerInfo.introducer}</td>
-                                        <td>${customerInfo.memo}</td>
-                                        <td>${customerInfo.lastTime}</td>
-                                        <td>${customerInfo.createTime}</td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row-fluid">
-            <div id="footer" class="span12">
-                2016 &copy; <a href="#">合众艾特信息技术有限公司</a>
-            </div>
-        </div>
-    </div>
+            ]]
+        }) ;
+    });
+</script>
+</head>
+<body class="easyui-layout">
+<div class="easyui-panel" style="width:100%;height:100%">
+    <table id="customerInfo_datagrid">
+    </table>
 </div>
-
-
-
-<script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/jquery.ui.custom.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/jquery.uniform.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/select2.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/jquery.dataTables.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/unicorn.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/unicorn.tables.js"></script>
+</body>
 </body>
 </html>

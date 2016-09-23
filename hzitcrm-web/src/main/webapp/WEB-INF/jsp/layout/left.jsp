@@ -1,21 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<div id="sidebar">
+<div id="sidebar" >
     <a href="#" class="visible-phone"><i class="icon icon-home"></i>手机查看</a>
     <ul style="display: block;">
-        <li class="active">
+        <li >
             <a href="${pageContext.request.contextPath}/index"><i class="icon icon-home"></i><span>来访者登记</span></a>
         </li>
-        <%--<li class="submenu">
-            <a href="#"><i class="icon icon-th-list"></i> <span>客户信息</span><span class="label">3</span></a>
-            &lt;%&ndash;<ul>
-                <li ><a href="${pageContext.request.contextPath}/customerInfo/list">客户列表</a></li>
-                <li><a href="#">我的客户</a></li>
-                <li><a href="form-wizard.html">指定模块</a></li>
-            </ul>&ndash;%&gt;
-        </li>--%>
+
         <li>
-            <a href="${pageContext.request.contextPath}/customerInfo/list"><i class="icon icon-pencil"></i>客户列表</a>
+            <a target="index_iframe" href="${pageContext.request.contextPath}/customerInfo/list"><i class="icon icon-pencil"></i>客户列表</a>
         </li>
         <li >
             <a href="${pageContext.request.contextPath}/customerInfo/list"><i class="icon icon-pencil"></i>我的客户</a>

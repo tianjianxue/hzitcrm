@@ -5,6 +5,7 @@ import com.fc.platform.commons.page.Pageable;
 import com.hzit.crm.core.entity.CustomerInfo;
 import com.hzit.crm.core.mapper.CustomerInfoMapper;
 import com.hzit.crm.service.CustomerInfoService;
+import com.hzit.crm.vo.DataGrid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,7 @@ public class CustomerInfoServiceImpl implements CustomerInfoService {
      */
     @Override
     public List<CustomerInfo> findByNameAndState() {
+
        /* SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String currentDate = simpleDateFormat.format(new Date());
         Map<String,String> map = new HashMap<String,String>();
@@ -42,14 +44,6 @@ public class CustomerInfoServiceImpl implements CustomerInfoService {
         customerInfoMapper.insertCustomerInfo(customerInfo);
     }
 
-    /**
-     * 获取客户表的总记录数
-     * @return
-     */
-    @Override
-    public int getTotal() {
-        return customerInfoMapper.getTotal();
-    }
 
     /**
      * 录入客户信息
@@ -67,8 +61,14 @@ public class CustomerInfoServiceImpl implements CustomerInfoService {
      * @return
      */
     @Override
-    public Page<CustomerInfo> customerInfoList(Map<String, String> map, Pageable pageable) {
-        return customerInfoMapper.searchCustomerInfoByParams(map,pageable);
+    public DataGrid<CustomerInfo> customerInfoList(Map<String, String> map, Pageable pageable,String sort,String order) {
+        Page<CustomerInfo> page = customerInfoMapper.searchCustomerInfoByParams(map,pageable);
+        DataGrid<CustomerInfo> dataGrid = new DataGrid<CustomerInfo>();
+        dataGrid.setTotal(customerInfoMapper.getTotal());
+        if(page != null){
+            dataGrid.setRows(page.getContent());
+        }
+        return dataGrid;
     }
 
 }
