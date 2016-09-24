@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ import java.util.Map;
  * Created by 冼耀基 on 2016/9/20.
  */
 @Service
-@Transactional
+@Transactional//开启事务
 public class CustomerInfoServiceImpl implements CustomerInfoService {
     @Autowired
     private CustomerInfoMapper customerInfoMapper;
@@ -51,7 +52,7 @@ public class CustomerInfoServiceImpl implements CustomerInfoService {
      */
     @Override
     public void updateCustomerInfo(CustomerInfo customerInfo) {
-
+        customerInfoMapper.updateCustomerInfo(customerInfo);
     }
 
     /**
@@ -69,6 +70,23 @@ public class CustomerInfoServiceImpl implements CustomerInfoService {
             dataGrid.setRows(page.getContent());
         }
         return dataGrid;
+    }
+
+    /**
+     * 根据客户id查找客户信息
+     * @param customerId
+     * @return
+     */
+    @Override
+    public CustomerInfo findCustomerInfoById(String customerId) {
+        Map<String ,String> map =  new Hashtable<String, String>();
+        map.put("customerId",customerId);
+        List<CustomerInfo> list = customerInfoMapper.searchCustomerInfoByParams(map);
+        CustomerInfo customerInfo = null;
+        if(list != null && list.size() >0){
+            customerInfo = list.get(0);
+        }
+        return customerInfo;
     }
 
 }

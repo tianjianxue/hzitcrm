@@ -3,8 +3,11 @@ package com.hzit.crm.web;
 import com.fc.platform.commons.page.Page;
 import com.fc.platform.commons.page.PageRequest;
 import com.hzit.crm.core.entity.CustomerInfo;
+import com.hzit.crm.core.entity.UserInfo;
 import com.hzit.crm.service.CustomerInfoService;
+import com.hzit.crm.service.UserInfoService;
 import com.hzit.crm.vo.DataGrid;
+import com.hzit.crm.vo.EasyuiMessager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +26,8 @@ import java.util.Map;
 public class CustomerInfoController extends  BaseController{
     @Autowired
     private CustomerInfoService customerInfoService;
-
+    @Autowired
+    private UserInfoService userInfoService;
     /**
      * 获取客户信息(主页来访列表用)
      * @return
@@ -98,8 +102,8 @@ public class CustomerInfoController extends  BaseController{
      * 使用者(咨询师)
      * 跳转到录入客户信息详情表单页
      */
-    @RequestMapping("/typedCustomerInfo")
-    protected  String typedCustomerInfo(){
+    @RequestMapping("/typedCustomerInfoui")
+    protected  String typedCustomerInfoui(){
         return "/customer/typedCustomerInfo";
     }
 
@@ -107,11 +111,43 @@ public class CustomerInfoController extends  BaseController{
      * 录入客户信息(咨询师修改完善客户信息)
       * @return
      */
-    @RequestMapping("/editCustomerInfo")
-    protected  String editCustomerInfo(CustomerInfo customerInfo ){
+    @RequestMapping("/typedCustomerInfo")
+    protected  String typedCustomerInfo(CustomerInfo customerInfo ){
         return "index";
     }
 
+    /**
+     * 跳转到客户信息修改页面
+     */
+    @RequestMapping("/customer/editCustomerInfoui")
+    protected String editCustomerInfoui(String customerId,Model map){
+        //获取所有的面试官信息
+        map.addAttribute("customerInfo",customerInfoService.findCustomerInfoById(customerId));
+        List<UserInfo> userInfoList = userInfoService.findAll();
+        map.addAttribute("userInfoList",userInfoList);
+        return "/customer/editCustomerInfo";
+    }
+
+    /**
+     * 保存修改后的客户信息
+     */
+    @RequestMapping("/customer/editCustomerInfo")
+    @ResponseBody
+    private EasyuiMessager editCustomerInfo(CustomerInfo customerInfo) throws InterruptedException {
+        EasyuiMessager easyuiMessager = new EasyuiMessager();
+        try{
+            customerInfoService.updateCustomerInfo(customerInfo);
+
+            easyuiMessager.setMsg("修改成功!");
+            easyuiMessager.setSuccess(true);
+        }catch (Exception e){
+            easyuiMessager.setMsg("修改失败!");
+            easyuiMessager.setSuccess(false);
+        }
+        Thread.sleep(5000);//模拟网络堵塞
+
+        return easyuiMessager;
+    }
 
 
 }

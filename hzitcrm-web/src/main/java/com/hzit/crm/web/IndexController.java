@@ -68,17 +68,19 @@ public class IndexController {
     @ResponseBody
     protected String add(CustomerInfo customerInfo){
         String msg = null;
-        if(customerInfo != null){
+        if(customerInfo.getRealName() != null && !"".equals(customerInfo.getRealName())){
            try{
 
                customerInfo.setCustomerState(1);//默认为等待状态
                SimpleDateFormat simpleDateFormat  = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                customerInfo.setCreateTime(simpleDateFormat.format(new Date()));
                customerInfoService.insertByRealNameAndUserId(customerInfo);
-               msg = "添加成功";
+               msg = "success";
            }catch (Exception e){
-               msg = "添加失败";
+               msg = "failed";
            }
+        }else{
+            msg = "nullValue";
         }
         return msg;
     }

@@ -51,9 +51,8 @@
 
 
 <div id="content" style="height:768px;">
-
-            <iframe src="${pageContext.request.contextPath}/layout/welcome" name="index_iframe" style="width:100%;height:768px;">
-            </iframe>
+    <iframe src="${pageContext.request.contextPath}/layout/welcome" name="index_iframe" style="width:100%;height:768px;">
+    </iframe>
 </div>
 
 

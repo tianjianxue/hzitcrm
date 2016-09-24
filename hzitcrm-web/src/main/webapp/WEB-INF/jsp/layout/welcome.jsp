@@ -20,12 +20,11 @@
     <script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         $(function () {
-
             <!--获取咨询师信息-->
             $.get("${pageContext.request.contextPath}/userInfoList", function (data) {
                 var $option;
                 var $index_select = $("#index_select");
-                for (var item in data) {
+                for (var item in data){
                     $option = $("<option value='" + data[item].userId + "'></option>");
                     $option.html(data[item].name);
                     $index_select.append($option);
@@ -38,19 +37,42 @@
                     url: '${pageContext.request.contextPath}/userInfo/add',
                     data: $("#form-userinfo").serialize(),
                     success: function (data) {
-                        alert(data);
+                        var show ;
+                        var msg;
+                        var $showResult = $("#show_result");
+                        $showResult.empty();
+                        if(data == "success"){//添加成功
+                            show  = "alert alert-success";
+                            msg = "客户信息添加成功!"
+                        }else if(data == "failed"){//添加失败！
+                            show = "alert alert-error";
+                            msg = "客户信息添加失败!";
+                        }else if(data == "nullValue"){
+                            show = "alert alert-error";
+                            msg = "请输入客户信息!";
+                        }
+                        $div = $('<div class="'+show+'" > <button class="close" data-dismiss="alert">x</button> <strong>'+msg+'</strong> </div>');
+                        $showResult.append($div);
+                        window.setTimeout(function(){
+                            $showResult.empty();
+                        },5000);
                     }
                 });
             });
 
+            /**
+             * 获取当前时间
+             * @returns {string}
+             */
             function getTime() {
                 var today = new Date();
                 var s = today.getFullYear() + "年" + today.getMonth() + "月" + today.getDate() + "日" + today.getHours() + "时" + today.getMinutes() + "分" + today.getSeconds() + "秒" + "\t星期" + today.getDay();
                 return s;
             }
+
             <!--获取要修改客户信息-->
             function editCustomerInfo(customerId,realName){
-                console.log(customerId);
+               // console.log(customerId);
                 $("#welcome_p").html("客户名称:"+realName+"----"+customerId);
                 <!--异步方式获取咨询师信息-->
                 $.get("${pageContext.request.contextPath}/userInfoList", function (data) {
@@ -65,7 +87,6 @@
                 });
 
             }
-
 
             <!--获取来访客户信息-->
             function getCustomerInfo() {
@@ -93,12 +114,10 @@
                             minute = Math.floor((new Date().getTime() - currentDate.getTime()) / 1000 / 60 - (hour * 60));
                             second = Math.floor((new Date().getTime() - currentDate.getTime()) / 1000 - (hour * 60 * 60 + minute * 60));
                             leftTime = hour + "小时" + minute + "分钟" + second + "秒";
-                            $li = $('<a href="#myAlert"  data-toggle="modal" ><li><i class="icon-user"></i> <strong>' + data[item].realName + '</strong> <span style="color:orange;font-size:12px;">等待' + leftTime + '</span>' +
+                            $li = $('<a href="#myAlert" onclick=""  data-toggle="modal" ><li><i class="icon-user"></i> <strong>' + data[item].realName + '</strong> <span style="color:orange;font-size:12px;">等待' + leftTime + '</span>' +
                                     '<span title="" class="label label-warning " style="float:right">待面试</span></li></a>');
-                            $li.click(function(){
-                                editCustomerInfo(data[item].customerId,data[item].realName);
-                            });
                             $ul.append($li);
+                           $li.click=editCustomerInfo(data[item].customerId,data[item].realName);
                         }
                     }
                 });
@@ -133,9 +152,9 @@
     </div>
 </div>
 <!--头部-->
-<div id="content-header" style="margin-top:0px;">
+<%--<div id="content-header" style="margin-top:0px;">
     <h1>来访者登记</h1>
-</div>
+</div>--%>
 <div id="breadcrumb">
     <a href="index.html" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i>来访者登记</a>
 </div>
@@ -148,10 +167,16 @@
                     <!--记录当前访问者的表单-->
                     <form action="${pageContextPath.request.contxtPath}/userInfo/add" method="post"
                           id="form-userinfo" class="form-horizontal ui-formwizard">
+                            <!--显示结果-->
+                            <span id="show_result">
+
+                            </span>
                         <div class="control-group">
+
                             <label class="control-label">应聘者名字</label>
                             <div class="controls">
                                 <input id="username" type="text" name="realName" style="height:30px;">
+
                             </div>
                         </div>
                         <div class="control-group">
@@ -163,9 +188,11 @@
                         </div>
                         <div class="control-group">
                             <div class="controls">
-                                <input id="index_button_userinfo" class="btn btn-primary" type="button" value="登记"
-                                       style="">
+                                   <input id="index_button_userinfo" class="btn btn-primary" type="button" value="登记"
+                                          style="">
+
                             </div>
+
                         </div>
                     </form>
                 </div>

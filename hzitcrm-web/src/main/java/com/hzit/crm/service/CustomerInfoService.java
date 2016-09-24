@@ -29,4 +29,7 @@ public interface CustomerInfoService {
     public void updateCustomerInfo(CustomerInfo customerInfo);
 
     public DataGrid<CustomerInfo> customerInfoList(Map<String,String> map, Pageable pageable, String sort, String order);
+
+    CustomerInfo findCustomerInfoById(String customerId);
+
 }

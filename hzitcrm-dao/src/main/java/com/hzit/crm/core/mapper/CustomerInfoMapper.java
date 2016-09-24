@@ -14,6 +14,10 @@ public interface CustomerInfoMapper {
 
 	void deleteCustomerInfoByCustomerId(Integer customerId);
 
+	/**
+	 * 修改客户数据
+	 * @param customerInfo
+     */
 	void updateCustomerInfo(CustomerInfo customerInfo);
 
 	Page<CustomerInfo> searchCustomerInfoByParams(@Param("map") Map<String, String> map, Pageable pageable);
