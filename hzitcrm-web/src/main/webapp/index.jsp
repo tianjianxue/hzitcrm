@@ -9,8 +9,10 @@
 <html>
   <head>
     <title></title>
+    <script type="application/javascript">
+      window.locatioin='https://qy.weixin.qq.com/cgi-bin/loginpage?corp_id=wxb84c9584d983b952&redirect_uri=http://www.hzitxx.com:8082/weixinLogin&state=xxxx&usertype=member'
+    </script>
   </head>
   <body>
-初始化页面1
   </body>
 </html>

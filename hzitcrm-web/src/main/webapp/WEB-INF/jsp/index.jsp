@@ -46,7 +46,9 @@
 <jsp:include page="layout/top.jsp"></jsp:include>
 <!--左侧动态生成的菜单 -->
 <div style="width:50px;">
-    <jsp:include page="layout/left.jsp"></jsp:include>
+    <jsp:include page="layout/left.jsp">
+
+    </jsp:include>
 </div>
 
 
