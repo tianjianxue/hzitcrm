@@ -24,6 +24,7 @@
 <script type="text/javascript">
     var $customerInfo_dataGrid;
     $(function(){
+        $("#fileUpload").dialog('close');//隐藏对话框
         $customerInfo_dataGrid=$("#customerInfo_datagrid").datagrid({
             url:'${pageContext.request.contextPath}/customerInfo/ajaxList',
             pagination:true,
@@ -51,7 +52,10 @@
                 },{
                     field:'sex',
                     title:"性别",
-                    sortable:true
+                    sortable:true,
+                    handler:function(){
+
+                    }
                 },{
                     field:"age",
                     title:"年龄",
@@ -153,7 +157,13 @@
                     sortable:true
                 }
 
-            ]],toolbar: [{
+            ]],toolbar: ['-',{
+                iconCls:'icon-tip',
+                text:'客户详情',
+                handler:function(){
+                    alert("查看该客户");
+                }
+            },'-',{
                 iconCls: 'icon-edit',
                 text:"编辑客户",
                 handler: function(){
@@ -168,12 +178,16 @@
             },'-',{
                 iconCls:'icon-large-chart',
                 text:'导出',
-                handler:function(){alert('导出报表!')}
+                handler:function(){
+                    window.location.href='${pageContext.request.contextPath}/exportCustomerInfo';
+                }
             },'-',{
                 iconCls:'icon-large-chart',
                 text:'导入',
-                handler:function(){alert("导入数据")}
-            }]
+                handler:function(){
+                    importCustomerInfo();
+                }
+            },'-']
 
         }) ;
     });
@@ -186,9 +200,7 @@
         if(customerInfo == null){
             $.messager.alert('警告','请选择要修改的数据!');
         }else{
-
             $('#customerInfo_datagrid').datagrid('uncheckAll').datagrid('unselectAll').datagrid('clearSelections');
-
             var editDialog = $('<div/>').dialog({
                 href : '${pageContext.request.contextPath}/customer/editCustomerInfoui?customerId='+customerInfo.customerId,
                 width : 800,
@@ -199,11 +211,12 @@
                     text : '编辑',
                     iconCls : 'icon-edit',
                     handler : function() {
+                        //editDialog.dialog('refresh');
                         var button = this;
-                        //d = $(this).closest('.window-body');
+                        //$.messager.progress();	// 显示进度条
                         $('#customerInfo_form').form('submit', {
                             url : '${pageContext.request.contextPath}/customer/editCustomerInfo'+'?date='+new Date().getTime(),
-                            onSubmit : function(){//表单提交时调用
+                            /*onSubmit : function(){//表单提交时调用
                                 var isValid = $(this).form('validate');//表单验证
                                 console.info(isValid);
                                 if (!isValid){
@@ -212,12 +225,13 @@
                                     $(button).linkbutton('disable');
                                     return isValid;    // 表单验证不通过时不允许提交表单
                                 }
-                            },
+                            },*/
                             success : function(result) {//服务器处理成功时
-                                    $(button).linkbutton('enable');   //提交完，并且处理完毕返回消息后，马上恢复掉保存按钮，enable
+                               // $.messager.progress('close');	// 如果提交成功则隐藏进度条
+                                $(button).linkbutton('enable');   //提交完，并且处理完毕返回消息后，马上恢复掉保存按钮，enable
                                     var obj = jQuery.parseJSON(result);
                                     //服务器处理成功后清空表单数据
-                                    //$('#customerInfo_form').form('reset');
+                                    $('#customerInfo_form').form('reset');
                                     if (obj.success) {
                                         $("#customerInfo_datagrid").datagrid('load'),
                                         editDialog.dialog('close');
@@ -242,12 +256,18 @@
                         editDialog.dialog('close');//关闭窗口
                     }
                 } ]
-            });
+            }).panel('open').panel('refresh');
         }
     }
     <%--取消选择--%>
     function cancelSelection(){
         $customerInfo_dataGrid.datagrid('clearSelections');
+    }
+</script>
+<script type="text/javascript">
+    <%-- 导入客户信息--%>
+    function importCustomerInfo(){
+        $("#fileUpload").dialog('open');
     }
 </script>
 </head>
@@ -272,7 +292,7 @@
                 </td>
                 <th style="align:right">&nbsp;录入时间</th>
                 <td>
-                    <input name="createTime" class="easyui-datebox"  />
+                    <input name="createTime" class="easyui-datebox" />
                 </td>
                 <th></th>
                 <td>
@@ -288,6 +308,19 @@
         <table id="customerInfo_datagrid">
         </table>
     </div>
+</div>
+<%--文件上传--%>
+<div id="fileUpload" data-options="modal:true" class="easyui-dialog" title="报表导入" data-options="iconCls:'icon-save'" style="width:350px;height:170px;padding:10px">
+    <form action="${pageContext.request.contextPath}/importCustomreInfo" method="post" enctype="multipart/form-data">
+        <div style="margin-top:10px;"></div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-filebox" name="importCustomerInfo" data-options="prompt:'请选择文件...'" style="width:100%">
+        </div>
+        <div>
+            <a href="#" class="easyui-linkbutton" style="width:100%">Upload</a>
+        </div>
+    </form>
+
 </div>
 </body>
 </html>

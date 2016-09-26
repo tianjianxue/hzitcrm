@@ -8,12 +8,19 @@ import com.hzit.crm.service.CustomerInfoService;
 import com.hzit.crm.service.UserInfoService;
 import com.hzit.crm.vo.DataGrid;
 import com.hzit.crm.vo.EasyuiMessager;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -137,16 +144,43 @@ public class CustomerInfoController extends  BaseController{
         EasyuiMessager easyuiMessager = new EasyuiMessager();
         try{
             customerInfoService.updateCustomerInfo(customerInfo);
-
             easyuiMessager.setMsg("修改成功!");
             easyuiMessager.setSuccess(true);
         }catch (Exception e){
             easyuiMessager.setMsg("修改失败!");
             easyuiMessager.setSuccess(false);
         }
-        Thread.sleep(5000);//模拟网络堵塞
+        //Thread.sleep(5000);//模拟网络堵塞（测试时用）
 
         return easyuiMessager;
+    }
+
+    /**
+     * 报表导出
+     */
+    @RequestMapping("/exportCustomerInfo")
+    protected void exprotCustomerInfo(HttpServletResponse response) throws IOException {
+        HSSFWorkbook hssfWorkbook = new HSSFWorkbook();
+        HSSFSheet hssfSheet = hssfWorkbook.createSheet();
+        HSSFRow hssfRow1 = hssfSheet.createRow(0);
+        HSSFCell hssfCell1 = hssfRow1.createCell(0);
+        HSSFCell hssfCell2 = hssfRow1.createCell(1);
+        //hssfCell.setCellType(1);
+        hssfCell1.setCellValue("你好");
+        hssfCell2.setCellValue("世界！！！");
+        response.setHeader("content-disposition","attachment;fileName=a.xls");
+        OutputStream outputStream = response.getOutputStream();
+       // outputStream.write("hello".getBytes());
+        hssfWorkbook.write(outputStream);
+        outputStream.close();//关闭资源
+    }
+
+    /**
+     * 报表导入
+     */
+    @RequestMapping("/importCustomreInfo")
+    protected void importCustomerInfo(){
+
     }
 
 

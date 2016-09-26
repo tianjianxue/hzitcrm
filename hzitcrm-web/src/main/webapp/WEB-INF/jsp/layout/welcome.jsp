@@ -71,9 +71,9 @@
             }
 
             <!--获取要修改客户信息-->
-            function editCustomerInfo(customerId,realName){
+            function editCustomerInfo($li){
                // console.log(customerId);
-                $("#welcome_p").html("客户名称:"+realName+"----"+customerId);
+
                 <!--异步方式获取咨询师信息-->
                 $.get("${pageContext.request.contextPath}/userInfoList", function (data) {
                     var $option;
@@ -117,7 +117,7 @@
                             $li = $('<a href="#myAlert" onclick=""  data-toggle="modal" ><li><i class="icon-user"></i> <strong>' + data[item].realName + '</strong> <span style="color:orange;font-size:12px;">等待' + leftTime + '</span>' +
                                     '<span title="" class="label label-warning " style="float:right">待面试</span></li></a>');
                             $ul.append($li);
-                           $li.click=editCustomerInfo(data[item].customerId,data[item].realName);
+                           $li.click(editCustomerInfo($li));
                         }
                     }
                 });
@@ -167,10 +167,7 @@
                     <!--记录当前访问者的表单-->
                     <form action="${pageContextPath.request.contxtPath}/userInfo/add" method="post"
                           id="form-userinfo" class="form-horizontal ui-formwizard">
-                            <!--显示结果-->
-                            <span id="show_result">
 
-                            </span>
                         <div class="control-group">
 
                             <label class="control-label">应聘者名字</label>
@@ -193,6 +190,14 @@
 
                             </div>
 
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+                                <!--显示结果-->
+                                <span id="show_result">
+
+                            </span>
+                            </div>
                         </div>
                     </form>
                 </div>

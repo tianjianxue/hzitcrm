@@ -95,6 +95,4 @@
         <result column="real_name" property="realName"/>
     </resultMap>
 
-
-
 </mapper>
