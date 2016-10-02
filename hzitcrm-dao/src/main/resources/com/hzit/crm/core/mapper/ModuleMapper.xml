@@ -93,4 +93,11 @@
         <result column="module_level" property="moduleLevel"/>
     </resultMap>
 
+    <select id="searchModuleByWeCharNo" resultMap="moduleMap">
+        SELECT m.module_id,m.`name`,m.module_url,m.parent_module_id,m.module_level from user_info u join role r on u.role_id=r.role_id
+                          join role_module rm on r.role_id=rm.role_id
+                          join module m on rm.module_id=m.module_id
+        where u.wechat_no=#{wechartno}
+    </select>
+
 </mapper>
