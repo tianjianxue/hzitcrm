@@ -27,19 +27,19 @@ public class LoginController
     @Autowired
     ModuleService moduleService;
 
-    @RequestMapping("/login")
-    public String login(@RequestParam String userId,@RequestParam String pwd)
+    //这个方法用来测试登录的。实际上线的时候必须切掉这个控制器路径
+    @RequestMapping("/testLogin")
+    public String login(HttpSession session)
     {
-        //匹配用户名密码 md5加密密码
-        //解析权限
-        return null;
+        WxUserinfoVo wx=new WxUserinfoVo("1","jack");  //测试代码
+        session.setAttribute("userinfo",wx);
+        return "index";
     }
 
     @RequestMapping("/weixinLogin")
     public String weixinLogin(@RequestParam(name="auth_code",defaultValue = "") String auth_code, @RequestParam(name="expires_in",defaultValue = "") String expires_in, HttpSession session, ModelMap modelMap)
     {
-//        WxUserinfoVo wx=wxCommand.getWxUserJson(auth_code);
-        WxUserinfoVo wx=new WxUserinfoVo("1","jack");  //测试代码
+        WxUserinfoVo wx=wxCommand.getWxUserJson(auth_code);
         if(wx==null){
                 return "redirect:/index.jsp";
         }else{

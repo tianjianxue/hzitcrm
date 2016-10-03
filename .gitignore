@@ -3,3 +3,5 @@
 /.idea/
 
 
+/hzitcrm-web/target/
+/hzitcrm-dao/target/
