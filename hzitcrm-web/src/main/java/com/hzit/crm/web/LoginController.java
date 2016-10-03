@@ -44,8 +44,6 @@ public class LoginController
                 return "redirect:/index.jsp";
         }else{
             session.setAttribute("userinfo",wx);
-            List<Module> mlist= moduleService.searchModuleByWeCharNo(wx.getUserid());
-            modelMap.put("mlist",mlist);
         }
         return "index";
 
