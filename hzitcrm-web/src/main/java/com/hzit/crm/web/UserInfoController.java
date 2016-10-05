@@ -54,7 +54,7 @@ public class UserInfoController {
     }
 
     /**
-     * 我的客户排序排序
+     * 我的客户排序
      * @param sort
      * @param order
      * @return
@@ -76,5 +76,6 @@ public class UserInfoController {
         }
         return sortName+" "+order;
     }
+
 
 }

@@ -1,12 +1,10 @@
-package com.hzit.crm.core.entity;
-
-import java.io.Serializable;
+package com.hzit.crm.vo;
 
 /**
  *
  * @author clark1230
  */
-public class CustomerInfo implements Serializable{
+public class CustomerInfoVo {
 	/**
 	 *  客户id
 	 */
@@ -107,6 +105,9 @@ public class CustomerInfo implements Serializable{
 	 *  创建时间
 	 */
 	private String createTime;
+
+	private String name;//咨询师名称
+	private String userName;//咨询师真实名称
 	/**
 	 * 客户id
 	 * @param customerId
@@ -481,6 +482,22 @@ public class CustomerInfo implements Serializable{
 	 */
 	public String getCreateTime(){
 		return createTime;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	@Override

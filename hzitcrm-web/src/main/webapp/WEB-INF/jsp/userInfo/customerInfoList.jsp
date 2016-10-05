@@ -67,16 +67,6 @@
                     title: "电话号码",
                     sortable: true
                 }, {
-                    field: "wechatNo",
-                    title: "微信号",
-                    sortable: true,
-                    width: 150
-                }, {
-                    field: "qq",
-                    title: "qq号码",
-                    sortable: true,
-                    width: 120
-                }, {
                     field: "educationBg",
                     title: "学历",
                     sortable: true,
@@ -127,31 +117,13 @@
                     sortable: true,
                     width: 120
                 }, {
-                    field: "userId",
-                    title: "咨询师id",
-                    sortable: true,
-                    width: 80
-                }, {
                     field: "targetSkill",
                     title: "客户感兴趣的目标技能",
                     sortable: true,
                     width: 150
                 }, {
-                    field: "introducer",
-                    title: "推荐人",
-                    sortable: true,
-                    width: 80
-                }, {
-                    field: "memo",
-                    title: "备注",
-                    sortable: true
-                }, {
                     field: "lastTime",
                     title: "最后跟进时间",
-                    sortable: true
-                }, {
-                    field: "createTime",
-                    title: "创建时间",
                     sortable: true
                 }
 
@@ -167,35 +139,127 @@
                     handler: function () {
                         editCustomerInf();
                     }
-                }, '-', {
+                },'-', {
+                    iconCls: 'icon-large-chart',
+                    text: '数据导入',
+                    handler: function () {
+                        importCustomerInfo();
+                    }
+                }, '-',{
+                    iconCls:'icon-man',
+                    text:'客户跟进',
+                    handler:function () {
+                        customerInfoTrace();
+                    }
+                },"-",{
                     iconCls: 'icon-reload',
                     text: "清空选择",
                     handler: function () {
                         cancelSelection();
                     }
-                }, '-', {
-                    iconCls: 'icon-large-chart',
-                    text: '导出',
-                    handler: function () {
-                        window.location.href = '${pageContext.request.contextPath}/exportCustomerInfo';
-                    }
-                }, '-', {
-                    iconCls: 'icon-large-chart',
-                    text: '导入',
-                    handler: function () {
-                        importCustomerInfo();
-                    }
-                }, '-']
+                },'-' ]
 
             });
         });
     </script>
+    <script>
+        function editCustomerInf(){
+            var customerInfo = $customerInfo_dataGrid.datagrid('getSelected');
+            var customerInfoArr =  $customerInfo_dataGrid.datagrid('getSelections');
+            if(customerInfoArr.length == 1){
+                $('#customerInfo_datagrid').datagrid('uncheckAll').datagrid('unselectAll').datagrid('clearSelections');
+                var editDialog = $('<div/>').dialog({
+                    href : '${pageContext.request.contextPath}/customer/editCustomerInfoui?customerId='+customerInfo.customerId,
+                    width : 800,
+                    height : 430,
+                    modal : true,
+                    title : '修改客户信息',
+                    buttons : [ {
+                        text : '编辑',
+                        iconCls : 'icon-edit',
+                        handler : function() {
+                            //editDialog.dialog('refresh');
+                            var button = this;
+                            //$.messager.progress();	// 显示进度条
+                            $('#customerInfo_form').form('submit', {
+                                url : '${pageContext.request.contextPath}/customer/editCustomerInfo'+'?date='+new Date().getTime(),
+                                /*onSubmit : function(){//表单提交时调用
+                                 var isValid = $(this).form('validate');//表单验证
+                                 console.info(isValid);
+                                 if (!isValid){
+                                 return isValid;
+                                 }else{
+                                 $(button).linkbutton('disable');
+                                 return isValid;    // 表单验证不通过时不允许提交表单
+                                 }
+                                 },*/
+                                success : function(result) {//服务器处理成功时
+                                    // $.messager.progress('close');	// 如果提交成功则隐藏进度条
+                                    $(button).linkbutton('enable');   //提交完，并且处理完毕返回消息后，马上恢复掉保存按钮，enable
+                                    var obj = jQuery.parseJSON(result);
+                                    //服务器处理成功后清空表单数据
+                                    $('#customerInfo_form').form('reset');
+                                    if (obj.success) {
+                                        $("#customerInfo_datagrid").datagrid('load'),
+                                                editDialog.dialog('close');
+                                    }
+                                    $.messager.show({
+                                        title : '提示',
+                                        msg : obj.msg,
+                                        timeout:5000,
+                                        showType:'slide'
+                                    });
+
+                                },
+                                error:function(XMLHttpRequest, textStatus, errorThrown) {
+                                    $.messager.show("网络或者其它原因导致的错误!");
+                                }
+                            });
+                        }
+                    },{
+                        text:'取消',
+                        iconCls:'icon-cancel',
+                        handler:function(){
+                            editDialog.dialog('close');//关闭窗口
+                        }
+                    } ]
+                }).panel('open').panel('refresh');
+            }else if(customerInfoArr.length >= 2){
+                $.messager.alert('警告','所选数据大于1条，请选择一条要修改的数据!');
+            }else{
+                $.messager.alert('警告','请选择要修改的数据!');
+            }
+        }
+
+        <%--取消选择--%>
+        function cancelSelection(){
+            $customerInfo_dataGrid.datagrid('clearSelections');
+        }
+        <%-- 导入客户信息--%>
+        function importCustomerInfo(){
+            $("#fileUpload").dialog('open');
+        }
+
+        <%--客户跟进--%>
+        function customerInfoTrace(){
+            /*var customerInfo = $customerInfo_dataGrid.datagrid('getSelected');
+            var customerInfoArr =  $customerInfo_dataGrid.datagrid('getSelections');
+            if(customerInfoArr.length === 1){
+
+            }else if(customerInfoArr.length >= 2){
+                $.messager.alert('警告','所选数据大于1条，请选择一条要跟进的数据!');
+            }else{
+                $.messager.alert('警告','请选择要跟进的数据!');
+            }*/
+            window.location.href='${pageContext.request.contextPath}/customerTrace/list';
+        }
+    </script>
 </head>
 <body class="easyui-layout" data-options="fit:true,border : false">
 <%--搜索--%>
-<div data-options="region:'north',title:'查询条件',border:false" style="height: 60px;overflow: hidden;" align="center">
-    <form id="">
-        <table class="tableForm">
+<div data-options="region:'north',title:'查询条件',border:false" style="height: 60px;overflow: hidden;font-size:16px;" align="center">
+    <form id="" >
+        <table class="tableForm" style="font-size: 16px;">
             <tr>
                 <th style="align:right">客户名</th>
                 <td><input name="ralName" type="text" class="easyui-textbox" /></td>
@@ -237,7 +301,7 @@
             <input class="easyui-filebox" name="importCustomerInfo" data-options="prompt:'请选择文件...'" style="width:100%">
         </div>
         <div>
-            <a href="#" class="easyui-linkbutton" style="width:100%">Upload</a>
+            <a href="#" class="easyui-linkbutton" style="width:100%">上传文件</a>
         </div>
     </form>
 

@@ -21,4 +21,5 @@ public interface UserInfoMapper {
 
 	List<UserInfo> searchUserinfoByParams(@Param("map") Map<String, String> map);
 	List<UserInfo> findAll();
+	List<UserInfo> findUserNameById(@Param("map") Map<String,String> map);
 } 

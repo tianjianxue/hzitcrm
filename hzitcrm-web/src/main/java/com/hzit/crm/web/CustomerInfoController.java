@@ -6,6 +6,7 @@ import com.hzit.crm.core.entity.CustomerInfo;
 import com.hzit.crm.core.entity.UserInfo;
 import com.hzit.crm.service.CustomerInfoService;
 import com.hzit.crm.service.UserInfoService;
+import com.hzit.crm.vo.CustomerInfoVo;
 import com.hzit.crm.vo.DataGrid;
 import com.hzit.crm.vo.EasyuiMessager;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -69,12 +70,12 @@ public class CustomerInfoController extends  BaseController{
      */
     @RequestMapping("/customerInfo/ajaxList")
     @ResponseBody
-    protected DataGrid<CustomerInfo> ajaxList( String page, String rows,String sort, String order){
+    protected DataGrid<CustomerInfoVo> ajaxList(String page, String rows, String sort, String order){
         if(rows == null || "".equals(rows)){
             rows="20";
         }
         if(page == null || "".equals(page)){
-            page="0";
+            page="1";
         }
         if(order == null){
             order = "asc";
@@ -183,5 +184,19 @@ public class CustomerInfoController extends  BaseController{
 
     }
 
+    /**
+     * 查看客户详情
+     * @param customerId
+     * @param map
+     * @return
+     */
+    @RequestMapping("/customer/viewCustomerInfoui")
+    protected String detail(String customerId,Model map){
+        //获取所有的面试官信息
+        map.addAttribute("customerInfo",customerInfoService.findCustomerInfoById(customerId));
+        List<UserInfo> userInfoList = userInfoService.findAll();
+        map.addAttribute("userInfoList",userInfoList);
+        return "/customer/customerInfoDetail";
+    }
 
 }

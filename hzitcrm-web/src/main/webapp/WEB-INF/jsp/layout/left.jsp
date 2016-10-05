@@ -13,7 +13,7 @@
         <li >
             <a target="index_iframe" href="${pageContext.request.contextPath}/userInfo/customerInfoList"><i class="icon icon-pencil"></i>我的客户</a>
         </li>
-        <li><a href="#"><i class="icon icon-tint"></i> <span>客户跟踪</span></a></li>
+        <li><a target="index_iframe" href="${pageContext.request.contextPath}/customerTrace/list"><i class="icon icon-tint"></i> <span>客户跟进</span></a></li>
 
         <li><a href="interface.html"><i class="icon icon-pencil"></i> <span>Interface elements</span></a></li>
 

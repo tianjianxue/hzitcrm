@@ -21,7 +21,7 @@ var toGetCustomerRecordList = function(customerId){
             //async: false,
             success: function(data)
             {
-                alert(data.customerId);
+                //alert(data.customerId);
                 var htmlContent = "<li><div class='article-post'>"
                     + "<span class='user-info'>2016-09-2:09:10-李春梅</span>"
                     + "<p><a href='javascript:void(0)'>明天对比一下华育，朋友想明天来学"
@@ -29,7 +29,7 @@ var toGetCustomerRecordList = function(customerId){
 
                 for(var i=0; i<data.length; i++)
                 {
-                    alert(data[i]);
+                    //alert(data[i]);
                     var times   =   data[i].times;
                     var content =   data[i].content;
                     htmlContent +="<li><div class='article-post'><span class='user-info'>"

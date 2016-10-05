@@ -90,6 +90,7 @@
         <include refid="customerTraceRecordBaseColumnSql"/>
         FROM customer_trace_record
         <include refid="customerTraceRecordBaseWhereSql"/>
+        ORDER  BY  record_id DESC
     </select>
 
     <resultMap type="com.hzit.crm.core.entity.CustomerTraceRecord" id="customerTraceRecordMap">

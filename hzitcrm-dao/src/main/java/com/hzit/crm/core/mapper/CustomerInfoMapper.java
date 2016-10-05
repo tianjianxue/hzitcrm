@@ -35,4 +35,8 @@ public interface CustomerInfoMapper {
 	 * @return
      */
 	public long getTotal();
+	/**
+	 * 客户跟进时获取客户相应信息
+     */
+	public List<CustomerInfo> showCustomerTrace(@Param("map") Map<String,String> map);
 } 

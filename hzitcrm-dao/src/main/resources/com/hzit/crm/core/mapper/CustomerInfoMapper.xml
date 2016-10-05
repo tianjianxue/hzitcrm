@@ -244,9 +244,24 @@
               to_days(create_time)= to_days(now())
           order by create_time DESC
     </select>
+
     <!--获取客户表的总记录数-->
     <select id="getTotal" resultType="long">
         SELECT COUNT(customer_id) FROM customer_info
+    </select>
+    <!--客户跟进时获取相应信息-->
+    <select id="showCustomerTrace" resultMap="customerInfoMap" parameterType="map">
+        SELECT
+          customer_id,
+          real_name,
+          sex,
+          tel,
+          education_bg,
+          major_in,
+          last_time
+        FROM
+          customer_info
+        <include refid="customerInfoBaseWhereSql"/>
     </select>
 
     <select id="searchCustomerInfoByParams" parameterType="map"  resultMap="customerInfoMap">

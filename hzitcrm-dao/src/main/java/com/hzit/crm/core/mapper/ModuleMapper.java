@@ -19,5 +19,5 @@ public interface ModuleMapper {
 	Page<Module> searchModuleByParams(@Param("map") Map<String, String> map, Pageable pageable);
 
 	List<Module> searchModuleByParams(@Param("map") Map<String, String> map);
-
+	List<Module> searchModuleByWeCharNo(@Param("wechartno") String wechartno);
 } 

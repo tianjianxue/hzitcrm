@@ -3,16 +3,18 @@ package com.hzit.crm.service.impl;
 import com.fc.platform.commons.page.Page;
 import com.fc.platform.commons.page.Pageable;
 import com.hzit.crm.core.entity.CustomerInfo;
+import com.hzit.crm.core.entity.UserInfo;
 import com.hzit.crm.core.mapper.CustomerInfoMapper;
+import com.hzit.crm.core.mapper.UserInfoMapper;
 import com.hzit.crm.service.CustomerInfoService;
+import com.hzit.crm.vo.CustomerInfoVo;
 import com.hzit.crm.vo.DataGrid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by 冼耀基 on 2016/9/20.
@@ -23,6 +25,8 @@ public class CustomerInfoServiceImpl implements CustomerInfoService {
     @Autowired
     private CustomerInfoMapper customerInfoMapper;
 
+    @Autowired
+    private UserInfoMapper userInfoMapper;
     /**
      * 获取当前日期的来访客户
      * @return
@@ -62,12 +66,28 @@ public class CustomerInfoServiceImpl implements CustomerInfoService {
      * @return
      */
     @Override
-    public DataGrid<CustomerInfo> customerInfoList(Map<String, String> map, Pageable pageable,String sort,String order) {
+    public DataGrid<CustomerInfoVo> customerInfoList(Map<String, String> map, Pageable pageable,String sort,String order) {
+
+        //BeanUtils.copyProperties();
         Page<CustomerInfo> page = customerInfoMapper.searchCustomerInfoByParams(map,pageable);
-        DataGrid<CustomerInfo> dataGrid = new DataGrid<CustomerInfo>();
+        DataGrid<CustomerInfoVo> dataGrid = new DataGrid<CustomerInfoVo>();
         dataGrid.setTotal(customerInfoMapper.getTotal());
+        List<CustomerInfoVo> customerInfoVos = new ArrayList<CustomerInfoVo>();
+        CustomerInfoVo customerInfoVo = null;
         if(page != null){
-            dataGrid.setRows(page.getContent());
+            for(CustomerInfo customerInfo : page.getContent()){
+                customerInfoVo = new CustomerInfoVo();
+                BeanUtils.copyProperties(customerInfo,customerInfoVo);
+                for(UserInfo userInfo : userInfoMapper.findAll()){
+                    if(userInfo.getUserId().equals(customerInfoVo.getUserId())){
+                        customerInfoVo.setName(userInfo.getName());
+                        customerInfoVo.setUserName(userInfo.getRealName());
+                    }
+                }
+                customerInfoVos.add(customerInfoVo);
+            }
+
+            dataGrid.setRows(customerInfoVos);
         }
         return dataGrid;
     }
@@ -87,6 +107,18 @@ public class CustomerInfoServiceImpl implements CustomerInfoService {
             customerInfo = list.get(0);
         }
         return customerInfo;
+    }
+
+    /**
+     * 客户跟进时获取客户相应信息
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<CustomerInfo> showCustomerTrace(String userId) {
+        Map<String,String> map = new HashMap<String, String>();
+        map.put("userId",userId);
+        return customerInfoMapper.showCustomerTrace(map);
     }
 
 }

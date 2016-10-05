@@ -2,3 +2,8 @@
 /*.iml
 /.idea/
 
+/hzitcrm-web/target/
+/hzitcrm-dao/target/
+/hzitcrm-dao/hzitcrm-dao.iml
+/hzitcrm-web/hzitcrm-web.iml
+

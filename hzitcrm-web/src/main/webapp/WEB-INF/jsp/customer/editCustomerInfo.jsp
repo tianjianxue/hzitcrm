@@ -14,7 +14,7 @@
 <body>
 <form id="customerInfo_form" method="post">
     <input type="hidden" name="customerId" value="${requestScope.customerInfo.customerId}">
-    <table cellpadding="5" style="margin-top:10px;">
+    <table cellpadding="2" style="margin-top:10px;">
         <tr>
             <td>客户名</td>
             <td>
@@ -117,12 +117,12 @@
             <td>应聘渠道</td>
             <td>
                 <select class="easyui-combobox" name="recruitChannel" style="width:170px;">
-                    <option value="1">智联</option>
-                    <option value="2">前程无忧</option>
-                    <option value="3">58同城</option>
-                    <option value="4">转介绍</option>
-                    <option value="5">中华英才</option>
-                    <option value="6">其他</option>
+                    <option value="1" <c:if test="${requestScope.customerInfo.recruitChannel==1}">selected</c:if>>智联</option>
+                    <option value="2" <c:if test="${requestScope.customerInfo.recruitChannel==2}">selected</c:if>>前程无忧</option>
+                    <option value="3" <c:if test="${requestScope.customerInfo.recruitChannel==3}">selected</c:if>>58同城</option>
+                    <option value="4" <c:if test="${requestScope.customerInfo.recruitChannel==4}">selected</c:if>>转介绍</option>
+                    <option value="5" <c:if test="${requestScope.customerInfo.recruitChannel==5}">selected</c:if>>中华英才</option>
+                    <option value="6" <c:if test="${requestScope.customerInfo.recruitChannel==6}">selected</c:if>>其他</option>
                 </select>
             </td>
 

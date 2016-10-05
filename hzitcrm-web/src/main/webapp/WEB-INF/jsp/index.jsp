@@ -43,17 +43,16 @@
     </ul>
 </div>--%>
 <!--网页顶部-->
-<jsp:include page="layout/top.jsp"></jsp:include>
+<jsp:include page="layout/top.jsp" ></jsp:include>
+
 <!--左侧动态生成的菜单 -->
 <div style="width:50px;">
     <jsp:include page="layout/left.jsp">
-
+        <jsp:param name="" value=""></jsp:param>
     </jsp:include>
 </div>
-
-
-<div id="content" style="height:768px;">
-    <iframe src="${pageContext.request.contextPath}/layout/welcome" name="index_iframe" style="width:100%;height:768px;">
+<div id="content" style="height:680px;">
+    <iframe src="${pageContext.request.contextPath}/layout/welcome" name="index_iframe" style="width:100%;height:680px;">
     </iframe>
 </div>
 
