@@ -20,5 +20,5 @@ public interface UserInfoMapper {
 	Page<UserInfo> searchUserinfoByParams(@Param("map") Map<String, String> map, Pageable pageable);
 
 	List<UserInfo> searchUserinfoByParams(@Param("map") Map<String, String> map);
-
+	List<UserInfo> findAll();
 } 

@@ -34,16 +34,16 @@
     <sql id="customerInfoBaseWhereSql">
         <if test="map!=null">
             <where>
-                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.customerId)">
+                <if test="map.customerId!=null">
                     customer_id = #{map.customerId}
                 </if>
                 <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.realName)">
                     AND real_name = #{map.realName}
                 </if>
-                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.sex)">
+                <if test="map.sex!=null">
                     AND sex = #{map.sex}
                 </if>
-                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.age)">
+                <if test="map.age!=null">
                     AND age = #{map.age}
                 </if>
                 <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.nativePlace)">
@@ -58,7 +58,7 @@
                 <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.qq)">
                     AND qq = #{map.qq}
                 </if>
-                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.educationBg)">
+                <if test="map.educationBg!=null">
                     AND education_bg = #{map.educationBg}
                 </if>
                 <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.graduateTime)">
@@ -70,7 +70,7 @@
                 <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.majorIn)">
                     AND major_in = #{map.majorIn}
                 </if>
-                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.workAge)">
+                <if test="map.workAge!=null">
                     AND work_age = #{map.workAge}
                 </if>
                 <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.workExperience)">
@@ -85,7 +85,7 @@
                 <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.recruitChannel)">
                     AND recruit_channel = #{map.recruitChannel}
                 </if>
-                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.customerState)">
+                <if test="map.customerState!=null">
                     AND customer_state = #{map.customerState}
                 </if>
                 <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.customerLevel)">
@@ -113,39 +113,41 @@
         </if>
     </sql>
 
+
+
     <insert id="insertCustomerInfo" parameterType="com.hzit.crm.core.entity.CustomerInfo">
         INSERT INTO customer_info(
         <include refid="customerInfoBaseColumnSql"/>
         )VALUES(
-            #{customerId},
-            #{realName},
-            #{sex},
-            #{age},
-            #{nativePlace},
-            #{tel},
-            #{wechatNo},
-            #{qq},
-            #{educationBg},
-            #{graduateTime},
-            #{graduateFrom},
-            #{majorIn},
-            #{workAge},
-            #{workExperience},
-            #{job},
-            #{educateExperience},
-            #{recruitChannel},
-            #{customerState},
-            #{customerLevel},
-            #{userId},
-            #{targetSkill},
-            #{introducer},
-            #{memo},
-            #{lastTime},
-            #{createTime}
+        #{customerId},
+        #{realName},
+        #{sex},
+        #{age},
+        #{nativePlace},
+        #{tel},
+        #{wechatNo},
+        #{qq},
+        #{educationBg},
+        #{graduateTime},
+        #{graduateFrom},
+        #{majorIn},
+        #{workAge},
+        #{workExperience},
+        #{job},
+        #{educateExperience},
+        #{recruitChannel},
+        #{customerState},
+        #{customerLevel},
+        #{userId},
+        #{targetSkill},
+        #{introducer},
+        #{memo},
+        #{lastTime},
+        #{createTime}
         )
     </insert>
 
-    
+
     <delete id="deleteCustomerInfoByCustomerId" parameterType="Integer">
         DELETE FROM customer_info WHERE customer_id = #{customerId}
     </delete>
@@ -156,10 +158,10 @@
             <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(realName)">
                 real_name = #{realName} ,
             </if>
-            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(sex)">
+            <if test="sex!= null">
                 sex = #{sex} ,
             </if>
-            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(age)">
+            <if test="age!=null">
                 age = #{age} ,
             </if>
             <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(nativePlace)">
@@ -174,7 +176,7 @@
             <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(qq)">
                 qq = #{qq} ,
             </if>
-            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(educationBg)">
+            <if test="educationBg!=null">
                 education_bg = #{educationBg} ,
             </if>
             <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(graduateTime)">
@@ -186,7 +188,7 @@
             <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(majorIn)">
                 major_in = #{majorIn} ,
             </if>
-            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(workAge)">
+            <if test="workAge!=null">
                 work_age = #{workAge} ,
             </if>
             <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(workExperience)">
@@ -198,16 +200,16 @@
             <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(educateExperience)">
                 educate_experience = #{educateExperience} ,
             </if>
-            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(recruitChannel)">
+            <if test="recruitChannel!=null">
                 recruit_channel = #{recruitChannel} ,
             </if>
-            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(customerState)">
+            <if test="customerState!=null">
                 customer_state = #{customerState} ,
             </if>
             <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(customerLevel)">
                 customer_level = #{customerLevel} ,
             </if>
-            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(userId)">
+            <if test="userId!=null">
                 user_id = #{userId} ,
             </if>
             <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(targetSkill)">
@@ -228,15 +230,31 @@
         </set>
         WHERE customer_id = #{customerId}
     </update>
+   <!-- SELECT real_name,customer_state,create_time FROM customer_info ORDER BY create_time DESC-->
+    <!--获取来访者姓名和来访状态-->
+    <select id="findByNameAndState" resultMap="customerInfoMap" parameterType="map">
+         SELECT
+              customer_id,
+              real_name,
+              customer_state,
+              create_time
+         FROM
+            customer_info
+         where
+              to_days(create_time)= to_days(now())
+          order by create_time DESC
+    </select>
+    <!--获取客户表的总记录数-->
+    <select id="getTotal" resultType="long">
+        SELECT COUNT(customer_id) FROM customer_info
+    </select>
 
-    <select id="searchCustomerInfoByParams" parameterType="map" resultMap="customerInfoMap">
+    <select id="searchCustomerInfoByParams" parameterType="map"  resultMap="customerInfoMap">
         SELECT
         <include refid="customerInfoBaseColumnSql"/>
         FROM customer_info
         <include refid="customerInfoBaseWhereSql"/>
-        WHERE
-          customer_state != 0
-        ORDER BY  last_time DESC
+
     </select>
 
     <resultMap type="com.hzit.crm.core.entity.CustomerInfo" id="customerInfoMap">

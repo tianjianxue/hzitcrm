@@ -30,6 +30,31 @@ public class Module {
 	 */
 	private String moduleLevel;
 	/**
+	 * 模块排序
+	 */
+	private int moduleOrder;
+	/**
+	 * 模块对应的图标
+	 */
+	private String moduleIco;
+
+	public int getModuleOrder() {
+		return moduleOrder;
+	}
+
+	public void setModuleOrder(int moduleOrder) {
+		this.moduleOrder = moduleOrder;
+	}
+
+	public String getModuleIco() {
+		return moduleIco;
+	}
+
+	public void setModuleIco(String moduleIco) {
+		this.moduleIco = moduleIco;
+	}
+
+	/**
 	 * 模块id
 	 * @param moduleId
 	 */

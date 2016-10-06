@@ -24,10 +24,10 @@ import org.springframework.http.HttpStatus;
 public class ApplicationWeb extends SpringBootServletInitializer {
 
 
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return builder.sources(ApplicationWeb.class);
-    }
+//    @Override
+//    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+//        return builder.sources(ApplicationWeb.class);
+//    }
 
 
 

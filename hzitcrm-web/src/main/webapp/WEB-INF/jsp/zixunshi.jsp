@@ -25,14 +25,8 @@
         </div>
 
 		<!--左边的菜单栏，预计做成动态菜单-->
-		<div id="sidebar">
-			<ul>
-				<li><a href="consultant.jsp"><i class="icon icon-user"></i> <span>我的咨询者</span></a></li>
-			</ul>
-		</div>
-		
+		<jsp:include page="/menu"></jsp:include>
 
-		
 		<div id="content">
 			<div id="content-header">
 				<h1>我的咨询者</h1>

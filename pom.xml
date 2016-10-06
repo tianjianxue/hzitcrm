@@ -19,12 +19,12 @@
     </parent>
 
 
-    <repositories>
-        <repository>
-            <id>nexus</id>
-            <name>nexus</name>
-            <url>http://192.168.0.200:8081/nexus/content/groups/public/</url>
-        </repository>
-    </repositories>
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>nexus</id>-->
+            <!--<name>nexus</name>-->
+            <!--<url>http://192.168.0.200:8081/nexus/content/groups/public/</url>-->
+        <!--</repository>-->
+    <!--</repositories>-->
 
 </project>

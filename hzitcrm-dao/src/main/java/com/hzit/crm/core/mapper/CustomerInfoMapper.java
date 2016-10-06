@@ -14,10 +14,25 @@ public interface CustomerInfoMapper {
 
 	void deleteCustomerInfoByCustomerId(Integer customerId);
 
+	/**
+	 * 修改客户数据
+	 * @param customerInfo
+     */
 	void updateCustomerInfo(CustomerInfo customerInfo);
 
 	Page<CustomerInfo> searchCustomerInfoByParams(@Param("map") Map<String, String> map, Pageable pageable);
 
 	List<CustomerInfo> searchCustomerInfoByParams(@Param("map") Map<String, String> map);
 
+	/**
+	 * 获取来访者的姓名和状态
+	 * @return
+     */
+	List<CustomerInfo> findByNameAndState();
+
+	/**
+	 * 获取客户表的总记录数
+	 * @return
+     */
+	public long getTotal();
 } 

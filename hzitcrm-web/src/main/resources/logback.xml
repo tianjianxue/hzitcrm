@@ -8,15 +8,14 @@
             <charset>GBK</charset>
         </encoder>
     </appender>
-   <!-- <logger name="com.hzit.employee.core.mapper" level="DEBUG"/>-->
-    <logger name="com.hzit.core.mapper" level="DEBUG"/>
+
+    <!-- <logger name="com.hzit.employee.core.mapper" level="DEBUG"/>-->
+    <logger name="com.hzit.crm.core.mapper" level="DEBUG"/>
 
 
-<!--    <root level="INFO">
-        <appender-ref ref="CONSOLE" />
-    </root>-->
 
     <root level="INFO">
         <appender-ref ref="CONSOLE" />
     </root>
+
 </configuration>
