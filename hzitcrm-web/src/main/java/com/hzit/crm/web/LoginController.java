@@ -29,12 +29,19 @@ public class LoginController
 
     //这个方法用来测试登录的。实际上线的时候必须切掉这个控制器路径
     @RequestMapping("/testLogin")
-    public String login(HttpSession session)
+    public String login(@RequestParam("weno") String weno, HttpSession session)
     {
-        WxUserinfoVo wx=new WxUserinfoVo("1","jack");  //测试代码
+        WxUserinfoVo wx=new WxUserinfoVo(weno,"jack");  //测试代码
         session.setAttribute("userinfo",wx);
-        return "index";
+        return "redirect:/index";
     }
+    @RequestMapping("/logout")
+    public String logout(HttpSession session)
+    {
+        session.invalidate();
+        return "redirect:/index.jsp";
+    }
+
 
     @RequestMapping("/weixinLogin")
     public String weixinLogin(@RequestParam(name="auth_code",defaultValue = "") String auth_code, @RequestParam(name="expires_in",defaultValue = "") String expires_in, HttpSession session, ModelMap modelMap)

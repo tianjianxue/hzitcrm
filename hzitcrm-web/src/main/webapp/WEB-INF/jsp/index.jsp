@@ -28,8 +28,6 @@
     <script src="assets/js/jquery.ui.custom.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/unicorn.js"></script>
-
-
 </head>
 <body>
 
@@ -54,7 +52,7 @@
     <jsp:include page="/layout/menu"></jsp:include>
 </div>
 <div id="content" style="height:768px;">
-    <%--<iframe src="${pageContext.request.contextPath}/layout/welcome" name="index_iframe" style="width:100%;height:768px;"></iframe>--%>
+    <iframe src="${pageContext.request.contextPath}/layout/welcome" name="index_iframe" style="width:100%;height:768px;"></iframe>
 </div>
 
 
