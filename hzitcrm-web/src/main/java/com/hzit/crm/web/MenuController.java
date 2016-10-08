@@ -42,7 +42,7 @@ public class MenuController
 
     private boolean hashChilde(List<Module> source,String target){
         for(Module m : source){
-            if(m.getParentModuleId().equals(target)){
+            if(m.getParentModuleId()!=null && m.getParentModuleId().equals(target)){
                 return true;
             }
         }

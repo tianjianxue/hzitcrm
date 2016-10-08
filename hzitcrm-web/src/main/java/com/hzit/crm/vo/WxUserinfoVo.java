@@ -4,7 +4,7 @@ package com.hzit.crm.vo;
  * Created by Administrator on 2016/9/25.
  */
 public class WxUserinfoVo {
-    private String userid;
+    private String userid;  //微信用户的用户ID
     private String username;
     private String userface;
 
