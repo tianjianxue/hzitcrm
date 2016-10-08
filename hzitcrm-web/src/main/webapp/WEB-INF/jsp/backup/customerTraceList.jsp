@@ -45,12 +45,11 @@
                     url:'${pageContext.request.contextPath}/customerTrace/listData',
                     data:'userId='+userId+'&page='+currentPage+'&pageSize='+pageSize,
                     success:function(data){
-                        console.log(data);
+                        //console.log(data);
                         //遍历数据
-                        var divArr = $(".panel-title.panel-with-icon");
-                        console.log(divArr);
                         for(var item in data){
-                            divArr.html(data[item].realName);
+                            console.log(data[item]);
+
                         }
                     }
                 })
@@ -87,7 +86,7 @@
                 currentPage = '${requestScope.totalPage}';
                 $("#aLast").linkbutton('enable');//上一页按钮启用
                 $("#aNext").linkbutton('disable');//下一页按钮失效
-               $("#spanCurrentPage").html(currentPage);
+                $("#spanCurrentPage").html(currentPage);
             });
         });
     </script>
@@ -95,19 +94,20 @@
 <body class="easyui-layout">
 <h3>客户跟进记录 || ${requestScope.totalPage}</h3>
 <div class="easyui-accordion" style="width:100%;height:90%;" id="customerTraceAccordion">
+
     <c:forEach items="${requestScope.customerTraceList}" var="customerTrace" varStatus="vs">
-        <div id="accordionDiv${vs.count}" title="&nbsp;${customerTrace.realName}(${customerTrace.tel})&nbsp;${customerTrace.sex}&nbsp;${customerTrace.educationBg}
+        <div id="divShowTitle${vs.count}" title="&nbsp;${customerTrace.realName}(${customerTrace.tel})&nbsp;${customerTrace.sex}&nbsp;${customerTrace.educationBg}
                      &nbsp;${customerTrace.lastTime}"
              data-options="iconCls:'icon-man'" style="overflow:auto;padding:10px;">
             <input type="hidden" id="id${vs.count}" value="${customerTrace.customerId}">
 
             <span id="span${vs.count}" >
 
-            </span>
+        </span>
             <p style="font-size:16px;font-family: 微软雅黑;color:dodgerblue;">添加跟进记录</p>
             <form method="post" id="form${vs.count}">
-                <input type="hidden" id="hiddenCustomerId${vs.count}" name="customerId" value="${customerTrace.customerId}">
-                <input type="hidden" id="hiddenUserId${vs.count}" name="userId" value="1001">
+                <input type="hidden" name="customerId" value="${customerTrace.customerId}">
+                <input type="hidden" name="userId" value="1004">
                     <%--<input  type="text" name="content"   style="width:600px;height:100px;"
                            data-options="multiline:true,required:true" missingMessage="跟进记录必填!">--%>
                 <textarea name="content" class="easyui-textbox" data-options="required:true,multiline:true" missingMessage="跟进记录必填!"
@@ -226,7 +226,7 @@
                 url:'${pageContext.request.contextPath}/customerTrace/addTraceRecord',
                 data: $formEle.serialize(),
                 success:function (data) {
-                    $inputText[2].value="";//清空表单
+                    //$inputText[2].value="";//清空表单
                     alert(data);
 
                 }

@@ -121,4 +121,9 @@ public class CustomerInfoServiceImpl implements CustomerInfoService {
         return customerInfoMapper.showCustomerTrace(map);
     }
 
+    @Override
+    public Page<CustomerInfo> pageCustomerTrace(Map<String,String> map,Pageable pageable) {
+        return customerInfoMapper.searchCustomerInfoByParams(map,pageable);
+    }
+
 }

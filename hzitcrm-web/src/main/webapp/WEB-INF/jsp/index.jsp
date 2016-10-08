@@ -5,24 +5,29 @@
   Time: 20:30
   To change this template use File | Settings | File Templates.
 --%>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-<html lang="en">
-<!-- container-fluid -->
+<html >
 <head>
     <title>来访记录</title>
     <meta charset="UTF-8"/>
+    <base href="<%=basePath %>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/assets/css/bootstrap-responsive.min.css"/>
-    <link rel="stylesheet" href="/assets/css/fullcalendar.css"/>
-    <link rel="stylesheet" href="/assets/css/unicorn.main.css"/>
-    <link rel="stylesheet" href="/assets/css/unicorn.grey.css" class="skin-color"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/fullcalendar.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/unicorn.main.css"/>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/unicorn.grey.css" class="skin-color"/>
     <script src="${pageContext.request.contextPath}/assets/js/excanvas.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/jquery.ui.custom.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/unicorn.js"></script>
 
 
 </head>
@@ -43,6 +48,7 @@
     </ul>
 </div>--%>
 <!--网页顶部-->
+
 <jsp:include page="layout/top.jsp" ></jsp:include>
 
 <!--左侧动态生成的菜单 -->
@@ -54,11 +60,14 @@
 <div id="content" style="height:680px;">
     <iframe src="${pageContext.request.contextPath}/layout/welcome" name="index_iframe" style="width:100%;height:680px;">
     </iframe>
+    <%--<jsp:include page="layout/top.jsp"></jsp:include>--%>
+<%--<!--左侧动态生成的菜单 -->
+<div style="width:50px;">
+    <jsp:include page="layout/left.jsp"></jsp:include>
+</div>--%>
+<%--<div id="content" style="height:768px;">
+    &lt;%&ndash;<iframe src="${pageContext.request.contextPath}/layout/welcome" name="index_iframe" style="width:100%;height:768px;"></iframe>&ndash;%&gt;
+</div>--%>
 </div>
-
-
-
-
-
 </body>
 </html>

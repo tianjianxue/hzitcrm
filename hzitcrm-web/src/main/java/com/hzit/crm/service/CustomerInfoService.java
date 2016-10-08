@@ -34,4 +34,6 @@ public interface CustomerInfoService {
     CustomerInfo findCustomerInfoById(String customerId);
 
     public List<CustomerInfo> showCustomerTrace(String userId);
+
+    public Page<CustomerInfo> pageCustomerTrace(Map<String,String> map,Pageable pageable);
 }

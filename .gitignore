@@ -1,9 +1,15 @@
 
-/*.iml
+*.iml
 /.idea/
 
+<<<<<<< HEAD
 /hzitcrm-web/target/
 /hzitcrm-dao/target/
 /hzitcrm-dao/hzitcrm-dao.iml
 /hzitcrm-web/hzitcrm-web.iml
 
+=======
+
+/hzitcrm-web/target/
+/hzitcrm-dao/target/
+>>>>>>> origin/master

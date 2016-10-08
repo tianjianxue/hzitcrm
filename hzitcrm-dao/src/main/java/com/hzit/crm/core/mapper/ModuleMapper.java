@@ -19,5 +19,16 @@ public interface ModuleMapper {
 	Page<Module> searchModuleByParams(@Param("map") Map<String, String> map, Pageable pageable);
 
 	List<Module> searchModuleByParams(@Param("map") Map<String, String> map);
+
+	//List<Module> searchModuleByWeCharNo(@Param("wechartno") String wechartno);
+
+
+	/**
+	 * 通过用户的微信OPENID获取这个用户所拥有的模块
+	 */
 	List<Module> searchModuleByWeCharNo(@Param("wechartno") String wechartno);
+
+
+
+
 } 

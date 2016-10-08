@@ -9,7 +9,9 @@
         auth_value,
         module_url,
         parent_module_id,
-        module_level
+        module_level,
+        module_order,
+        module_ico
     </sql>
 
     <sql id="moduleBaseWhereSql">
@@ -91,6 +93,15 @@
         <result column="module_url" property="moduleUrl"/>
         <result column="parent_module_id" property="parentModuleId"/>
         <result column="module_level" property="moduleLevel"/>
+        <result column="module_order" property="moduleOrder"/>
+        <result column="module_ico" property="moduleIco"/>
     </resultMap>
+
+    <select id="searchModuleByWeCharNo" resultMap="moduleMap">
+        SELECT m.module_id,m.`name`,m.module_url,m.parent_module_id,m.module_level,m.module_order,m.module_ico from user_info u join role r on u.role_id=r.role_id
+                          join role_module rm on r.role_id=rm.role_id
+                          join module m on rm.module_id=m.module_id
+        where u.wechat_no=#{wechartno} ORDER BY m.module_level,m.module_order
+    </select>
 
 </mapper>

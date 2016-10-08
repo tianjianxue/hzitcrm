@@ -1,5 +1,8 @@
 package com.hzit.crm.web;
 
+import com.fc.platform.commons.page.Page;
+import com.fc.platform.commons.page.PageRequest;
+import com.fc.platform.commons.page.Pageable;
 import com.hzit.crm.core.entity.CustomerInfo;
 import com.hzit.crm.core.entity.CustomerTraceRecord;
 import com.hzit.crm.service.CustomerInfoService;
@@ -28,21 +31,25 @@ public class CustomerTraceController {
     @Autowired
     private CustomerInfoService customerInfoService;
     @RequestMapping("/customerTrace/list")
-    protected String  list(Model map){
-        List<CustomerInfo> customerInfos = customerInfoService.showCustomerTrace("1004");
-        map.addAttribute("customerTraceList",customerInfos);
-        map.addAttribute("userId","1004");
+    protected String  list(String page,String pageSize,Model map){
+        Map<String,String> paraMap = new HashMap<String, String>();
+        paraMap.put("userId","1001");
+        if(page == null || "".equals(page)){
+            page = "1";
+        }
+        if(pageSize == null || "".equals(pageSize)){
+            pageSize = "5";
+        }
+        Pageable pageable = new PageRequest(Integer.parseInt(page)-1,Integer.parseInt(pageSize));
+        Page<CustomerInfo> customerInfoPage = customerInfoService.pageCustomerTrace(paraMap,pageable);
+
+        List<CustomerInfo> customerInfos = customerInfoService.showCustomerTrace("1001");
+        map.addAttribute("customerTraceList",customerInfoPage.getContent());
+        map.addAttribute("userId","1001");
+        map.addAttribute("totalPage",customerInfoPage.getTotalPages());
+
         return "/customerTrace/customerTraceList";
     }
-
-
-    @RequestMapping("")
-    @ResponseBody
-    protected  List<CustomerTraceRecord> getCustomerInfoData(){
-        return null;
-    }
-
-
 
     /**
      * 获取要跟进的客户相关信息
@@ -51,10 +58,26 @@ public class CustomerTraceController {
      */
     @RequestMapping("/customerTrace/listData")
     @ResponseBody
-    protected  List<CustomerInfo> listData(@RequestParam String userId,String page,String pageSize){
-        List<CustomerInfo> customerInfos = customerInfoService.showCustomerTrace(userId);
-        return customerInfos;
+    protected  List<CustomerInfo> listData(String userId,String page,String pageSize,Model map){
+        Map<String,String> paraMap = new HashMap<String, String>();
+        paraMap.put("userId","1001");
+        if(page == null || "".equals(page)){
+            page = "1";
+        }
+        if(pageSize == null || "".equals(pageSize)){
+            pageSize = "5";
+        }
+        Pageable pageable = new PageRequest(Integer.parseInt(page)-1,Integer.parseInt(pageSize));
+        Page<CustomerInfo> customerInfoPage = customerInfoService.pageCustomerTrace(paraMap,pageable);
+
+       // List<CustomerInfo> customerInfos = customerInfoService.showCustomerTrace("1001");
+        //将数据保存到request域中
+        map.addAttribute("customerTraceList",customerInfoPage.getContent());
+        map.addAttribute("userId","1001");
+        map.addAttribute("totalPage",customerInfoPage.getTotalPages());
+        return customerInfoPage.getContent();
     }
+
 
     /**
      * 获取跟进记录信息

@@ -1,10 +1,10 @@
-package com.hzit.crm.core.entity;
+package com.hzit.crm.vo;
 
 /**
  * 
  * @author ethen
  */
-public class Module {
+public class ModuleVo {
 	/**
 	 *  模块id
 	 */
@@ -37,6 +37,16 @@ public class Module {
 	 * 模块对应的图标
 	 */
 	private String moduleIco;
+
+	private boolean hasChild;
+
+	public boolean getHasChild() {
+		return hasChild;
+	}
+
+	public void setHasChild(boolean hasChild) {
+		this.hasChild = hasChild;
+	}
 
 	public int getModuleOrder() {
 		return moduleOrder;
