@@ -23,38 +23,30 @@
             font-family: 微软雅黑;
             background-color: #EEEEEE;
             margin-top:1px;
-
         }
     </style>
     <script>
         //数据分页
         $(function(){
-            var currentPage = 1;
+            var currentPage = '${requestScope.currentPage}';
+            var totalPage = '${requestScope.totalPage}';
+            totalPage = parseInt(totalPage);
+            currentPage = parseInt(currentPage);
             var pageSize = 5;
             var userId = "1001";
+            if(currentPage == 1){
+                $("#aLast").linkbutton('disable');//上一页按钮失效
+            }
+            if(totalPage == currentPage){
+                $("#aNext").linkbutton('disable');//下一页按钮失效
+            }
             //首页
             $("#aBegin").click(function(){
                 $("#aNext").linkbutton('enable');//下一页按钮起效
                 $("#aLast").linkbutton('disable');//上一页按钮失效
                 currentPage = 1;
                 $("#spanCurrentPage").html(currentPage);
-
-                //异步加载数据
-                $.ajax({
-                    type:'POST',
-                    url:'${pageContext.request.contextPath}/customerTrace/listData',
-                    data:'userId='+userId+'&page='+currentPage+'&pageSize='+pageSize,
-                    success:function(data){
-                        console.log(data);
-                        //遍历数据
-                        var divArr = $(".panel-title.panel-with-icon");
-                        console.log(divArr);
-                        for(var item in data){
-                            divArr.html(data[item].realName);
-                        }
-                    }
-                })
-
+               goto();
             });
             //上一页
             $("#aLast").click(function(){
@@ -65,6 +57,7 @@
                     }
                     $("#aNext").linkbutton('enable');
                     $("#spanCurrentPage").html(currentPage);
+                    goto();
                 }
 
             });
@@ -77,6 +70,7 @@
                     }
                     $("#aLast").linkbutton('enable');
                     $("#spanCurrentPage").html(currentPage);
+                    goto();
                 }else{
                     $("#aEnd").attr("disabled",true);
                 }
@@ -87,13 +81,46 @@
                 currentPage = '${requestScope.totalPage}';
                 $("#aLast").linkbutton('enable');//上一页按钮启用
                 $("#aNext").linkbutton('disable');//下一页按钮失效
-               $("#spanCurrentPage").html(currentPage);
+                $("#spanCurrentPage").html(currentPage);
+                goto();
+            });
+
+            $("#aGoTo").click(function(){
+                var $showMsg = $("#showMsg");
+                //获取分页数据
+                var $textGoTo = $("#textGoTo");
+                var match = $textGoTo.val().match(/^\d+$/);
+                if(match == null){
+                    //不是数字
+                    //$showMsg.css('display',"block");
+                    $showMsg.html('请输入数字!');
+                    return false;
+                }
+                if($textGoTo.val() <1){
+                    //$showMsg.css('display',"block");
+                    $showMsg.html('数字超出范围!');
+                    return false;
+                }else if($textGoTo.val() > totalPage){
+                    //$showMsg.css('display',"block");
+                    $showMsg.html('数字超出范围!');
+                    return false;
+                }
+                currentPage = $textGoTo.val();
+                goto();
+            });
+
+            function goto(){
+                window.location.href='${pageContext.request.contextPath}/customerTrace/list' +
+                        '?userId='+userId+'&page='+currentPage+'&pageSize='+pageSize;
+            }
+            $("#aGoTo").mouseout(function(){
+
             });
         });
     </script>
 </head>
 <body class="easyui-layout">
-<h3>客户跟进记录 || ${requestScope.totalPage}</h3>
+<h3>客户跟进记录</h3>
 <div class="easyui-accordion" style="width:100%;height:90%;" id="customerTraceAccordion">
     <c:forEach items="${requestScope.customerTraceList}" var="customerTrace" varStatus="vs">
         <div id="accordionDiv${vs.count}" title="&nbsp;${customerTrace.realName}(${customerTrace.tel})&nbsp;${customerTrace.sex}&nbsp;${customerTrace.educationBg}
@@ -125,41 +152,14 @@
     <a href="#" id="aLast" class="easyui-linkbutton"  style="width:80px">上一页</a>
     <a href="#" id="aNext" class="easyui-linkbutton"  style="width:80px">下一页</a>
     <a href="#" id="aEnd" class="easyui-linkbutton"  style="width:80px">尾页</a>
-    <input type="text"  class="easyui-textbox" data-options="required:true">
-    <a href="#" class="easyui-linkbutton"  style="width:80px">跳转到</a>
-    <span>当前<span id="spanCurrentPage">1</span>/${requestScope.totalPage}页</span>
+    <input type="text"  class="easyui-textbox" id="textGoTo" data-options="required:true"
+           missingMessage="请输入数字!">
+    <a href="#" class="easyui-linkbutton" id="aGoTo"  style="width:80px">跳转到</a>
+    <span>当前${requestScope.currentPage}/${requestScope.totalPage}页</span>
+    <span id="showMsg" style="color:red"></span>
 </div>
-<script>
-    $(function(){
-        var page = 1;//当前页
-        var pageSize = 5;//每页显示5条记录
-        var userId = '${requestScope.userId}';
 
-        $.ajax({
-            type:'POST',
-            url:'${pageContext.request.contextPath}/customerTrace/listData',
-            data:'userId='+userId+'&page='+page+'&pageSize='+pageSize,
-            success:function(data){
-                /*var $accordion = $("#customerTraceAccordion");
-                //获取服务器返回的数据
-                var $div;
-                var $hiddenId;
-                var $p;
-                var $span;
-                var $a;
-                var $form;
-                for(var item in data){
-                    $div = $('<div title="'+data[item].realName+'" data-options="" style="overflow:auto;padding:10px;"></div>');
-                    $span = $('<span id="'+item+'"></span>');
-                    $div.append($span);
-                    $div.appendTo($accordion);
-                    $.parser.parse($div);
-                }*/
-                console.log(data);
-            }
-        })
-    });
-</script>
+
 <script>
     $(function(){
         $customerTraceAccordion = $("#customerTraceAccordion");
@@ -226,9 +226,8 @@
                 url:'${pageContext.request.contextPath}/customerTrace/addTraceRecord',
                 data: $formEle.serialize(),
                 success:function (data) {
-                    $inputText[2].value="";//清空表单
+                    //$inputText[2].value="";//清空表单
                     alert(data);
-
                 }
             });
         }else{

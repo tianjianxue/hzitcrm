@@ -51,8 +51,14 @@
                     field: 'sex',
                     title: "性别",
                     sortable: true,
-                    handler: function () {
-
+                    formatter: function (value,data,index) {
+                        var gender;
+                        if(data.sex==1){
+                            gender ="男";
+                        }else if(data.sex==2){
+                            gender="女";
+                        }
+                        return gender;
                     }
                 }, {
                     field: "age",
@@ -70,7 +76,27 @@
                     field: "educationBg",
                     title: "学历",
                     sortable: true,
-                    width: 70
+                    width: 70,
+                    formatter:function(value,data,index){
+                        //学历[1-小学 2-初中 3-高中 4-大专 5-本科 6-研究生 0-其他]
+                        var education;
+                        if(data.educationBg == 1){
+                            education="小学";
+                        }else if(data.educationBg==2){
+                            education="初中";
+                        }else if(data.educationBg ==3){
+                            education ="高中";
+                        }else if(data.educationBg==4){
+                            education="大专";
+                        }else if(data.educationBg ==5){
+                            education="本科";
+                        }else if(data.educationBg == 6){
+                            education=="研究生";
+                        }else if(data.educationBg ==0){
+                            education="其他";
+                        }
+                        return education;
+                    }
                 }, {
                     field: "graduateTime",
                     title: "毕业时间",
@@ -110,7 +136,25 @@
                     field: "recruitChannel",
                     title: "应聘渠道",
                     sortable: true,
-                    width: 120
+                    width: 120,
+                    formatter: function (value,data,index) {
+                        //应聘渠道[1-智联 2-前程无忧 3-58同城 4-转介绍 5-中华英才 6-其他待定]
+                        var channel;
+                        if(data.recruitChannel==1){
+                            channel ="智联";
+                        }else if(data.recruitChannel==2){
+                            channel="前程无忧";
+                        }else if(data.recruitChannel==3){
+                            channel="58同城";
+                        }else if(data.recruitChannel==4){
+                            channel ="转介绍";
+                        }else if(data.recruitChannel=5){
+                            channel="中华英才网";
+                        }else{
+                            channel="其他";
+                        }
+                        return channel;
+                    }
                 }, {
                     field: "customerLevel",
                     title: "客户级别",
@@ -131,7 +175,7 @@
                     iconCls: 'icon-tip',
                     text: '客户详情',
                     handler: function () {
-                        alert("查看该客户");
+                        viewCustomerInfo("查看", "view");
                     }
                 }, '-', {
                     iconCls: 'icon-edit',
@@ -173,6 +217,7 @@
                     width : 800,
                     height : 430,
                     modal : true,
+                    cache:false,
                     title : '修改客户信息',
                     buttons : [ {
                         text : '编辑',
@@ -183,25 +228,25 @@
                             //$.messager.progress();	// 显示进度条
                             $('#customerInfo_form').form('submit', {
                                 url : '${pageContext.request.contextPath}/customer/editCustomerInfo'+'?date='+new Date().getTime(),
-                                /*onSubmit : function(){//表单提交时调用
+                                onSubmit : function(){//表单提交时调用
                                  var isValid = $(this).form('validate');//表单验证
-                                 console.info(isValid);
+                                 //console.info(isValid);
                                  if (!isValid){
                                  return isValid;
                                  }else{
                                  $(button).linkbutton('disable');
                                  return isValid;    // 表单验证不通过时不允许提交表单
                                  }
-                                 },*/
+                                 },
                                 success : function(result) {//服务器处理成功时
-                                    // $.messager.progress('close');	// 如果提交成功则隐藏进度条
+                                    //$.messager.progress('close');	// 如果提交成功则隐藏进度条
                                     $(button).linkbutton('enable');   //提交完，并且处理完毕返回消息后，马上恢复掉保存按钮，enable
                                     var obj = jQuery.parseJSON(result);
                                     //服务器处理成功后清空表单数据
-                                    $('#customerInfo_form').form('reset');
+                                    //$('#customerInfo_form').form('reset');
                                     if (obj.success) {
                                         $("#customerInfo_datagrid").datagrid('load'),
-                                                editDialog.dialog('close');
+                                        editDialog.dialog('destroy');
                                     }
                                     $.messager.show({
                                         title : '提示',
@@ -209,7 +254,6 @@
                                         timeout:5000,
                                         showType:'slide'
                                     });
-
                                 },
                                 error:function(XMLHttpRequest, textStatus, errorThrown) {
                                     $.messager.show("网络或者其它原因导致的错误!");
@@ -223,7 +267,7 @@
                             editDialog.dialog('close');//关闭窗口
                         }
                     } ]
-                }).panel('open').panel('refresh');
+                })
             }else if(customerInfoArr.length >= 2){
                 $.messager.alert('警告','所选数据大于1条，请选择一条要修改的数据!');
             }else{
@@ -231,6 +275,32 @@
             }
         }
 
+        <%--查看用户详情--%>
+        function viewCustomerInfo(msg, view) {
+            var customerInfo = $customerInfo_dataGrid.datagrid('getSelected');
+            var customerInfoArr = $customerInfo_dataGrid.datagrid('getSelections');
+            if (customerInfoArr.length === 1) {
+                $('#customerInfo_datagrid').datagrid('uncheckAll').datagrid('unselectAll').datagrid('clearSelections');
+                var editDialog = $('<div/>').dialog({
+                    href: '${pageContext.request.contextPath}/customer/' + view + 'CustomerInfoui?customerId=' + customerInfo.customerId,
+                    width: 800,
+                    height: 430,
+                    modal: true,
+                    title: msg + '客户信息',
+                    buttons: [{
+                        text: '关闭',
+                        iconCls: 'icon-cancel',
+                        handler: function () {
+                            editDialog.dialog('close');//关闭窗口
+                        }
+                    }]
+                }).panel('open').panel('refresh');
+            } else if (customerInfoArr.length >= 2) {
+                $.messager.alert('警告', '所选数据大于1条，请选择一条要' + msg + '的数据!');
+            } else {
+                $.messager.alert('警告', '请选择要' + msg + '的数据!');
+            }
+        }
         <%--取消选择--%>
         function cancelSelection(){
             $customerInfo_dataGrid.datagrid('clearSelections');

@@ -31,7 +31,7 @@ public class CustomerTraceController {
     @Autowired
     private CustomerInfoService customerInfoService;
     @RequestMapping("/customerTrace/list")
-    protected String  list(String page,String pageSize,Model map){
+    protected String  list(String userId,String page,String pageSize,Model map){
         Map<String,String> paraMap = new HashMap<String, String>();
         paraMap.put("userId","1001");
         if(page == null || "".equals(page)){
@@ -47,7 +47,7 @@ public class CustomerTraceController {
         map.addAttribute("customerTraceList",customerInfoPage.getContent());
         map.addAttribute("userId","1001");
         map.addAttribute("totalPage",customerInfoPage.getTotalPages());
-
+        map.addAttribute("currentPage",page);
         return "/customerTrace/customerTraceList";
     }
 

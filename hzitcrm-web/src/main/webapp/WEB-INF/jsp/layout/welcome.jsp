@@ -40,7 +40,7 @@
                         var show ;
                         var msg;
                         var $showResult = $("#show_result");
-                        $showResult.empty();
+                        //$showResult.empty();
                         if(data == "success"){//添加成功
                             show  = "alert alert-success";
                             msg = "客户信息添加成功!"
@@ -51,10 +51,11 @@
                             show = "alert alert-error";
                             msg = "请输入客户信息!";
                         }
-                        $div = $('<div class="'+show+'" > <button class="close" data-dismiss="alert">x</button> <strong>'+msg+'</strong> </div>');
+                        $div = $('<div class="'+show+'"> <button class="close" data-dismiss="alert">x</button> <strong>'+msg+'</strong> </div>');
                         $showResult.append($div);
                         window.setTimeout(function(){
                             $showResult.empty();
+                            window.location.reload();
                         },5000);
                     }
                 });
@@ -66,67 +67,125 @@
              */
             function getTime() {
                 var today = new Date();
-                var s = today.getFullYear() + "年" + today.getMonth() + "月" + today.getDate() + "日" + today.getHours() + "时" + today.getMinutes() + "分" + today.getSeconds() + "秒" + "\t星期" + today.getDay();
+                var s = today.getFullYear() + "年" + today.getMonth() + "月" + today.getDate() + "日" + today.getHours() + "时" + today.getMinutes() + "分" + today.getSeconds() + "秒";
+                $("#index_showTime").html(s);
                 return s;
             }
 
             <!--获取要修改客户信息-->
-            function editCustomerInfo($li){
-               // console.log(customerId);
-
+            function editCustomerInfo(){
+                alert("hello");
                 <!--异步方式获取咨询师信息-->
-                $.get("${pageContext.request.contextPath}/userInfoList", function (data) {
-                    var $option;
-                    var $index_select = $("#welcome_userName");
-                    $index_select.empty();
-                    for (var item in data) {
-                        $option = $("<option value='" + data[item].userId + "'></option>");
-                        $option.html(data[item].name);
-                        $index_select.append($option);
-                    }
-                });
 
             }
-
             <!--获取来访客户信息-->
-            function getCustomerInfo() {
-                $.ajax({
+            var $ajaxData = $.ajax({
                     type: 'get',
                     url: '${pageContext.request.contextPath}/customerInfoList',
+                    async:false,
                     success: function (data) {
-                        var showTime = getTime();//获取当前时间
                         var leftTime;//来访时间
                         var $ul = $("#index_customer_info");
+                        var $showTime = $("#index_showTime");
                         var $li = null;
                         var currentDate;
                         var hour;
                         var minute;
                         var second;
+                        $showTime.empty();
                         var $totalCustomer = $("#index_span_total");
-                        var $index_showTime = $("#index_showTime");
                         $ul.empty();//每次请求服务器时清空当前ul标签下的li标签
-                        $index_showTime.empty();
-                        $index_showTime.html("当前时间为:" + showTime);
                         $totalCustomer.html("当前访客人数:" + data.length);
                         for (var item in data) {
-                            currentDate = new Date(Date.parse(data[item].createTime));
-                            hour = Math.floor((new Date().getTime() - currentDate.getTime()) / 1000 / 60 / 60);
-                            minute = Math.floor((new Date().getTime() - currentDate.getTime()) / 1000 / 60 - (hour * 60));
-                            second = Math.floor((new Date().getTime() - currentDate.getTime()) / 1000 - (hour * 60 * 60 + minute * 60));
-                            leftTime = hour + "小时" + minute + "分钟" + second + "秒";
-                            $li = $('<a href="#myAlert" onclick=""  data-toggle="modal" ><li><i class="icon-user"></i> <strong>' + data[item].realName + '</strong> <span style="color:orange;font-size:12px;">等待' + leftTime + '</span>' +
-                                    '<span title="" class="label label-warning " style="float:right">待面试</span></li></a>');
+                            $li = $('<li><a href="#myAlert"  id="aAlert'+item+'" data-toggle="modal" ><i class="icon-user"></i> <strong>'
+                                    + data[item].realName + '</strong> ');
+                            var $spanTime=$('<span id="spanWaitTime'+item+'" style="color:orange;font-size:12px;">等待' + myTime() + '</span>');
+                            var $hidden = $('<input type="hidden" id="hiddenDate'+item+'" value="'+data[item].createTime+'">');
+                            var $hiddenCustomerId = $('<input type="hidden" id="hiddenCustomerId'+item+'" value="'+data[item].customerId+'"/>');
+                            var $hiddenName = $('<input type="hidden" id="hiddenName'+item+'" value="'+data[item].realName+'">');
+                            $li.append($spanTime);
+                            $li.append($hiddenName);
+                            $li.append($hiddenCustomerId);
+                            $li.append($hidden);
+                            $spanState = $('<span title="" class="label label-warning " style="float:right">待面试</span></a></li>');
+                            $li.append($spanState);
                             $ul.append($li);
-                           $li.click(editCustomerInfo($li));
+                            //$li.click(editCustomerInfo($li));
+                        }
+                        //显示时间
+                        function myTime(){
+                            $showTime.html(getTime());//显示当前时间
+                            for(var item in data){
+                                currentDate = new Date(Date.parse($("#hiddenDate"+item).val()));
+                                hour = Math.floor((new Date().getTime() - currentDate.getTime()) / 1000 / 60 / 60);
+                                minute = Math.floor((new Date().getTime() - currentDate.getTime()) / 1000 / 60 - (hour * 60));
+                                second = Math.floor((new Date().getTime() - currentDate.getTime()) / 1000 - (hour * 60 * 60 + minute * 60));
+                                leftTime = hour + "小时" + minute + "分钟" + second + "秒";
+                                $("#spanWaitTime"+item).html(leftTime);
+                            }
+                        }
+                        window.setInterval(myTime,1000);//每秒执行一次
+                        //修改客户所属咨询师
+                        var item ;
+                        for(item in data){
+                            $("#aAlert"+item).click(function(){
+                                var $index_select = $("#welcome_userName");
+                                var name = $("#hiddenName"+item).val();
+                                var aIdValue = $(this).attr('id');
+                                aIdValue = aIdValue.substr(aIdValue.length-1,aIdValue.length-1);
+                                $("#welcome_p").html("客户名:"+$("#hiddenName"+aIdValue).val());//用户名
+
+                                $("#hiddenCustomerId").val($("#hiddenCustomerId"+aIdValue).val());
+
+                                $.get("${pageContext.request.contextPath}/userInfoList", function (data) {
+                                    var $option;
+                                    $index_select.empty();
+                                    for (var item in data) {
+                                        $option = $("<option value='" + data[item].userId + "'></option>");
+                                        $option.html(data[item].name);
+                                        $index_select.append($option);
+                                    }
+                                });
+                            });
                         }
                     }
                 });
-
-            }
-
-            <!--每隔1秒向服务器获取客户信息-->
-            window.setInterval(getCustomerInfo, 1000);
+            //刷新数据
+            //ajaxData
+            $("#btnRefreshData").click(function(){
+               window.location.reload();
+            });
         });
+
+
+        //修改客户所属咨询师
+        function changeUser(){
+            $.ajax({
+                type:"POST",
+                url:'${pageContext.request.contextPath}/customerInfo/changeUser',
+                data:$("#editCustomerInfoForm").serialize(),
+                success:function(data){
+                    var msg;
+                    var show;
+                    if(data== 'true'){
+                        show  = "alert alert-success";
+                        msg = "修改成功!";
+                    }else{
+                        show = "alert alert-error";
+                        msg = "修改失败!";
+                    }
+                    $div = $('<div class="'+show+'"> <button class="close" data-dismiss="alert">x</button> <strong>'+msg+'</strong> </div>');
+                    $("#show_result").append($div);
+                    window.setTimeout(function(){
+                        $("#show_result").empty();
+                    },5000);
+                }
+            })
+            //alert("hello");
+        }
+
+    </script>
+    <script>
 
     </script>
 </head>
@@ -134,21 +193,25 @@
 <!--修改客户信息时弹出模态窗口-->
 <div class="widget-content" >
     <div id="myAlert" class="modal hide" aria-hidden="true" style="display: none;">
+        <form id="editCustomerInfoForm" action="" method="post">
         <div class="modal-header">
             <button data-dismiss="modal" class="close" type="button">×</button>
             <h3>修改客户信息</h3>
         </div>
         <div class="modal-body">
             <p id="welcome_p">客户名称</p>
+            <span id="showUserSpan"></span>
+            <input type="hidden" name="customerId" id="hiddenCustomerId">
             所选咨询师:
-            <select id="welcome_userName">
+            <select id="welcome_userName" name="userId">
 
             </select>
         </div>
         <div class="modal-footer">
-            <a data-dismiss="modal" class="btn btn-primary" href="#">确认修改</a>
+            <a data-dismiss="modal" onclick="changeUser()" class="btn btn-primary" href="#">确认修改</a>
             <a data-dismiss="modal" class="btn" href="#">取消</a>
         </div>
+        </form>
     </div>
 </div>
 <!--头部-->
@@ -185,9 +248,8 @@
                         </div>
                         <div class="control-group">
                             <div class="controls">
-                                   <input id="index_button_userinfo" class="btn btn-primary" type="button" value="登记"
-                                          style="">
-
+                                   <input id="index_button_userinfo" class="btn btn-primary " type="button" value="登记" style=""/>
+                                   <input id="btnRefreshData" class="btn btn-warning" type="button" value="刷新"/>
                             </div>
 
                         </div>
@@ -203,7 +265,6 @@
                 </div>
             </div>
         </div>
-
         <!--来访者列表-->
         <div class="span6">
             <div class="widget-box">
@@ -221,7 +282,6 @@
                     <div class="row-fluid">
                         <div class="span12">
                             <ul class="site-stats" id="index_customer_info">
-
                             </ul>
                         </div>
                     </div>
@@ -230,6 +290,5 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>

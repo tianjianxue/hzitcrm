@@ -46,6 +46,24 @@ public class CustomerInfoController extends  BaseController{
         return customerInfoService.findByNameAndState();
     }
 
+
+    /**
+     * 前台人员修改客户所属咨询师
+     * @return
+     */
+    @RequestMapping("/customerInfo/changeUser")
+    @ResponseBody
+    protected String changeUser(CustomerInfo customerInfo){
+        String msg;
+        try{
+            msg ="true";
+            customerInfoService.updateCustomerInfo(customerInfo);
+        }catch (Exception e){
+            msg = "false";
+        }
+        return msg;
+    }
+
     /**
      * 跳转到客户信息列表
      * @param map
@@ -151,7 +169,7 @@ public class CustomerInfoController extends  BaseController{
             easyuiMessager.setMsg("修改失败!");
             easyuiMessager.setSuccess(false);
         }
-        //Thread.sleep(5000);//模拟网络堵塞（测试时用）
+        Thread.sleep(5000);//模拟网络堵塞（测试时用）
 
         return easyuiMessager;
     }

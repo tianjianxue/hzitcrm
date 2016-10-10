@@ -21,6 +21,9 @@
         <%--</li>--%>
     <ul style="display: block;">
         <li>
+            <a target="index_iframe" href="${pageContext.request.contextPath}/layout/welcome"><i class="icon icon-pencil"></i>前台登记</a>
+        </li>
+        <li>
             <a target="index_iframe" href="${pageContext.request.contextPath}/customerInfo/list"><i class="icon icon-pencil"></i>客户列表</a>
         </li>
         <li >
