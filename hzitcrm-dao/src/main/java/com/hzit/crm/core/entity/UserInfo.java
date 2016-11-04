@@ -14,6 +14,11 @@ public class UserInfo {
 	 */
 	private String name;
 	/**
+	 *
+	 */
+	private String password;
+
+	/**
 	 *  角色id
 	 */
 	private Integer roleId;
@@ -29,6 +34,15 @@ public class UserInfo {
 	 *  用户姓名
 	 */
 	private String realName;
+	/**
+	 *
+	 */
+	private Integer deptId;
+
+	/**
+	 *
+	 */
+	private Integer companyId;
 	/**
 	 * 用户id
 	 * @param userId
@@ -119,6 +133,30 @@ public class UserInfo {
     public String getRealName(){
     	return realName;
     }
+
+	public Integer getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(Integer deptId) {
+		this.deptId = deptId;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Integer getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Integer companyId) {
+		this.companyId = companyId;
+	}
 
 	@Override
 	public String toString() {

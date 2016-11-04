@@ -1,10 +1,14 @@
 package com.hzit.crm.core.entity;
 
+import java.util.List;
+
 /**
  * 
  * @author ethen
  */
 public class RoleModule {
+	private List<Role> roles;
+	private List<Module> modules;
 	/**
 	 *  
 	 */
@@ -62,4 +66,20 @@ public class RoleModule {
     public Integer getModuleId(){
     	return moduleId;
     }
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
+	public List<Module> getModules() {
+		return modules;
+	}
+
+	public void setModules(List<Module> modules) {
+		this.modules = modules;
+	}
 }

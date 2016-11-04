@@ -1,4 +1,5 @@
 package com.hzit.crm.web;
+import com.hzit.crm.interceptors.LoginInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -32,7 +33,8 @@ public class BaseController extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        //registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/admin*//**");
+        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/*");
         //registry.addInterceptor(new RootInterceptor()).addPathPatterns("/weixin//**");
     }
+
 }

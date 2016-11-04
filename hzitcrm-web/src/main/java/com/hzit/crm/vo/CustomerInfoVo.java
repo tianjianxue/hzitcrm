@@ -17,6 +17,7 @@ public class CustomerInfoVo {
 	 *  性别
 	 */
 	private Integer sex;
+	private String sexMsg;
 	/**
 	 *  年龄
 	 */
@@ -78,6 +79,10 @@ public class CustomerInfoVo {
 	 */
 	private Integer customerState;
 	/**
+	 * 客户状态(具体信息)
+     */
+	private String customerStateMsg;
+	/**
 	 *  客户级别
 	 */
 	private String customerLevel;
@@ -108,6 +113,8 @@ public class CustomerInfoVo {
 
 	private String name;//咨询师名称
 	private String userName;//咨询师真实名称
+	private Integer companyId;//公司编号
+	private String companyName;//公司名称
 	/**
 	 * 客户id
 	 * @param customerId
@@ -498,6 +505,54 @@ public class CustomerInfoVo {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public String getCustomerStateMsg() {
+		return customerStateMsg;
+	}
+
+	public void setCustomerStateMsg(String customerStateMsg) {
+		this.customerStateMsg = customerStateMsg;
+	}
+
+	public String getSexMsg() {
+		return sexMsg;
+	}
+
+	public void setSexMsg(String sexMsg) {
+		this.sexMsg = sexMsg;
+	}
+
+	public Integer getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Integer companyId) {
+		this.companyId = companyId;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof CustomerInfoVo)) return false;
+
+		CustomerInfoVo that = (CustomerInfoVo) o;
+
+		return getCustomerId() != null ? getCustomerId().equals(that.getCustomerId()) : that.getCustomerId() == null;
+
+	}
+
+	@Override
+	public int hashCode() {
+		return getCustomerId() != null ? getCustomerId().hashCode() : 0;
 	}
 
 	@Override

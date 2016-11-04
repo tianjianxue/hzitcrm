@@ -9,14 +9,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>修改客户信息</title>
+    <title>修改学员信息</title>
+    <!--easyui-->
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/easyui/css/themes/bootstrap/easyui.css">
+    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/easyui/css/themes/icon.css">
+    <!--easyui-->
+    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-1.8.0.min.js"></script>
+    <%--<script type="text/javascript" src="${pageContext.request.contextPath}/easyui/js/jquery.min.js" ></script>--%>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/easyui/js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/easyui/js/easyui-lang-zh_CN.js"></script>
 </head>
-<body>
+<body class="easyui-layout">
 <form id="customerInfo_form" method="post">
     <input type="hidden" name="customerId" value="${requestScope.customerInfo.customerId}">
     <table cellpadding="2" style="margin-top:10px;">
         <tr>
-            <td>客户名</td>
+            <td>学员名</td>
             <td>
                 <input class="easyui-textbox" type="text" name="realName" data-options="required:true"
                 value="${requestScope.customerInfo.realName}" missingMessage="用户名必填">
@@ -48,16 +56,14 @@
             </td>
             <td>微信号</td>
             <td>
-                <input type="text" class="easyui-textbox" name="wechatNo" data-options="required:true"
-                       value="${requestScope.customerInfo.wechatNo}" missingMessage="微信号必填">
+                <input type="text" class="easyui-textbox" name="wechatNo" value="${requestScope.customerInfo.wechatNo}">
             </td>
         </tr>
 
         <tr>
             <td>qq</td>
             <td>
-                <input type="text" class="easyui-textbox" name="qq" data-options="required:true"
-                       value="${requestScope.customerInfo.qq}" missingMessage="qq号必填">
+                <input type="text" class="easyui-textbox" name="qq" value="${requestScope.customerInfo.qq}">
             </td>
             <td>学历</td>
             <td>
@@ -65,16 +71,16 @@
                     <option value="1">小学</option>
                     <option value="2">初中</option>
                     <option value="3">高中</option>
-                    <option value="4">大专</option>
-                    <option value="5">本科</option>
-                    <option value="6">研究生</option>
-                    <option value="1">其他</option>
+                    <option value="4">中专</option>
+                    <option value="5">大专</option>
+                    <option value="6">本科</option>
+                    <option value="7">研究生</option>
+                    <option value="8">其他</option>
                 </select>
             </td>
             <td>毕业时间</td>
             <td>
-                <input type="text" class="easyui-textbox" name="graduateTime" data-options="required:true"
-                       value="${requestScope.customerInfo.graduateTime}" onfocus="WdatePicker({'skin':'default','dateFmt':'yyyy-MM-dd '});">
+                <input name="graduateTime" type="text" value="${requestScope.customerInfo.graduateTime}" class="easyui-datebox"   required="required" >
             </td>
         </tr>
 
@@ -86,31 +92,27 @@
             </td>
             <td>专业</td>
             <td>
-                <input type="text" class="easyui-textbox" name="majorIn" data-options="required:true"
+                <input type="text" class="easyui-textbox" name="majorIn"
                        value="${requestScope.customerInfo.majorIn}" missingMessage="专业必填">
             </td>
             <td>工作年限</td>
             <td>
-                <input type="text" class="easyui-numberbox" name="workAge" data-options="required:true"
-                       value="${requestScope.customerInfo.workAge}" missingMessage="工作年限(数字)">
+                <input type="text" class="easyui-numberbox" name="workAge" value="${requestScope.customerInfo.workAge}">
             </td>
         </tr>
 
         <tr>
             <td>工作经历</td>
             <td>
-                <input type="text" class="easyui-textbox" name="workExperience" data-options="required:true"
-                       value="${requestScope.customerInfo.workExperience}" missingMessage="工作经历必填">
+                <input type="text" class="easyui-textbox" name="workExperience" value="${requestScope.customerInfo.workExperience}" >
             </td>
             <td>从事职业</td>
             <td>
-                <input type="text" class="easyui-textbox" name="job" data-options="required:true"
-                       value="${requestScope.customerInfo.job}" missingMessage="从事职业必填">
+                <input type="text" class="easyui-textbox" name="job" value="${requestScope.customerInfo.job}">
             </td>
             <td>教育培训经历</td>
             <td>
-                <input type="text" class="easyui-textbox" name="educateExperience" data-options="required:true"
-                       value="${requestScope.customerInfo.educateExperience}"  missingMessage="教育培训经历必填">
+                <input type="text" class="easyui-textbox" name="educateExperience" value="${requestScope.customerInfo.educateExperience}" >
             </td>
         </tr>
         <tr>
@@ -126,16 +128,23 @@
                 </select>
             </td>
 
-            <td>客户状态</td>
+            <td>学员状态</td>
             <td>
-                <input type="text" class="easyui-numberbox" name="customerState" data-options="required:true"
-                       value="${requestScope.customerInfo.customerState}" missingMessage="客户状态必填(数字)">
+                <select  id="customerState" name="customerState" style="width:170px;">
+                    <c:forEach items="${requestScope.customerStateList}" var="customerState">
+                        <option value="${customerState.stateId}" <c:if test="${requestScope.customerInfo.customerState==customerState.stateId}">selected</c:if>>${customerState.customerState}</option>
+                    </c:forEach>
+                </select>
             </td>
 
-            <td>客户级别</td>
+            <td>学员级别</td>
             <td>
-                <input type="text" class="easyui-textbox" name="customerLevel" data-options="required:true"
-                       value="${requestScope.customerInfo.customerLevel}" missingMessage="客户级别必填">
+                <select class="easyui-combobox" name="customerLevel" style="width:170px;">
+                    <option value="1" <c:if test="${requestScope.customerInfo.customerLevel==A}">selected</c:if>>A</option>
+                    <option value="2" <c:if test="${requestScope.customerInfo.customerLevel==B}">selected</c:if>>B</option>
+                    <option value="3" <c:if test="${requestScope.customerInfo.customerLevel==C}">selected</c:if>>C</option>
+                    <option value="4" <c:if test="${requestScope.customerInfo.customerLevel==D}">selected</c:if>>D</option>
+                </select>
             </td>
         </tr>
 
@@ -150,26 +159,28 @@
             </td>
             <td>感兴趣的技能</td>
             <td>
-                <input type="text" class="easyui-textbox" name="targetSkill" data-options="required:true"
-                       value="${requestScope.customerInfo.targetSkill}" missingMessage="客户感兴趣的技能必填">
+                <input type="text" class="easyui-textbox" name="targetSkill" value="${requestScope.customerInfo.targetSkill}" >
             </td>
-            <td>推荐人</td>
+            <td>邀约人</td>
             <td>
-                <input type="text" class="easyui-textbox" name="introducer" data-options="required:true"
-                       value="${requestScope.customerInfo.introducer}" missingMessage="推荐人必填">
+                <select class="easyui-combobox" style="width:170px;" readonly="">
+                    <c:forEach items="${requestScope.yaoYueRenList}" var="yaoYueRen">
+                        <option value="${yaoYueRen.userId}"
+                                <c:if test="${requestScope.customerInfo.introducer==yaoYueRen.name}">selected</c:if>>${yaoYueRen.name}</option>
+                    </c:forEach>
+                </select>
             </td>
         </tr>
 
         <tr>
             <td>备注</td>
             <td>
-                <input class="easyui-textbox" name="memo" data-options="multiline:true,required:true" style="height:60px"
-                       value="${requestScope.customerInfo.memo}"  missingMessage="备注必填">
+                <input class="easyui-textbox" name="memo" data-options="multiline:true" style="height:60px"
+                       value="${requestScope.customerInfo.memo}">
             </td>
             <td>最后跟进时间</td>
             <td>
-                <input type="text" class="easyui-textbox" name="lastTime" data-options="required:true"
-                       value="${requestScope.customerInfo.lastTime}" onfocus="WdatePicker({'skin':'default','dateFmt':'yyyy-MM-dd hh:mm:ss'});">
+                <input type="text" class="easyui-datebox" readonly="readonly"  name="lastTime" value="${requestScope.customerInfo.lastTime}">
             </td>
             <td>录入时间</td>
             <td>
@@ -179,6 +190,5 @@
         </tr>
     </table>
 </form>
-
 </body>
 </html>

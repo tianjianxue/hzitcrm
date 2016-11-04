@@ -10,13 +10,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>客户详情页</title>
+    <title>学员详情页</title>
 </head>
 <body>
     <input type="hidden" name="customerId" value="${requestScope.customerInfo.customerId}">
     <table cellpadding="2" style="margin-top:10px;">
         <tr>
-            <td>客户名</td>
+            <td>学员名</td>
             <td>
                 <input  type="text" name="realName" value="${requestScope.customerInfo.realName}"
                         class="easyui-textbox" readonly="readonly">
@@ -121,16 +121,29 @@
                 </select>
             </td>
 
-            <td>客户状态</td>
+            <td>学员状态</td>
             <td>
-                <input type="text" class="easyui-numberbox" name="customerState"
-                       value="${requestScope.customerInfo.customerState}" readonly="readonly">
+                <%--<input type="text" class="easyui-numberbox" name="customerState"
+                       value="${requestScope.customerInfo.customerState}" readonly="readonly">--%>
+                <select class="easyui-combobox" name="customerState" style="width:170px;" readonly>
+                    <option value="1" <c:if test="${requestScope.customerInfo.customerState==1}">selected</c:if>>有意向</option>
+                    <option value="2" <c:if test="${requestScope.customerInfo.customerState==2}">selected</c:if>>试听</option>
+                    <option value="3" <c:if test="${requestScope.customerInfo.customerState==3}">selected</c:if>>已报名</option>
+                    <option value="4" <c:if test="${requestScope.customerInfo.customerState==4}">selected</c:if>>已就业</option>
+                    <option value="5" <c:if test="${requestScope.customerInfo.customerState==5}">selected</c:if>>无效</option>
+                </select>
             </td>
 
-            <td>客户级别</td>
+            <td>学员级别</td>
             <td>
-                <input type="text" class="easyui-textbox" name="customerLevel"
-                       value="${requestScope.customerInfo.customerLevel}" readonly="readonly">
+                <%--<input type="text" class="easyui-textbox" name="customerLevel"
+                       value="${requestScope.customerInfo.customerLevel}" readonly="readonly">--%>
+                <select class="easyui-combobox" name="customerLevel" style="width:170px;" readonly>
+                    <option value="1" <c:if test="${requestScope.customerInfo.customerLevel==1}">selected</c:if>>A</option>
+                    <option value="2" <c:if test="${requestScope.customerInfo.customerLevel==2}">selected</c:if>>B</option>
+                    <option value="3" <c:if test="${requestScope.customerInfo.customerLevel==3}">selected</c:if>>C</option>
+                    <option value="4" <c:if test="${requestScope.customerInfo.customerLevel==4}">selected</c:if>>D</option>
+                </select>
             </td>
         </tr>
 
@@ -148,7 +161,7 @@
                 <input type="text" class="easyui-textbox" name="targetSkill"
                        value="${requestScope.customerInfo.targetSkill}" readonly="readonly">
             </td>
-            <td>推荐人</td>
+            <td>邀约人</td>
             <td>
                 <input type="text" class="easyui-textbox" name="introducer"
                        value="${requestScope.customerInfo.introducer}" readonly="readonly">
@@ -169,9 +182,12 @@
             </td>
         </tr>
         <tr >
-            <td colspan="4">
+            <td>
                 <span>备注</span>
-                <input class="easyui-textbox" name="memo" data-options="multiline:true" style="height:60px;width:180px;"
+            </td>
+            <td>
+
+                <input class="easyui-textbox" name="memo" data-options="multiline:true" style="height:70px;width:170px;"
                        value="${requestScope.customerInfo.memo}"  readonly="readonly">
             </td>
         </tr>

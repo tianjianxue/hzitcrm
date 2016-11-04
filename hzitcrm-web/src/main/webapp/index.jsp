@@ -15,7 +15,7 @@
     <title></title>
     <base href="<%=basePath %>" />
     <script type="application/javascript">
- //     window.locatioin='https://qy.weixin.qq.com/cgi-bin/loginpage?corp_id=wxb84c9584d983b952&redirect_uri=http://www.hzitxx.com:8082/weixinLogin&state=xxxx&usertype=member'
+      //window.location='https://qy.weixin.qq.com/cgi-bin/loginpage?corp_id=wxb84c9584d983b952&redirect_uri=http://www.hzitxx.com:8082/weixinLogin&state=xxxx&usertype=member'
     </script>
   </head>
   <body>

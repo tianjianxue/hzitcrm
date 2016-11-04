@@ -3,12 +3,15 @@ package com.hzit.crm.service.impl;
 import com.fc.platform.commons.page.Page;
 import com.fc.platform.commons.page.Pageable;
 import com.hzit.crm.core.entity.CustomerInfo;
+import com.hzit.crm.core.entity.CustomerState;
 import com.hzit.crm.core.entity.UserInfo;
 import com.hzit.crm.core.mapper.CustomerInfoMapper;
+import com.hzit.crm.core.mapper.CustomerStateMapper;
 import com.hzit.crm.core.mapper.UserInfoMapper;
 import com.hzit.crm.service.CustomerInfoService;
 import com.hzit.crm.vo.CustomerInfoVo;
 import com.hzit.crm.vo.DataGrid;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,25 +30,71 @@ public class CustomerInfoServiceImpl implements CustomerInfoService {
 
     @Autowired
     private UserInfoMapper userInfoMapper;
+
+    @Autowired
+    private CustomerStateMapper customerStateMapper;
+
+
     /**
-     * 获取当前日期的来访客户
+     * 获取当前日期的来访客户(得到用户的名称和状态)
      * @return
      */
     @Override
-    public List<CustomerInfo> findByNameAndState() {
-
-       /* SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String currentDate = simpleDateFormat.format(new Date());
-        Map<String,String> map = new HashMap<String,String>();
-        map.put("createTime",currentDate);*/
-        return customerInfoMapper.findByNameAndState();
+    public List<CustomerInfoVo> findByNameAndState() {
+        List<CustomerInfoVo> customerInfoVoList =new ArrayList<CustomerInfoVo>();
+        List<CustomerInfo> customerInfoList = customerInfoMapper.findByNameAndState();
+        CustomerInfoVo customerInfoVo = null;
+        Map<String,String> customerStateMap = new HashMap<String, String>();
+        if(customerInfoList != null && customerInfoList.size() >0){
+            for(CustomerInfo customerInfo : customerInfoList){//遍历客户列表
+                customerStateMap = new HashMap<String, String>();
+                customerStateMap.put("stateId",customerInfo.getCustomerState()+"");//获取客户状态编号
+                customerInfoVo = new CustomerInfoVo();
+                BeanUtils.copyProperties(customerInfo,customerInfoVo);
+                //获取客户状态
+                List<CustomerState> customerStateList = customerStateMapper.searchCustomerStateByParams(customerStateMap);
+                if(customerStateList != null && customerStateList.size() >0){
+                    customerInfoVo.setCustomerStateMsg(customerStateList.get(0).getCustomerState());//获取客户状态信息
+                }
+                customerInfoVoList.add(customerInfoVo);
+            }
+        }
+        return customerInfoVoList;
     }
+
+    /**
+     * 添加客户信息
+     * @param customerInfo
+     */
+    @Override
+    public void insertCustomerInfo(CustomerInfo customerInfo) {
+        customerInfoMapper.insertCustomerInfo(customerInfo);
+    }
+
+    /**
+     * 根据参数查找数据
+     * @param map
+     * @return
+     */
+    @Override
+    public List<CustomerInfo> searchCustomerInfoByParams(Map<String,String> map){
+        return customerInfoMapper.searchCustomerInfoByParams(map);
+    }
+
+
 
     /**
      * 保存客户的真实名称和咨询师id
      */
     @Override
-    public void insertByRealNameAndUserId(CustomerInfo customerInfo) {
+    public void insertByRealNameAndUserId(CustomerInfo customerInfo,String userId) {
+        //获取员工所在公司id
+        Map<String,String> userParamMap = new HashMap<String, String>();
+        userParamMap.put("userId",userId);
+        List<UserInfo> userInfoList = userInfoMapper.searchUserInfoByParams(userParamMap);
+        if(userInfoList != null && userInfoList.size() >0){
+            customerInfo.setCompanyId(userInfoList.get(0).getCompanyId());
+        }
         customerInfoMapper.insertCustomerInfo(customerInfo);
     }
 
@@ -58,7 +107,17 @@ public class CustomerInfoServiceImpl implements CustomerInfoService {
     public void updateCustomerInfo(CustomerInfo customerInfo) {
         customerInfoMapper.updateCustomerInfo(customerInfo);
     }
-
+    /**
+     * 模糊查询
+     * @param map
+     * @param pageable
+     * @return
+     */
+    @Override
+    public DataGrid<CustomerInfoVo> searchCustomerInfoByParamsLike(@Param("map") Map<String, String> map, Pageable pageable) {
+        Page<CustomerInfo> page = customerInfoMapper.searchCustomerInfoByParamsLike(map,pageable);
+        return  common(page);
+    }
     /**
      * 获取客户列表
      * @param map
@@ -66,25 +125,36 @@ public class CustomerInfoServiceImpl implements CustomerInfoService {
      * @return
      */
     @Override
-    public DataGrid<CustomerInfoVo> customerInfoList(Map<String, String> map, Pageable pageable,String sort,String order) {
+    public DataGrid<CustomerInfoVo> customerInfoList(Map<String, String> map, Pageable pageable) {
+        Page<CustomerInfo> page = customerInfoMapper.searchCustomerInfoByParamsLike(map,pageable);
+        return common(page);
+    }
 
-        //BeanUtils.copyProperties();
-        Page<CustomerInfo> page = customerInfoMapper.searchCustomerInfoByParams(map,pageable);
+    private DataGrid<CustomerInfoVo> common(Page<CustomerInfo> page) {
         DataGrid<CustomerInfoVo> dataGrid = new DataGrid<CustomerInfoVo>();
-        dataGrid.setTotal(customerInfoMapper.getTotal());
+        dataGrid.setTotal(page.getTotalElements());
         List<CustomerInfoVo> customerInfoVos = new ArrayList<CustomerInfoVo>();
         CustomerInfoVo customerInfoVo = null;
+
+        Map<String,String> customerStateMap = null;
+
         if(page != null){
             for(CustomerInfo customerInfo : page.getContent()){
                 customerInfoVo = new CustomerInfoVo();
                 BeanUtils.copyProperties(customerInfo,customerInfoVo);
                 for(UserInfo userInfo : userInfoMapper.findAll()){
+                    customerStateMap  = new HashMap<String, String>();
+                    customerStateMap.put("stateId",customerInfo.getCustomerState()+"");
+                    List<CustomerState> customerStateList = customerStateMapper.searchCustomerStateByParams(customerStateMap);
+                    if(customerStateList != null && customerStateList.size() >0){
+                        customerInfoVo.setCustomerStateMsg(customerStateList.get(0).getCustomerState());
+                    }
                     if(userInfo.getUserId().equals(customerInfoVo.getUserId())){
                         customerInfoVo.setName(userInfo.getName());
-                        customerInfoVo.setUserName(userInfo.getRealName());
+                        customerInfoVo.setUserName(userInfo.getName());
                     }
                 }
-                customerInfoVos.add(customerInfoVo);
+                customerInfoVos.add(customerInfoVo);//添加客户信息
             }
 
             dataGrid.setRows(customerInfoVos);

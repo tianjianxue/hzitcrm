@@ -11,9 +11,9 @@
 </div>
 <div id="user-nav" class="navbar navbar-inverse">
     <ul class="nav btn-group">
-        <li class="btn btn-inverse"><a title="" href="#"><i class="icon icon-user"></i> <span class="text">${sessionScope.userinfo.username}</span></a>
+        <li class="btn btn-inverse"><a title="" target="index_iframe" href="${pageContext.request.contextPath}/userInfo/changePassword"><i class="icon icon-user"></i> <span class="text">${sessionScope.userinfo.name}</span></a>
         </li>
-        <li class="btn btn-inverse"><a title="" href="logout"><i class="icon icon-share-alt"></i> <span
+        <li class="btn btn-inverse"><a title="" href="${pageContext.request.contextPath}/logout"><i class="icon icon-share-alt"></i> <span
                 class="text">退出</span></a></li>
     </ul>
 </div>

@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -26,6 +27,7 @@ import java.util.*;
 * Created by yangxiaowei-pc on 2016/8/24.
 */
 @Service
+@Transactional
 public class CustomerServiceImpl implements CustomerService
 {
 
@@ -143,6 +145,4 @@ public class CustomerServiceImpl implements CustomerService
             return false;
         }
     }
-
-
 }

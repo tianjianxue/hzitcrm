@@ -19,5 +19,5 @@ public interface RoleModuleMapper {
 	Page<RoleModule> searchRoleModuleByParams(@Param("map") Map<String, String> map, Pageable pageable);
 
 	List<RoleModule> searchRoleModuleByParams(@Param("map") Map<String, String> map);
-
+	void deleteRoleModuleByRoleId(Integer id);
 } 

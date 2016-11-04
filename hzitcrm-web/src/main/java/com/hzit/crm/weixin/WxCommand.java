@@ -14,8 +14,9 @@ import java.io.IOException;
 /**
  * Created by Administrator on 2016/7/12.
  */
-@Service
+//@Service
 public class WxCommand {
+/*
 
     @Value("${corpID}")
     private String corpID;
@@ -72,6 +73,7 @@ public class WxCommand {
 
 
     }
+*/
 
 
 }

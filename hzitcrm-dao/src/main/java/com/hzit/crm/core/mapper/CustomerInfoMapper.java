@@ -39,4 +39,12 @@ public interface CustomerInfoMapper {
 	 * 客户跟进时获取客户相应信息
      */
 	public List<CustomerInfo> showCustomerTrace(@Param("map") Map<String,String> map);
+
+	/**
+	 * 模糊查询
+	 * @param map
+	 * @param pageable
+     * @return
+     */
+	Page<CustomerInfo> searchCustomerInfoByParamsLike(@Param("map")Map<String,String> map,Pageable pageable);
 } 

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hzit.crm.core.mapper.CustomerStateMapper">
+
+    <sql id="customerStateBaseColumnSql">
+        state_id,
+        customer_state
+    </sql>
+
+    <sql id="customerStateBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.stateId)">
+                    state_id = #{map.stateId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.customerState)">
+                    AND customer_state = #{map.customerState}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertCustomerState" parameterType="com.hzit.crm.core.entity.CustomerState">
+        INSERT INTO customer_state(
+        <include refid="customerStateBaseColumnSql"/>
+        )VALUES(
+            #{stateId},
+            #{customerState}
+        )
+    </insert>
+
+    
+    <delete id="deleteCustomerStateByStateId" parameterType="Integer">
+        DELETE FROM customer_state WHERE state_id = #{stateId}
+    </delete>
+
+    <update id="updateCustomerState" parameterType="com.hzit.crm.core.entity.CustomerState">
+        UPDATE customer_state
+        <set>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(customerState)">
+                customer_state = #{customerState} ,
+            </if>
+        </set>
+        WHERE state_id = #{stateId}
+    </update>
+
+    <select id="searchCustomerStateByParams" parameterType="map" resultMap="customerStateMap">
+        SELECT
+        <include refid="customerStateBaseColumnSql"/>
+        FROM customer_state
+        <include refid="customerStateBaseWhereSql"/>
+    </select>
+
+    <resultMap type="com.hzit.crm.core.entity.CustomerState" id="customerStateMap">
+        <id column="state_id" property="stateId"/>
+        <result column="customer_state" property="customerState"/>
+    </resultMap>
+
+</mapper>

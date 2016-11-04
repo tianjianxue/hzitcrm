@@ -107,6 +107,7 @@ public class CustomerInfo implements Serializable{
 	 *  创建时间
 	 */
 	private String createTime;
+	private Integer companyId;
 	/**
 	 * 客户id
 	 * @param customerId
@@ -481,6 +482,14 @@ public class CustomerInfo implements Serializable{
 	 */
 	public String getCreateTime(){
 		return createTime;
+	}
+
+	public Integer getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Integer companyId) {
+		this.companyId = companyId;
 	}
 
 	@Override

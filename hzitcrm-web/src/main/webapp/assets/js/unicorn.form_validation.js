@@ -76,6 +76,9 @@ $(document).ready(function(){
 				minlength:6,
 				maxlength:20,
 				equalTo:"#pwd"
+			},
+			password:{
+				required:true
 			}
 		},
 		errorClass: "help-inline",

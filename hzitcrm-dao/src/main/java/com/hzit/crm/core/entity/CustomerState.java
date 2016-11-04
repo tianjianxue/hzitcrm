@@ -43,4 +43,12 @@ public class CustomerState {
     public String getCustomerState(){
     	return customerState;
     }
+
+	@Override
+	public String toString() {
+		return "CustomerState{" +
+				"stateId=" + stateId +
+				", customerState='" + customerState + '\'' +
+				'}';
+	}
 }

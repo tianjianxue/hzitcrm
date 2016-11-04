@@ -1,11 +1,15 @@
 package com.hzit.crm.service.impl;
 
+import com.fc.platform.commons.page.Page;
+import com.fc.platform.commons.page.Pageable;
+import com.hzit.crm.core.entity.CustomerInfo;
 import com.hzit.crm.core.entity.CustomerTraceRecord;
 import com.hzit.crm.core.entity.UserInfo;
 import com.hzit.crm.core.mapper.CustomerTraceRecordMapper;
 import com.hzit.crm.core.mapper.UserInfoMapper;
 import com.hzit.crm.service.CustomerTraceService;
 import com.hzit.crm.vo.CustomerTraceRecordVo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,5 +78,39 @@ public class CustomerTraceServiceImpl implements CustomerTraceService {
     @Override
     public void addTraceRecord(CustomerTraceRecord customerTraceRecord) {
         customerTraceRecordMapper.insertCustomerTraceRecord(customerTraceRecord);
+    }
+
+    /**
+     * 获取取跟进记录详情
+     * @param customerInfo
+     * @return
+     */
+    @Override
+    public List<CustomerTraceRecordVo> detailedCustomerTrace(CustomerInfo customerInfo) {
+        //获取跟进记录
+        Map<String,String> paramMap = new HashMap<String, String>();
+        paramMap.put("customerId",customerInfo.getUserId()+"");
+        List<CustomerTraceRecordVo> customerTraceRecordVoList = new ArrayList<CustomerTraceRecordVo>();
+        CustomerTraceRecordVo customerTraceRecordVo = null;
+        List<CustomerTraceRecord> customerTraceRecordList = customerTraceRecordMapper.searchCustomerTraceRecordByParams(paramMap);
+        if(customerTraceRecordList!=null && customerTraceRecordList.size() >0){
+            for(CustomerTraceRecord customerTraceRecord : customerTraceRecordList){
+                customerTraceRecordVo = new CustomerTraceRecordVo();
+                BeanUtils.copyProperties(customerTraceRecord,customerTraceRecordVo);
+                BeanUtils.copyProperties(customerTraceRecord,customerTraceRecordVo);
+                customerTraceRecordVoList.add(customerTraceRecordVo);
+            }
+        }
+        return customerTraceRecordVoList;
+    }
+
+    @Override
+    public Page<CustomerTraceRecord> searchCustomerTraceRecordByParams(@Param("map") Map<String, String> map, Pageable pageable) {
+        return customerTraceRecordMapper.searchCustomerTraceRecordByParams(map,pageable);
+    }
+
+    @Override
+    public List<CustomerTraceRecord> searchCustomerTraceRecordByParams(@Param("map") Map<String, String> map) {
+        return customerTraceRecordMapper.searchCustomerTraceRecordByParams(map);
     }
 }

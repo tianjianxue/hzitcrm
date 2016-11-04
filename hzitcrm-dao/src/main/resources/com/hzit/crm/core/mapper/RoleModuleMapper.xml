@@ -39,7 +39,9 @@
     <delete id="deleteRoleModuleById" parameterType="Integer">
         DELETE FROM role_module WHERE id = #{id}
     </delete>
-
+    <delete id="deleteRoleModuleByRoleId" parameterType="Integer">
+        DELETE FROM role_module where role_id=#{roleId}
+    </delete>
     <update id="updateRoleModule" parameterType="com.hzit.crm.core.entity.RoleModule">
         UPDATE role_module
         <set>

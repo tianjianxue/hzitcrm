@@ -10,10 +10,11 @@
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html >
 <head>
-    <title>来访记录</title>
+    <title>咨询系统</title>
     <meta charset="UTF-8"/>
     <base href="<%=basePath %>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -28,8 +29,6 @@
     <script src="assets/js/jquery.ui.custom.js"></script>
     <script src="assets/js/bootstrap.min.js"></script>
     <script src="assets/js/unicorn.js"></script>
-
-
 </head>
 <body>
 
@@ -47,20 +46,28 @@
                 class="text">退出</span></a></li>
     </ul>
 </div>--%>
+
 <!--网页顶部-->
     <jsp:include page="layout/top.jsp"></jsp:include>
 <!--左侧动态生成的菜单 -->
-<div style="width:50px;">
-    <jsp:include page="layout/left.jsp"></jsp:include>
+<div style="width:45px;">
+    <%--<jsp:include page="layout/left.jsp"></jsp:include>--%>
+        <div id="sidebar" >
+            <ul style="display: block;">
+
+                <c:forEach items="${requestScope.moduleList}" var="module" varStatus="vs">
+                    <li>
+                        <a target="index_iframe" href="${pageContext.request.contextPath}${module.moduleUrl}"><i class="icon icon-pencil"></i>${module.name}</a>
+                    </li>
+                </c:forEach>
+            </ul>
+        </div>
 </div>
 <div id="content" style="height:768px;">
-    <iframe src="${pageContext.request.contextPath}/layout/welcome" name="index_iframe" style="width:100%;height:768px;">
+    <iframe src="${pageContext.request.contextPath}/foreground" name="index_iframe" style="width:100%;height:768px;">
 
     </iframe>
 </div>
-
-
-
 
 
 </body>

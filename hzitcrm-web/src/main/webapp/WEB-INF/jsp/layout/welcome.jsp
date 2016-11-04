@@ -20,6 +20,9 @@
     <script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         $(function () {
+            window.setInterval(function(){
+                window.location.reload();
+            },1000*60*20);//每个20分钟刷新一下 // 1000*60*20
             <!--获取咨询师信息-->
             $.get("${pageContext.request.contextPath}/userInfoList", function (data) {
                 var $option;
@@ -32,7 +35,17 @@
             });
             <!--保存来访者信息-->
             $("#index_button_userinfo").click(function () {
-                $.ajax({
+                //表单验证--form-userinfo
+                var $formUserInfo = $("#form-userinfo");
+                if($("#username").val() ===""){
+                    alert('请输入学员姓名!');
+                    return false;
+                }
+                if($("#index_select option:selected").val() == -1){
+                    alert('请选择所属面试官!');
+                    return false;
+                }
+               $.ajax({
                     type: 'post',
                     url: '${pageContext.request.contextPath}/userInfo/add',
                     data: $("#form-userinfo").serialize(),
@@ -43,20 +56,20 @@
                         //$showResult.empty();
                         if(data == "success"){//添加成功
                             show  = "alert alert-success";
-                            msg = "客户信息添加成功!"
+                            msg = "学员信息添加成功!"
                         }else if(data == "failed"){//添加失败！
                             show = "alert alert-error";
-                            msg = "客户信息添加失败!";
+                            msg = "学员信息添加失败!";
                         }else if(data == "nullValue"){
                             show = "alert alert-error";
-                            msg = "请输入客户信息!";
+                            msg = "请输入学员信息!";
                         }
                         $div = $('<div class="'+show+'"> <button class="close" data-dismiss="alert">x</button> <strong>'+msg+'</strong> </div>');
                         $showResult.append($div);
                         window.setTimeout(function(){
                             $showResult.empty();
                             window.location.reload();
-                        },5000);
+                        },2000);
                     }
                 });
             });
@@ -72,13 +85,13 @@
                 return s;
             }
 
-            <!--获取要修改客户信息-->
+            <!--获取要修改学员信息-->
             function editCustomerInfo(){
                 alert("hello");
-                <!--异步方式获取咨询师信息-->
+                <!--异步方式获取面试官信息-->
 
             }
-            <!--获取来访客户信息-->
+            <!--获取来访学员信息-->
             var $ajaxData = $.ajax({
                     type: 'get',
                     url: '${pageContext.request.contextPath}/customerInfoList',
@@ -103,14 +116,16 @@
                             var $hidden = $('<input type="hidden" id="hiddenDate'+item+'" value="'+data[item].createTime+'">');
                             var $hiddenCustomerId = $('<input type="hidden" id="hiddenCustomerId'+item+'" value="'+data[item].customerId+'"/>');
                             var $hiddenName = $('<input type="hidden" id="hiddenName'+item+'" value="'+data[item].realName+'">');
+                            var $hiddenUserId = $('<input type="hidden" id="hiddenUserId'+item+'" value="'+data[item].userId+'"/>');
                             $li.append($spanTime);
                             $li.append($hiddenName);
                             $li.append($hiddenCustomerId);
+                            $li.append($hiddenUserId);
                             $li.append($hidden);
-                            $spanState = $('<span title="" class="label label-warning " style="float:right">待面试</span></a></li>');
+
+                            $spanState = $('<span title="" class="label label-warning " style="float:right">'+data[item].customerStateMsg+'</span></a></li>');
                             $li.append($spanState);
                             $ul.append($li);
-                            //$li.click(editCustomerInfo($li));
                         }
                         //显示时间
                         function myTime(){
@@ -125,7 +140,7 @@
                             }
                         }
                         window.setInterval(myTime,1000);//每秒执行一次
-                        //修改客户所属咨询师
+                        //修改学员所属面试官
                         var item ;
                         for(item in data){
                             $("#aAlert"+item).click(function(){
@@ -133,15 +148,19 @@
                                 var name = $("#hiddenName"+item).val();
                                 var aIdValue = $(this).attr('id');
                                 aIdValue = aIdValue.substr(aIdValue.length-1,aIdValue.length-1);
-                                $("#welcome_p").html("客户名:"+$("#hiddenName"+aIdValue).val());//用户名
-
+                                var $userId = $("#hiddenUserId"+aIdValue).val();//获取下拉列表的默认值
+                                $("#welcome_p").html("学员名:"+'<span style="color:dodgerblue">'+$("#hiddenName"+aIdValue).val()+'</span>');//用户名
                                 $("#hiddenCustomerId").val($("#hiddenCustomerId"+aIdValue).val());
+                                $("#agaginChangeUser").val(aIdValue);//用于再次修改所属咨询师时用
 
                                 $.get("${pageContext.request.contextPath}/userInfoList", function (data) {
                                     var $option;
                                     $index_select.empty();
                                     for (var item in data) {
                                         $option = $("<option value='" + data[item].userId + "'></option>");
+                                        if($userId == data[item].userId){//该来访者默认所属咨询师
+                                            $option= $("<option value='" + data[item].userId + "' selected='selected'></option>");;
+                                        }
                                         $option.html(data[item].name);
                                         $index_select.append($option);
                                     }
@@ -150,7 +169,7 @@
                         }
                     }
                 });
-            //刷新数据
+            //手动刷新数据
             //ajaxData
             $("#btnRefreshData").click(function(){
                window.location.reload();
@@ -158,8 +177,11 @@
         });
 
 
-        //修改客户所属咨询师
+        //修改学员所属咨询师
         function changeUser(){
+            //用户再次修改所属咨询师时下拉列表的默认信息能够及时改变
+            var welcome_userNameValue= $("#welcome_userName option:selected").val();
+            $("#hiddenUserId"+$("#agaginChangeUser").val()).val(welcome_userNameValue);
             $.ajax({
                 type:"POST",
                 url:'${pageContext.request.contextPath}/customerInfo/changeUser',
@@ -178,10 +200,9 @@
                     $("#show_result").append($div);
                     window.setTimeout(function(){
                         $("#show_result").empty();
-                    },5000);
+                    },3000);
                 }
-            })
-            //alert("hello");
+            });
         }
 
     </script>
@@ -190,19 +211,21 @@
     </script>
 </head>
 <body>
-<!--修改客户信息时弹出模态窗口-->
+<!--修改学员信息时弹出模态窗口-->
 <div class="widget-content" >
     <div id="myAlert" class="modal hide" aria-hidden="true" style="display: none;">
+        <!--再次修改所属咨询师时用-->
+        <input type="hidden" value="" id="agaginChangeUser">
         <form id="editCustomerInfoForm" action="" method="post">
         <div class="modal-header">
             <button data-dismiss="modal" class="close" type="button">×</button>
-            <h3>修改客户信息</h3>
+            <h3>修改学员信息</h3>
         </div>
         <div class="modal-body">
-            <p id="welcome_p">客户名称</p>
-            <span id="showUserSpan"></span>
+            <p style="font-size: medium" id="welcome_p">学员名称</p>
+            <span style="color:dodgerblue;" id="showUserSpan"></span>
             <input type="hidden" name="customerId" id="hiddenCustomerId">
-            所选咨询师:
+            <span style="font-size: medium">选择其他面试官:</span>
             <select id="welcome_userName" name="userId">
 
             </select>
@@ -219,7 +242,7 @@
     <h1>来访者登记</h1>
 </div>--%>
 <div id="breadcrumb">
-    <a href="index.html" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i>来访者登记</a>
+    <a href="#" class="tip-bottom" data-original-title="Go to Home"><i class="icon-home"></i>来访者登记</a>
 </div>
 <div class="container-fluid">
     <div class="row-fluid">
@@ -227,6 +250,7 @@
             <div class="widget-box">
                 <div class="widget-title"><span class="icon"><i class="icon-file"></i></span><h5>来访者登记</h5></div>
                 <div class="widget-content nopadding">
+
                     <!--记录当前访问者的表单-->
                     <form action="${pageContextPath.request.contxtPath}/userInfo/add" method="post"
                           id="form-userinfo" class="form-horizontal ui-formwizard">
@@ -235,14 +259,14 @@
 
                             <label class="control-label">应聘者名字</label>
                             <div class="controls">
-                                <input id="username" type="text" name="realName" style="height:30px;">
-
+                                <input id="username" type="text" name="realName" style="height:30px;" required="required">
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label">选择所属面试官</label>
                             <div class="controls">
                                 <select id="index_select" name="userId">
+                                    <option value="-1">请选择面试官!</option>
                                 </select>
                             </div>
                         </div>

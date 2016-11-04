@@ -5,10 +5,13 @@
     <sql id="userInfoBaseColumnSql">
         user_id,
         name,
+        password,
         role_id,
         wechat_no,
         tel,
-        real_name
+        real_name,
+        dept_id,
+        company_id
     </sql>
 
     <sql id="userInfoBaseWhereSql">
@@ -20,7 +23,10 @@
                 <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.name)">
                     AND name = #{map.name}
                 </if>
-                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.roleId)">
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.password)">
+                    AND password = #{map.password}
+                </if>
+                <if test="map.roleId!=null">
                     AND role_id = #{map.roleId}
                 </if>
                 <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.wechatNo)">
@@ -32,6 +38,63 @@
                 <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.realName)">
                     AND real_name = #{map.realName}
                 </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.deptId)">
+                    AND dept_id = #{map.deptId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.companyId)">
+                    AND company_id = #{map.companyId}
+                </if>
+            </where>
+        </if>
+    </sql>
+    <!--模糊查询条件-->
+    <sql id="userInfoBaseLikeSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.userId)">
+                    like user_id concat('%',#{map.userId},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.name)">
+                    AND name  like  concat('%',#{map.name},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.password)">
+                    AND password like  concat('%',#{map.password},'%')
+                </if>
+                <if test="map.roleId!=null">
+                    AND role_id like  concat('%',#{map.roleId},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.wechatNo)">
+                    AND wechat_no like  concat('%',#{map.wechatNo},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.tel)">
+                    AND tel like  concat('%',#{map.tel},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.realName)">
+                    AND real_name like concat('%',#{map.realName},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.deptId)">
+                    AND dept_id like  concat('%',#{map.deptId},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.companyId)">
+                    AND company_id like  concat('%',#{map.companyId},'%')
+                </if>
+            </where>
+        </if>
+    </sql>
+
+
+    <sql id="userInfoBaseOrSql">
+        <if test="map!=null">
+            <where>
+                <if test="map.roleId!=null">
+                     role_id = #{map.roleId}
+                </if>
+                <if test="map.roleId!=null">
+                    OR role_id = #{map.roleId2}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.companyId)">
+                    AND company_id = #{map.companyId}
+                </if>
             </where>
         </if>
     </sql>
@@ -42,10 +105,13 @@
         )VALUES(
         #{userId},
         #{name},
+        #{password},
         #{roleId},
         #{wechatNo},
         #{tel},
-        #{realName}
+        #{realName},
+        #{deptId},
+        #{companyId}
         )
     </insert>
 
@@ -60,7 +126,10 @@
             <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(name)">
                 name = #{name} ,
             </if>
-            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(roleId)">
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(password)">
+                password = #{password} ,
+            </if>
+            <if test="roleId!=null">
                 role_id = #{roleId} ,
             </if>
             <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(wechatNo)">
@@ -71,6 +140,12 @@
             </if>
             <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(realName)">
                 real_name = #{realName} ,
+            </if>
+            <if test="deptId!=null">
+                dept_id = #{deptId} ,
+            </if>
+            <if test="companyId!=null">
+                company_id = #{companyId}
             </if>
         </set>
         WHERE user_id = #{userId}
@@ -86,6 +161,7 @@
     <select id="findAll" resultMap="userInfoMap">
         select * from user_info
     </select>
+    <!--根据id查找姓名-->
     <select id="findUserNameById" parameterType="map" resultMap="userInfoMap">
         SELECT
         <include refid="userInfoBaseColumnSql"/>
@@ -94,13 +170,62 @@
         WHERE
         user_id = #{map.userId}
     </select>
+    <!--获取分公司咨询主管和咨询师数据-->
+    <select id="searchUserInfoByRoleAndCompany" parameterType="map" resultMap="userInfoMap">
+        SELECT
+        <include refid="userInfoBaseColumnSql"/>
+        FROM user_info
+        <include refid="userInfoBaseOrSql"/>
+    </select>
+    <!--员工模糊查询-->
+    <select id="searchUserInfoByParamsLike" parameterType="map" resultMap="userInfoMap">
+        SELECT
+        <include refid="userInfoBaseColumnSql"/>
+        FROM user_info
+        <include refid="userInfoBaseLikeSql"/>
+    </select>
+    <!--咨询师:2,咨询部门主管:3，创量人员:14,创量主管:15-->
+    <select id="thirdPartUserInfo" parameterType="map" resultMap="userInfoMap">
+        SELECT
+        <include refid="userInfoBaseColumnSql"/>
+        FROM user_info
+        WHERE  role_id in (2,3,14,15)
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.companyId)">
+            AND company_id = #{map.companyId}
+        </if>
+
+    </select>
+    <!--本公司所有的咨询师-->
+    <select id="consultantList" parameterType="map" resultMap="userInfoMap">
+        SELECT
+        <include refid="userInfoBaseColumnSql"/>
+        FROM user_info
+        WHERE   role_id in (2,3)
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.companyId)">
+            AND company_id = #{map.companyId}
+        </if>
+    </select>
+   <!-- 获取邀约人-->
+   <select id="getAllYaoYueRen" resultMap="userInfoMap" parameterType="map">
+        SELECT
+        <include refid="userInfoBaseColumnSql"/>
+        FROM user_info
+        WHERE  role_id in(14,15)
+        <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.companyId)">
+            AND company_id = #{map.companyId}
+        </if>
+    </select>
+
     <resultMap type="com.hzit.crm.core.entity.UserInfo" id="userInfoMap">
         <id column="user_id" property="userId"/>
         <result column="name" property="name"/>
+        <result column="password" property="password"/>
         <result column="role_id" property="roleId"/>
         <result column="wechat_no" property="wechatNo"/>
         <result column="tel" property="tel"/>
         <result column="real_name" property="realName"/>
+        <result column="dept_id" property="deptId"/>
+        <result column="company_id" property="companyId"/>
     </resultMap>
 
 </mapper>

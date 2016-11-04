@@ -67,7 +67,51 @@
         FROM role
         <include refid="roleBaseWhereSql"/>
     </select>
+    <!--选择最大的id-->
+    <select id="selectMaxId" resultType="Integer">
+        select max(role_id) from role
+    </select>
 
+    <resultMap id="roleModuleResultMap" type="com.hzit.crm.core.entity.RoleModule">
+        <id column="id" property="id"/>
+        <result column="role_id" property="roleId"/>
+        <result column="module_id" property="moduleId"/>
+        <collection property="roles" ofType="com.hzit.crm.core.entity.Role">
+            <id column="role_id" property="roleId"/>
+            <result column="role_name" property="roleName"/>
+            <result column="total_auth_value" property="totalAuthValue"/>
+            <result column="memo" property="memo"/>
+        </collection>
+        <collection property="modules" ofType="com.hzit.crm.core.entity.Module">
+            <id column="module_id" property="moduleId"/>
+            <result column="name" property="name"/>
+            <result column="auth_value" property="authValue"/>
+            <result column="module_url" property="moduleUrl"/>
+            <result column="parent_module_id" property="parentModuleId"/>
+            <result column="module_level" property="moduleLevel"/>
+            <result column="module_order" property="moduleOrder"/>
+            <result column="module_ico" property="moduleIco"/>
+            <result column="description" property="description"/>
+        </collection>
+    </resultMap>
+    <!--根据用户id查找该用户所能访问的资源 start-->
+    <select id="findModuleByUserId" resultMap="roleModuleResultMap" parameterType="String">
+        select name,
+			module_url,
+			description
+		from
+		    module
+		where
+			module_id in(
+				select
+						module_id
+				from
+						role_module
+						where role_id =(select role_id from user_info where user_id=#{userId})
+
+		)
+    </select>
+    <!--根据用户id查找该用户所能访问的资源 end-->
     <resultMap type="com.hzit.crm.core.entity.Role" id="roleMap">
         <id column="role_id" property="roleId"/>
         <result column="role_name" property="roleName"/>

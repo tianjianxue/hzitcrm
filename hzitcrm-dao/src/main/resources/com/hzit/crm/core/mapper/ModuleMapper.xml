@@ -11,7 +11,8 @@
         parent_module_id,
         module_level,
         module_order,
-        module_ico
+        module_ico,
+        description
     </sql>
 
     <sql id="moduleBaseWhereSql">
@@ -35,6 +36,9 @@
                 <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.moduleLevel)">
                     AND module_level = #{map.moduleLevel}
                 </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.description)">
+                    AND description = #{map.description}
+                </if>
             </where>
         </if>
     </sql>
@@ -48,7 +52,8 @@
             #{authValue},
             #{moduleUrl},
             #{parentModuleId},
-            #{moduleLevel}
+            #{moduleLevel},
+            #{description}
         )
     </insert>
 
@@ -75,6 +80,9 @@
             <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(moduleLevel)">
                 module_level = #{moduleLevel} ,
             </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(description)">
+                description = #{description} ,
+            </if>
         </set>
         WHERE module_id = #{moduleId}
     </update>
@@ -95,6 +103,7 @@
         <result column="module_level" property="moduleLevel"/>
         <result column="module_order" property="moduleOrder"/>
         <result column="module_ico" property="moduleIco"/>
+        <result column="description" property="description"/>
     </resultMap>
 
     <select id="searchModuleByWeCharNo" resultMap="moduleMap">

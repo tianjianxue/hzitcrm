@@ -1,10 +1,12 @@
 package com.hzit.crm;
 
+import com.hzit.crm.interceptors.LoginInterceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
 
 /**
@@ -22,7 +24,6 @@ public class ApplicationWeb extends SpringBootServletInitializer {
 //    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 //        return builder.sources(ApplicationWeb.class);
 //    }
-
 
 
 

@@ -28,7 +28,8 @@
         introducer,
         memo,
         last_time,
-        create_time
+        create_time,
+        company_id
     </sql>
 
     <sql id="customerInfoBaseWhereSql">
@@ -109,10 +110,96 @@
                 <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.createTime)">
                     AND create_time = #{map.createTime}
                 </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.companyId)">
+                    AND company_id = #{map.companyId}
+                </if>
             </where>
         </if>
     </sql>
-
+    <sql id="customerInfoBaseLikeSql">
+        <if test="map!=null">
+            <where>
+                <if test="map.customerId!=null">
+                    like customer_id concat('%',#{map.customerId},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.realName)">
+                    AND real_name like concat('%',#{map.realName},'%')
+                </if>
+                <if test="map.sex!=null">
+                    AND sex like concat('%',#{map.sex},'%')
+                </if>
+                <if test="map.age!=null">
+                    AND age like concat('%',#{map.age},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.nativePlace)">
+                    AND native_place like concat('%',#{map.nativePlace},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.tel)">
+                    AND tel like concat('%',#{map.tel},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.wechatNo)">
+                    AND wechat_no like concat('%',#{map.wechatNo},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.qq)">
+                    AND qq like concat('%',#{map.qq},'%')
+                </if>
+                <if test="map.educationBg!=null">
+                    AND education_bg like concat('%',#{map.educationBg},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.graduateTime)">
+                    AND graduate_time like concat('%',#{map.graduateTime},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.graduateFrom)">
+                    AND graduate_from like concat('%',#{map.graduateFrom},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.majorIn)">
+                    AND major_in like concat('%',#{map.majorIn},'%')
+                </if>
+                <if test="map.workAge!=null">
+                    AND work_age  like concat('%',#{map.workAge},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.workExperience)">
+                    AND work_experience like concat('%',#{map.workExperience},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.job)">
+                    AND job like concat('%',#{map.job},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.educateExperience)">
+                    AND educate_experience like concat('%',#{map.educateExperience},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.recruitChannel)">
+                    AND recruit_channel like concat('%',#{map.recruitChannel},'%')
+                </if>
+                <if test="map.customerState!=null">
+                    AND customer_state like concat('%',#{map.customerState},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.customerLevel)">
+                    AND customer_level like concat('%',#{map.customerLevel},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.userId)">
+                    AND user_id like concat('%',#{map.userId},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.targetSkill)">
+                    AND target_skill like concat('%',#{map.targetSkill},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.introducer)">
+                    AND introducer like concat('%',#{map.introducer},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.memo)">
+                    AND memo like concat('%',#{map.memo},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.lastTime)">
+                    AND last_time like concat('%',#{map.lastTime},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.createTime)">
+                    AND create_time like concat('%',#{map.createTime},'%')
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.companyId)">
+                    AND company_id like concat('%',#{map.companyId},'%')
+                </if>
+            </where>
+        </if>
+    </sql>
 
 
     <insert id="insertCustomerInfo" parameterType="com.hzit.crm.core.entity.CustomerInfo">
@@ -143,7 +230,8 @@
         #{introducer},
         #{memo},
         #{lastTime},
-        #{createTime}
+        #{createTime},
+        #{companyId}
         )
     </insert>
 
@@ -227,6 +315,9 @@
             <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(createTime)">
                 create_time = #{createTime} ,
             </if>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(companyId)">
+                company_id = #{companyId} ,
+            </if>
         </set>
         WHERE customer_id = #{customerId}
     </update>
@@ -237,12 +328,14 @@
               customer_id,
               real_name,
               customer_state,
-              create_time
+              create_time,
+              user_id
          FROM
             customer_info
          where
               to_days(create_time)= to_days(now())
-          order by create_time DESC
+            AND customer_state="1"
+         order by create_time DESC
     </select>
 
     <!--获取客户表的总记录数-->
@@ -271,7 +364,12 @@
         <include refid="customerInfoBaseWhereSql"/>
 
     </select>
-
+    <select id="searchCustomerInfoByParamsLike" parameterType="map" resultMap="customerInfoMap">
+        SELECT
+        <include refid="customerInfoBaseColumnSql"/>
+        FROM customer_info
+        <include refid="customerInfoBaseLikeSql"/>
+    </select>
     <resultMap type="com.hzit.crm.core.entity.CustomerInfo" id="customerInfoMap">
         <id column="customer_id" property="customerId"/>
         <result column="real_name" property="realName"/>
@@ -298,6 +396,7 @@
         <result column="memo" property="memo"/>
         <result column="last_time" property="lastTime"/>
         <result column="create_time" property="createTime"/>
+        <result column="company_id" property="companyId"/>
     </resultMap>
 
 </mapper>

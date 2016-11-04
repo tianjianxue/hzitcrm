@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hzit.crm.core.mapper.StudentinfoMapper">
+
+    <sql id="studentinfoBaseColumnSql">
+        studentID,
+        zixunshiName,
+        studentName,
+        studentSex,
+        studentTime,
+        studentAge,
+        studentTel,
+        studentXl,
+        studentYx,
+        studentHome,
+        sttudentSchool,
+        stedentClass,
+        studentStatus,
+        studentdes,
+        studentintime,
+        studentsal
+    </sql>
+
+    <sql id="studentinfoBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.studentId)">
+                    studentID = #{map.studentId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.zixunshiName)">
+                    AND zixunshiName = #{map.zixunshiName}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.studentName)">
+                    AND studentName = #{map.studentName}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.studentSex)">
+                    AND studentSex = #{map.studentSex}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.studentTime)">
+                    AND studentTime = #{map.studentTime}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.studentAge)">
+                    AND studentAge = #{map.studentAge}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.studentTel)">
+                    AND studentTel = #{map.studentTel}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.studentXl)">
+                    AND studentXl = #{map.studentXl}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.studentYx)">
+                    AND studentYx = #{map.studentYx}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.studentHome)">
+                    AND studentHome = #{map.studentHome}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.sttudentSchool)">
+                    AND sttudentSchool = #{map.sttudentSchool}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.stedentClass)">
+                    AND stedentClass = #{map.stedentClass}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.studentStatus)">
+                    AND studentStatus = #{map.studentStatus}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.studentdes)">
+                    AND studentdes = #{map.studentdes}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.studentintime)">
+                    AND studentintime = #{map.studentintime}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.studentsal)">
+                    AND studentsal = #{map.studentsal}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+    <insert id="insertStudentinfo" parameterType="com.hzit.crm.core.entity.Studentinfo">
+        INSERT INTO hzit.studentinfo(
+        <include refid="studentinfoBaseColumnSql"/>
+        )VALUES(
+            #{studentId},
+            #{zixunshiName},
+            #{studentName},
+            #{studentSex},
+            #{studentTime},
+            #{studentAge},
+            #{studentTel},
+            #{studentXl},
+            #{studentYx},
+            #{studentHome},
+            #{sttudentSchool},
+            #{stedentClass},
+            #{studentStatus},
+            #{studentdes},
+            #{studentintime},
+            #{studentsal}
+        )
+    </insert>
+
+    <resultMap type="com.hzit.crm.core.entity.Studentinfo" id="studentinfoMap">
+        <id column="studentID" property="studentId"/>
+        <result column="zixunshiName" property="zixunshiName"/>
+        <result column="studentName" property="studentName"/>
+        <result column="studentSex" property="studentSex"/>
+        <result column="studentTime" property="studentTime"/>
+        <result column="studentAge" property="studentAge"/>
+        <result column="studentTel" property="studentTel"/>
+        <result column="studentXl" property="studentXl"/>
+        <result column="studentYx" property="studentYx"/>
+        <result column="studentHome" property="studentHome"/>
+        <result column="sttudentSchool" property="sttudentSchool"/>
+        <result column="stedentClass" property="stedentClass"/>
+        <result column="studentStatus" property="studentStatus"/>
+        <result column="studentdes" property="studentdes"/>
+        <result column="studentintime" property="studentintime"/>
+        <result column="studentsal" property="studentsal"/>
+    </resultMap>
+
+</mapper>

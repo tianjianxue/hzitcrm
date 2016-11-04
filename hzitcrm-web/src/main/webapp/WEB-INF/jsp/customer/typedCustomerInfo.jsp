@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>客户录入</title>
+    <title>学员录入</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
@@ -35,7 +35,7 @@
 
     <div id="breadcrumb">
         <a href="${pageContext.request.contextPath}/index" title="回到主页" class="tip-bottom"><i class="icon-home"></i>主页</a>
-        <a href="#">录入客户信息</a>
+        <a href="#">录入学员信息</a>
     </div>
     <div class="container-fluid">
         <div class="row-fluid">
@@ -46,13 +46,13 @@
 								<span class="icon">
 									<i class="icon-align-justify"></i>
 								</span>
-                        <h5>当前客户信息</h5>
-                        <span class="label label-important">客户信息</span>
+                        <h5>当前学员信息</h5>
+                        <span class="label label-important">学员信息</span>
                     </div>
                     <div class="widget-content nopadding">
 
                         <div class="control-group">
-                            <label class="control-label">客户真实姓名</label>
+                            <label class="control-label">学员真实姓名</label>
                             <div class="controls">
                                 <input type="text" name="realName" id="realName" />
                                 <span for="required" generated="true" class="help-inline">该字段必填</span>
@@ -177,14 +177,14 @@
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">客户状态</label>
+                            <label class="control-label">学员状态</label>
                             <div class="controls">
                                 <input type="text" name="customerState" id="customerState" />
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label">客户级别</label>
+                            <label class="control-label">学员级别</label>
                             <div class="controls">
                                 <input type="text" name="customerLevel" id="customerLevel" />
                             </div>
@@ -200,7 +200,7 @@
 
 
                         <div class="control-group">
-                            <label class="control-label">客户感兴趣的目标技能</label>
+                            <label class="control-label">学员感兴趣的目标技能</label>
                             <div class="controls">
                                 <input type="text" name="targetSkill" id="targetSkill" />
                             </div>

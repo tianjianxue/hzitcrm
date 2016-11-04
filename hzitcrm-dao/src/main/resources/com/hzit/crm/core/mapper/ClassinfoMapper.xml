@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hzit.crm.core.mapper.ClassinfoMapper">
+
+    <sql id="classinfoBaseColumnSql">
+        classId,
+        classname,
+        classLx,
+        classWz,
+        classTime,
+        classZt,
+        classTeacher,
+        classSchool
+    </sql>
+
+    <sql id="classinfoBaseWhereSql">
+        <if test="map!=null">
+            <where>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.classId)">
+                    classId = #{map.classId}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.classname)">
+                    AND classname = #{map.classname}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.classLx)">
+                    AND classLx = #{map.classLx}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.classWz)">
+                    AND classWz = #{map.classWz}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.classTime)">
+                    AND classTime = #{map.classTime}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.classZt)">
+                    AND classZt = #{map.classZt}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.classTeacher)">
+                    AND classTeacher = #{map.classTeacher}
+                </if>
+                <if test="@org.apache.commons.lang3.StringUtils@isNotEmpty(map.classSchool)">
+                    AND classSchool = #{map.classSchool}
+                </if>
+            </where>
+        </if>
+    </sql>
+
+
+    <select id="searchClassinfoByParams" parameterType="map" resultMap="classinfoMap">
+        SELECT
+        <include refid="classinfoBaseColumnSql"/>
+        FROM hzit.classinfo
+        <include refid="classinfoBaseWhereSql"/>
+    </select>
+
+    <resultMap type="com.hzit.crm.core.entity.Classinfo" id="classinfoMap">
+        <id column="classId" property="classId"/>
+        <result column="classname" property="classname"/>
+        <result column="classLx" property="classLx"/>
+        <result column="classWz" property="classWz"/>
+        <result column="classTime" property="classTime"/>
+        <result column="classZt" property="classZt"/>
+        <result column="classTeacher" property="classTeacher"/>
+        <result column="classSchool" property="classSchool"/>
+    </resultMap>
+
+</mapper>

@@ -37,6 +37,10 @@ public class Module {
 	 * 模块对应的图标
 	 */
 	private String moduleIco;
+	/**
+	 *
+	 */
+	private String description;
 
 	public int getModuleOrder() {
 		return moduleOrder;
@@ -144,4 +148,12 @@ public class Module {
     public String getModuleLevel(){
     	return moduleLevel;
     }
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }
